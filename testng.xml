@@ -2,22 +2,22 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Loan Department" parallel="tests" thread-count="6">
     <listeners> 
-        <listener class-name="Test.Listeners"/>
+        <listener class-name="Framework_TestNG.Listeners"/>
           </listeners>
    
     <test name="Personal loan">
        <parameter name="URL" value="personalloan.com"/>
          
     <classes>
-      <class name="Test.day1">
+      <class name="Framework_TestNG.day1">
           <methods>
               <include name ="Demo"/>
           </methods>
           
           
 </class>
-      <class name="Test.day2"/>
-      <class name ="Test.day4"/>
+      <class name="Framework_TestNG.day2"/>
+      <class name ="Framework_TestNG.day4"/>
 
     </classes>
   </test> 
@@ -26,7 +26,7 @@
   <parameter name="APIKey/usrname" value="123456"/>
        <classes>
           
-          <class name="Test.day3">
+          <class name="Framework_TestNG.day3">
               <methods>
                   <exclude name="API.*"/>
               </methods>

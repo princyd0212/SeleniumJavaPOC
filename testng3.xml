@@ -11,10 +11,10 @@
             </run>
         </groups>
     <classes>
-      <class name="Test.day1"/>
-      <class name="Test.day2"/>
-      <class name ="Test.day4"/>
-        <class name="Test.day3"/>
+      <class name="Framework_TestNG.day1"/>
+      <class name="Framework_TestNG.day2"/>
+      <class name ="Framework_TestNG.day4"/>
+        <class name="Framework_TestNG.day3"/>
       
     </classes>
   </test> 

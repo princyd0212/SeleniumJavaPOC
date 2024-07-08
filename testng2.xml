@@ -6,7 +6,7 @@
         <parameter name="URL" value="carloan.com"/>
         <parameter name="APIKey/usrname" value="123456"/>
   <packages>
-      <package name= "Test"/>
+      <package name= "Framework_TestNG"/>
           
   </packages>
   </test>
