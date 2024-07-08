@@ -3,19 +3,14 @@
 <suite name="Loan Department">
 
     <test name="Regression">
-        <parameter name="URL" value="carloan.com"/>
-        <parameter name="APIKey/usrname" value="123456"/>
         <groups>
             <run>
-                <exclude name ="Smoke"/>
+                <include name ="CheckUATLinks"/>
             </run>
         </groups>
     <classes>
-      <class name="Framework_TestNG.day1"/>
-      <class name="Framework_TestNG.day2"/>
-      <class name ="Framework_TestNG.day4"/>
-        <class name="Framework_TestNG.day3"/>
-      
+      <class name="GetURL.GetPageLinks"/>
+      <class name="GetURL.FooterLinksCheck"/>
     </classes>
   </test> 
 
