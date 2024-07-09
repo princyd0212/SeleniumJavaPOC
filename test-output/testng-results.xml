@@ -2,22 +2,22 @@
 <testng-results ignored="0" total="2" passed="2" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2024-07-08T15:26:54 IST" name="Loan Department" finished-at="2024-07-08T15:31:48 IST" duration-ms="293868">
+  <suite started-at="2024-07-09T11:29:38 IST" name="Loan Department" finished-at="2024-07-09T11:33:53 IST" duration-ms="255198">
     <groups>
       <group name="CheckUATLinks">
-        <method signature="FooterLinksCheck.FooterLinks()[pri:0, instance:GetURL.FooterLinksCheck@20f5281c]" name="FooterLinks" class="GetURL.FooterLinksCheck"/>
-        <method signature="GetPageLinks.HeaderLinks()[pri:0, instance:GetURL.GetPageLinks@3561c410]" name="HeaderLinks" class="GetURL.GetPageLinks"/>
+        <method signature="FooterLinksCheck.FooterLinks()[pri:0, instance:GetURL.FooterLinksCheck@3f9342d4]" name="FooterLinks" class="GetURL.FooterLinksCheck"/>
+        <method signature="GetPageLinks.HeaderLinks()[pri:0, instance:GetURL.GetPageLinks@77102b91]" name="HeaderLinks" class="GetURL.GetPageLinks"/>
       </group> <!-- CheckUATLinks -->
     </groups>
-    <test started-at="2024-07-08T15:26:54 IST" name="Regression" finished-at="2024-07-08T15:31:48 IST" duration-ms="293868">
+    <test started-at="2024-07-09T11:29:38 IST" name="Regression" finished-at="2024-07-09T11:33:53 IST" duration-ms="255198">
       <class name="GetURL.FooterLinksCheck">
-        <test-method signature="FooterLinks()[pri:0, instance:GetURL.FooterLinksCheck@20f5281c]" started-at="2024-07-08T15:28:28 IST" name="FooterLinks" finished-at="2024-07-08T15:31:48 IST" duration-ms="200497" status="PASS">
+        <test-method signature="FooterLinks()[pri:0, instance:GetURL.FooterLinksCheck@3f9342d4]" started-at="2024-07-09T11:31:23 IST" name="FooterLinks" finished-at="2024-07-09T11:33:53 IST" duration-ms="149879" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- FooterLinks -->
       </class> <!-- GetURL.FooterLinksCheck -->
       <class name="GetURL.GetPageLinks">
-        <test-method signature="HeaderLinks()[pri:0, instance:GetURL.GetPageLinks@3561c410]" started-at="2024-07-08T15:26:55 IST" name="HeaderLinks" finished-at="2024-07-08T15:28:28 IST" duration-ms="93303" status="PASS">
+        <test-method signature="HeaderLinks()[pri:0, instance:GetURL.GetPageLinks@77102b91]" started-at="2024-07-09T11:29:38 IST" name="HeaderLinks" finished-at="2024-07-09T11:31:23 IST" duration-ms="105241" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- HeaderLinks -->

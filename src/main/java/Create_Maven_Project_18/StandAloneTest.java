@@ -1,5 +1,6 @@
 package Create_Maven_Project_18;
 
+import Page_Object_Factory_19.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -21,27 +22,19 @@ public class StandAloneTest {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.get("https://rahulshettyacademy.com/client");
-        driver.findElement(By.id("userEmail")).sendKeys("tadmin@admin.com");
-        driver.findElement(By.id("userPassword")).sendKeys("Admin@123");
-        driver.findElement(By.id("login")).click();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".mb-3")));
-        List<WebElement> products = driver.findElements(By.cssSelector(".mb-3"));
-        WebElement prod = products.stream().filter(product -> product.findElement(By.cssSelector("b")).getText().equals(productName)).findFirst().orElse(null);
-        prod.findElement(By.cssSelector(".card-body button:last-of-type")).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#toast-container")));
-        wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.cssSelector(".ng-animating"))));
-        driver.findElement(By.xpath("//button[@routerlink='/dashboard/cart']")).click();
-        List<WebElement> cartProducts = driver.findElements(By.cssSelector(".cartSection h3"));
-        boolean match = cartProducts.stream().anyMatch(cartProduct->cartProduct.getText().equals(productName));
+        LandingPage landingPage = new LandingPage(driver);
+        landingPage.GoTo();
+        ProductCatalogue ProductCatalogue = landingPage.LoginApplication("tadmin@admin.com", "Admin@123");
+        List<WebElement> Products = ProductCatalogue.getProductList();
+        ProductCatalogue.addProductToCart(productName);
+        CartPage cartPage = ProductCatalogue.goToCartPage();
+        Boolean match = cartPage.VerifyProductDisplay(productName);
         Assert.assertTrue(match);
-        driver.findElement(By.cssSelector(".totalRow button")).click();
-        Actions a = new Actions(driver);
-        a.sendKeys(driver.findElement(By.xpath("//input[@placeholder='Select Country']")), "india").build().perform();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ta-results")));
-        driver.findElement(By.cssSelector(".ta-item:nth-of-type(2)")).click();
-        driver.findElement(By.cssSelector(".action__submit")).click();
-        String confMsg = driver.findElement(By.cssSelector(".hero-primary")).getText();
+        CheckoutPage checkoutPage = cartPage.goToCheckout();
+        checkoutPage.selectCountry("india");
+        ConfirmationPage confirmationPage = checkoutPage.submitOrder();
+        String confMsg = confirmationPage.getConfirmationMessage();
         Assert.assertTrue(confMsg.equalsIgnoreCase("THANKYOU FOR THE ORDER."));
         driver.close();
     }
