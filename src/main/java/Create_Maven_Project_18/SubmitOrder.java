@@ -8,20 +8,17 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
+import TestComponent.BaseTest;
+import org.testng.annotations.Test;
 
-public class StandAloneTest{
-    public static void main(String[] args) throws InterruptedException {
+public class SubmitOrder extends BaseTest{
+    @Test
+    public void submitOrder() throws IOException {
         String productName = "ZARA COAT 3";
-        WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.get("https://rahulshettyacademy.com/client");
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        LandingPage landingPage = new LandingPage(driver);
-        landingPage.GoTo();
+        LandingPage landingPage = lunchApplication();
         ProductCatalogue ProductCatalogue = landingPage.LoginApplication("tadmin@admin.com", "Admin@123");
         List<WebElement> Products = ProductCatalogue.getProductList();
         ProductCatalogue.addProductToCart(productName);
