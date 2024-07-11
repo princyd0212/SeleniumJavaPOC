@@ -26,12 +26,20 @@ public class LandingPage extends AbstractComponent {
     @FindBy(id="login")
     WebElement submit;
 
+    @FindBy(xpath="//div[@aria-label='Incorrect email or password.']")
+    WebElement errorMessage;
+
     public ProductCatalogue LoginApplication(String email, String password){
         userEmail.sendKeys(email);
         passwordEle.sendKeys(password);
         submit.click();
         ProductCatalogue ProductCatalogue = new ProductCatalogue(driver);
         return ProductCatalogue;
+    }
+    public String getErrorMessage(){
+        waitForWebElementToAppear(errorMessage);
+//        System.out.println(errorMessage.getText());
+        return errorMessage.getText();
     }
 
     public void GoTo (){

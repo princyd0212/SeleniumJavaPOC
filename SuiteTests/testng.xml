@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite parallel="tests" name="All Test Suite">
+    <test thread-count="5" name="Submit Order Test">
+        <classes>
+<!--            <class name="Framework_TestNG.day1">-->
+<!--                <methods>-->
+<!--                    <include name="Demo"/>-->
+<!--                    <include name="SecondTest"/>-->
+<!--                </methods>-->
+<!--            </class>-->
+<!--            <class name="Framework_TestNG.day3">-->
+<!--                <methods>-->
+<!--                    <include name="WebloginCarLoan"/>-->
+<!--                    <include name="MobilesignimcarLoan"/>-->
+<!--                    <include name="MobilesignoutcarLoan"/>-->
+<!--                </methods>-->
+<!--            </class>-->
+<!--            <class name="Framework_TestNG.day4">-->
+<!--                <methods>-->
+<!--                    <include name="WebloginHomeLoan"/>-->
+<!--                    <include name="LoginAPIHomeLoan"/>-->
+<!--                </methods>-->
+<!--            </class>-->
+<!--            <class name="JavaObjectOrientedPrinciples_Inheritance.Child">-->
+<!--                <methods>-->
+<!--                    <include name="TestRun"/>-->
+<!--                </methods>-->
+<!--            </class>-->
+<!--            <class name="Create_Maven_Project_18.ErrorValidations">-->
+<!--                <methods>-->
+<!--                    <include name="LoginErrorValidation"/>-->
+<!--                    <include name="ProducterrorValidation"/>-->
+<!--                </methods>-->
+<!--            </class>-->
+            <class name="Create_Maven_Project_18.SubmitOrder">
+<!--                <methods>-->
+<!--                    <include name="submitOrder"/>-->
+<!--                </methods>-->
+            </class>
+        </classes>
+    </test>
+    <test thread-count="5" name="Error Validation Message">
+        <classes>
+            <class name="Create_Maven_Project_18.ErrorValidations" />
+        </classes>
+    </test>
+</suite>

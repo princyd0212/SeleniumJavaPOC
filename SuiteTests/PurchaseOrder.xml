@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite parallel="tests" name="All Test Suite">
+    <groups>
+        <run>
+            <include name="PurchaseOrder"/>
+        </run>
+    </groups>
+    <test thread-count="5" name="Submit Order Test">
+        <classes>
+            <class name="Create_Maven_Project_18.SubmitOrder">
+            </class>
+        </classes>
+    </test>
+    <test thread-count="5" name="Error Validation Message">
+        <classes>
+            <class name="Create_Maven_Project_18.ErrorValidations" />
+        </classes>
+    </test>
+</suite>
