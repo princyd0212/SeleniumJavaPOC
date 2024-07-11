@@ -5,6 +5,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
@@ -25,7 +27,7 @@ public class BaseTest {
 
     public static void initializeDriver() throws IOException {
         Properties prop = new Properties();
-        FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"\\src\\main\\java\\resources\\GlobleData.properties");
+        FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + "\\src\\main\\java\\resources\\GlobleData.properties");
         prop.load(fis);
         String browserName = prop.getProperty("browser");
         if (browserName.equalsIgnoreCase("chrome")) {
@@ -45,17 +47,26 @@ public class BaseTest {
     }
 
     @AfterMethod(alwaysRun = true)
-    public void closeDriver(){
-        driver.close();
+    public void closeDriver() {
+        driver.quit();
     }
 
     public List<HashMap<String, String>> getJsonDataToMap(String filePath) throws IOException {
-        String jsonContent =  FileUtils.readFileToString(new File(filePath), StandardCharsets.UTF_8);
+        String jsonContent = FileUtils.readFileToString(new File(filePath), StandardCharsets.UTF_8);
 
         //String to hasmap
         ObjectMapper mapper = new ObjectMapper();
         List<HashMap<String, String>> data = mapper.readValue(jsonContent, new TypeReference<List<HashMap<String, String>>>() {
         });
         return data;
+    }
+
+    public String getScreenshot(String testCaseName, WebDriver driver) throws IOException {
+        TakesScreenshot ts = (TakesScreenshot) driver;
+        File source = ts.getScreenshotAs(OutputType.FILE);
+        String destPath = System.getProperty("user.dir") + "/reports/" + testCaseName + ".png";
+        File destination = new File(destPath);
+        FileUtils.copyFile(source, destination);
+        return destPath; // Return the path of the screenshot
     }
 }

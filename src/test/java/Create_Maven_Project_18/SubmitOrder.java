@@ -3,7 +3,6 @@ package Create_Maven_Project_18;
 import Page_Object_Factory_19.*;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +29,10 @@ public class SubmitOrder extends BaseTest{
         String confMsg = confirmationPage.getConfirmationMessage();
         Assert.assertTrue(confMsg.equalsIgnoreCase("THANKYOU FOR THE ORDER."));
     }
+
+
+
+
     @Test(dependsOnMethods = {"submitOrder"})
     public void OrderHistoryTest(String email, String password, String productName){
         ProductCatalogue ProductCatalogue = landingPage.LoginApplication("tadmin@admin.com", "Admin@123");

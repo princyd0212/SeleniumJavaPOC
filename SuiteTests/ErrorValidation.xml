@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite parallel="tests" name="All Test Suite">
+
     <groups>
         <run>
             <include name="ErrorHandling"/>
         </run>
     </groups>
+    <listeners>
+        <listener class-name="TestComponent.Listeners" />
+    </listeners>
     <test thread-count="5" name="Submit Order Test">
         <classes>
             <class name="Create_Maven_Project_18.SubmitOrder">
