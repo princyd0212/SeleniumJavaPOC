@@ -10,7 +10,7 @@ import TestComponent.BaseTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class SubmitOrder extends BaseTest{
+public class SubmitOrderTest extends BaseTest{
 //    String productName = "ZARA COAT 3";
     @Test(dataProvider = "getData", groups = {"PurchaseOrder"})
     public void submitOrder(HashMap<String, String> input) throws IOException {
@@ -31,13 +31,11 @@ public class SubmitOrder extends BaseTest{
     }
 
 
-
-
-    @Test(dependsOnMethods = {"submitOrder"})
-    public void OrderHistoryTest(String email, String password, String productName){
-        ProductCatalogue ProductCatalogue = landingPage.LoginApplication("tadmin@admin.com", "Admin@123");
+    @Test(dataProvider = "getData",dependsOnMethods = {"submitOrder"})
+    public void OrderHistoryTest(HashMap<String, String> input){
+        ProductCatalogue ProductCatalogue = landingPage.LoginApplication(input.get("email"), input.get("password"));
         OrderPage orderPage = ProductCatalogue.goToOrdersPage();
-        Assert.assertTrue(orderPage.VerifyOrderDisplay(productName));
+        Assert.assertTrue(orderPage.VerifyOrderDisplay(input.get("product")));
     }
 
     @DataProvider
@@ -46,7 +44,6 @@ public class SubmitOrder extends BaseTest{
         List<HashMap<String,String>> data = getJsonDataToMap(System.getProperty("user.dir")+"\\src\\test\\java\\Data\\PurchaseOrder.json");
         return new Object[][] { {data.get(0)},{data.get(1)} };
     }
-
 }
 
 //@DataProvider

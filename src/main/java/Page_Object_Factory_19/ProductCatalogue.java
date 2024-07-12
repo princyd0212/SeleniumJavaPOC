@@ -14,7 +14,7 @@ public class ProductCatalogue extends AbstractComponent {
 
     public ProductCatalogue(WebDriver driver){
         super(driver);
-        this.driver = this.driver;
+        this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 

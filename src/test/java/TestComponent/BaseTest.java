@@ -46,8 +46,9 @@ public class BaseTest {
         return landingPage;
     }
 
-    @AfterMethod(alwaysRun = true)
+    @AfterMethod
     public void closeDriver() {
+      driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         driver.quit();
     }
 
