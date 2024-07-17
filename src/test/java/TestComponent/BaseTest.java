@@ -5,10 +5,12 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -30,11 +32,16 @@ public class BaseTest {
         Properties prop = new Properties();
         FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + "\\src\\main\\java\\resources\\GlobleData.properties");
         prop.load(fis);
-        String browserName = System.getProperty("browser")!=null ? System.getProperty("browser") : prop.getProperty("browser");
+        String browserName = System.getProperty("browser") != null ? System.getProperty("browser") : prop.getProperty("browser");
 //        prop.getProperty("browser");
-        if (browserName.equalsIgnoreCase("chrome")) {
+        if (browserName.contains("chrome")) {
+            ChromeOptions option = new ChromeOptions();
             WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver();
+            if (browserName.contains("headless")) {
+                option.addArguments("headless");
+            }
+            driver = new ChromeDriver(option);
+            driver.manage().window().setSize(new Dimension(1440, 900));
         } else if (browserName.equalsIgnoreCase("firefox")) {
             WebDriver driver = new FirefoxDriver();
             driver = new FirefoxDriver();
@@ -53,7 +60,7 @@ public class BaseTest {
 
     @AfterMethod
     public void closeDriver() {
-      driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         driver.quit();
     }
 
