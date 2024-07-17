@@ -90,6 +90,16 @@
                 </pluginManagement>
             </build>
         </profile>
+        <profile>
+        <id>
+            Purchase
+        </id>
+        </profile>
+        <profile>
+        <id>
+            ErrorValidation
+        </id>
+        </profile>
     </profiles>
 
 </project>

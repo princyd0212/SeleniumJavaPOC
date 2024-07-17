@@ -45,9 +45,10 @@ public class FooterLinksCheck {
                 if (pageUrl != null && !pageUrl.isEmpty()) {
                     if (pageUrl.contains("uat")) {
                         System.out.println("Found 'uat' in URL: " + pageUrl);
-                    } else {
-                        System.out.println(pageUrl);
                     }
+//                    else {
+//                        System.out.println(pageUrl);
+//                    }
                 }
             }
         }

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GetPageLinks {
-    @Test(groups={"CheckUATLinks"})
+    @Test(groups = {"CheckUATLinks"})
     public void HeaderLinks() {
         WebDriver driver = new ChromeDriver();
         driver.manage().window().maximize();
@@ -45,6 +45,8 @@ public class GetPageLinks {
                 if (pageUrl != null && !pageUrl.isEmpty()) {
                     if (pageUrl.contains("uat")) {
                         System.out.println("Found 'uat' in URL: " + pageUrl);
+                    } else {
+                        System.out.println(pageUrl);
                     }
                 }
             }
