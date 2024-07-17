@@ -26,7 +26,7 @@ public class GetPageLinks {
         List<String> headerURLs = new ArrayList<>();
         for (WebElement headerLink : headerLinks) {
             String headerUrl = headerLink.getAttribute("href");
-            if (headerUrl != null && !headerUrl.isEmpty() && !headerUrl.equals("javascript:void(0)")) {
+            if (headerUrl != null && !headerUrl.isEmpty() && !headerUrl.equals("javascript:void(0)") && !headerUrl.equals("javascript:meetInPersonPopup();")) {
                 headerURLs.add(headerUrl);
             }
         }
@@ -45,8 +45,6 @@ public class GetPageLinks {
                 if (pageUrl != null && !pageUrl.isEmpty()) {
                     if (pageUrl.contains("uat")) {
                         System.out.println("Found 'uat' in URL: " + pageUrl);
-                    } else {
-                        System.out.println(pageUrl);
                     }
                 }
             }

@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 import java.util.List;
 
-public class ErrorValidations extends BaseTest {
+public class ErrorValidationsTest extends BaseTest {
 
     @Test(groups = {"ErrorHandling"}, retryAnalyzer = Retry.class)
 

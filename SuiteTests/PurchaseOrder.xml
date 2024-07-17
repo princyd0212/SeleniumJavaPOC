@@ -9,7 +9,7 @@
     </test>
     <test thread-count="5" name="Error Validation Message">
         <classes>
-            <class name="Create_Maven_Project_18.ErrorValidations" />
+            <class name="Create_Maven_Project_18.ErrorValidationsTest" />
         </classes>
     </test>
 </suite>

@@ -11,7 +11,7 @@
 </test> <!-- Test -->
 <test  name="Error Validations Test">
     <classes>
-        <class name="Create_Maven_Project_18.ErrorValidations"/>
+        <class name="Create_Maven_Project_18.ErrorValidationsTest"/>
     </classes>
 </test> <!-- Test -->
 </suite> <!-- Suite -->
