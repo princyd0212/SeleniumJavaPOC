@@ -24,8 +24,8 @@ public class CombinedCompare {
 
         try {
             // URLs to compare
-            String url1 = "https://www.paybima.com/life-insurance/term-insurance/saral-jeevan-bima";
-            String url2 = "https://uat.paybima.com/life-insurance/term-insurance/saral-jeevan-bima";
+            String url1 = "https://www.paybima.com/blog/miscellaneous/union-budget-2024-25-what-it-holds-for-the-insurance-sector";
+            String url2 = "https://uat.paybima.com/blog/miscellaneous/union-budget-2024-25-what-it-holds-for-the-insurance-sector";
 
             // Navigate to the URLs
             driver1.get(url1);
