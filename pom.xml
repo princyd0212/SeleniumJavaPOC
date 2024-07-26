@@ -84,7 +84,19 @@
             <version>1.18.1</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>7.18.1</version>
+        </dependency>
 
+        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-testng -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-testng</artifactId>
+            <version>7.18.1</version>
+        </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.testng/testng -->
         <dependency>
@@ -183,9 +195,9 @@
                             <artifactId>maven-surefire-plugin</artifactId>
                             <version>3.3.1</version>
                             <configuration>
-                                <suiteXmlFiles>
-                                    <suiteXmlFile>**/TestNGTestRunner.java</suiteXmlFile>
-                                </suiteXmlFiles>
+                                <includes>
+                                    <include>**/TestNGTestRunner.java</include>
+                                </includes>
                             </configuration>
                         </plugin>
                     </plugins>

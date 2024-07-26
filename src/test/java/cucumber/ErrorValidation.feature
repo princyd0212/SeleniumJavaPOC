@@ -1,4 +1,4 @@
-Feature: Purchase the order from Ecommerce Website
+Feature: Error Validation
   I want to use this template for my feature file
 
   @ErrorValidation
@@ -9,4 +9,4 @@ Feature: Purchase the order from Ecommerce Website
 
     Examples:
       | name               | password  |
-      | tadmin@admin.com   | Admin@12a |
+      | tadmin12@admin.com   | Admin@12a |
