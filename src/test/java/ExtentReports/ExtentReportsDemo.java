@@ -32,7 +32,7 @@ public class ExtentReportsDemo {
         driver.get("https://rahulshettyacademy.com/");
         System.out.println(driver.getTitle());
         driver.close();
-//        test.fail("Resilt do not match");
+//        test.fail("Result do not match");
         extent.flush();
     }
 }

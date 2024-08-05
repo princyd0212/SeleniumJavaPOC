@@ -17,6 +17,7 @@ public class ConfirmationPage extends AbstractComponent {
     WebElement confirmationMessage;
 
     public String getConfirmationMessage(){
+
         return confirmationMessage.getText();
     }
 
