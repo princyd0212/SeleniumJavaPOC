@@ -15,7 +15,7 @@ public class Hooks extends BaseTest {
     @After
     public void takeScreenshotOnFailure(Scenario scenario) {
         if (scenario.isFailed()) {
-            WebDriver driver = BaseTest.getDriver();
+            WebDriver driver = getDriver();
             if (driver != null) {
                 try {
                     String screenshotPath = getScreenshot(scenario.getName(), driver);

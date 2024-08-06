@@ -27,8 +27,9 @@ import java.util.Properties;
 public class BaseTest {
     public static WebDriver driver;
     public LandingPage landingPage;
+    private static ThreadLocal<WebDriver> tdriver = new ThreadLocal<>();
 
-    public static void initializeDriver() throws IOException {
+    public static WebDriver initializeDriver() throws IOException {
         Properties prop = new Properties();
         FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + "\\src\\main\\java\\resources\\GlobleData.properties");
         prop.load(fis);
@@ -48,10 +49,12 @@ public class BaseTest {
         }
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
+        tdriver.set(driver);
+        return driver;
     }
 
     public static WebDriver getDriver() {
-        return driver;
+        return tdriver.get();
     }
 
     @BeforeMethod(alwaysRun = true)
