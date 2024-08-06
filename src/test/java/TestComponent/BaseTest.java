@@ -50,6 +50,10 @@ public class BaseTest {
         driver.manage().window().maximize();
     }
 
+    public static WebDriver getDriver() {
+        return driver;
+    }
+
     @BeforeMethod(alwaysRun = true)
     public LandingPage lunchApplication() throws IOException {
         initializeDriver();

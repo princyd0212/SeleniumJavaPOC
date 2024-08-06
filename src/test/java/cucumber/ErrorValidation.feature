@@ -5,7 +5,7 @@ Feature: Error Validation
   Scenario Outline: Error Validation
     Given I landed on Ecommerce Page
     When Logged in with username <name> and password <password>
-    Then "Incorrect email or password." message is displayed
+    Then "Incorrect email password." message is displayed
 
     Examples:
       | name               | password  |
