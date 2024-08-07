@@ -1,3 +1,4 @@
+@SmokeTest
 Feature: Error Validation
   I want to use this template for my feature file
 
