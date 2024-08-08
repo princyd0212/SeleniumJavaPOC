@@ -47,7 +47,7 @@ public class StepDefinitionImpl extends BaseTest {
     public void Checkout_and_submit_the_order(String productKey) {
         String product = propertyFileReader.getProperty(productKey);
         CartPage cartPage = productCatalogue.goToCartPage();
-        Boolean match = cartPage.VerifyProductDisplay(productKey);
+        Boolean match = cartPage.VerifyProductDisplay(product);
         Assert.assertTrue(match);
         CheckoutPage checkoutPage = cartPage.goToCheckout();
         checkoutPage.selectCountry("india");

@@ -7,7 +7,7 @@ Feature: Purchase the order from Ecommerce Website
 
   @Regression
   Scenario Outline: Positive Test of Submitting the order
-    Given Logged in with username <name> and password <password>
+    Given Logged in with username <email> and password <password>
     When I add product <productName> to Cart
     And Checkout <productName> and submit the order
     Then <confirmMessage> message is displayed in ConfirmationPage
