@@ -6,8 +6,8 @@ Feature: Error Validation
   Scenario Outline: Error Validation
     Given I landed on Ecommerce Page
     When Logged in with username <name> and password <password>
-    Then "Incorrect email password." message is displayed
+    Then <errorMessage> message is displayed
 
     Examples:
-      | name               | password  |
-      | tadmin12@admin.com   | Admin@12a |
+      | name      | password  |  errorMessage |
+      | email_3   | password_3 |  errorMessage_3 |
