@@ -16,4 +16,6 @@ Feature: Purchase the order from Ecommerce Website
       | email   | password   | productName   | confirmMessage   |
       | email_1 | password_1 | productName_1 | confirmMessage_1 |
       | email_2 | password_2 | productName_2 | confirmMessage_2 |
+      | email_5 | password_5 | productName_5 | confirmMessage_5 |
+      | email_6 | password_6 | productName_6 | confirmMessage_6 |
 
