@@ -1,7 +1,7 @@
 package stepDefinations;
 
 import Data.PropertyFileReader;
-import Page_Object_Factory_19.*;
+import pages.*;
 import TestComponent.BaseTest;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -21,7 +21,7 @@ public class StepDefinitionImpl extends BaseTest {
     public ConfirmationPage confirmationPage;
 
     public StepDefinitionImpl() throws IOException {
-        propertyFileReader = new PropertyFileReader(System.getProperty("user.dir")+"//src//test//java/data//config.properties");
+        propertyFileReader = new PropertyFileReader(System.getProperty("user.dir") + "//src//test//java/data//config.properties");
     }
 
     @Given("I landed on Ecommerce Page")

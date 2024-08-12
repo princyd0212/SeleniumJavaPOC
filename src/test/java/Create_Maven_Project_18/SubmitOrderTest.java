@@ -1,6 +1,6 @@
 package Create_Maven_Project_18;
 
-import Page_Object_Factory_19.*;
+import pages.*;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import java.io.IOException;

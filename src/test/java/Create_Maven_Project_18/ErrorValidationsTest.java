@@ -1,7 +1,7 @@
 package Create_Maven_Project_18;
 
-import Page_Object_Factory_19.CartPage;
-import Page_Object_Factory_19.ProductCatalogue;
+import pages.CartPage;
+import pages.ProductCatalogue;
 import TestComponent.BaseTest;
 import TestComponent.Retry;
 import org.openqa.selenium.WebElement;

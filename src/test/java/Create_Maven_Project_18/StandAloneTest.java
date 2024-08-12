@@ -1,6 +1,6 @@
 package Create_Maven_Project_18;
 
-import Page_Object_Factory_19.*;
+import pages.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
