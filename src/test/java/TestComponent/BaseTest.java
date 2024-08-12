@@ -1,14 +1,13 @@
 package TestComponent;
 
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.LandingPage;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -26,6 +25,7 @@ import java.util.Properties;
 public class BaseTest {
     public static WebDriver driver;
     public LandingPage landingPage;
+
     private static ThreadLocal<WebDriver> tdriver = new ThreadLocal<>();
 
     public static WebDriver initializeDriver() throws IOException {
@@ -79,6 +79,8 @@ public class BaseTest {
         });
         return data;
     }
+
+
 
     public String getScreenshot(String testCaseName, WebDriver driver) throws IOException {
         TakesScreenshot ts = (TakesScreenshot) driver;

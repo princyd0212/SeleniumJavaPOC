@@ -12,41 +12,41 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class AbstractComponent {
-WebDriver driver;
+    WebDriver driver;
 
     public AbstractComponent(WebDriver driver) {
         this.driver = driver;
     }
 
-    @FindBy(xpath="//button[@routerlink='/dashboard/cart']")
+    @FindBy(xpath = "//button[@routerlink='/dashboard/cart']")
     WebElement cartHeader;
 
-    @FindBy(xpath ="//button[@routerlink='/dashboard/myorders']")
+    @FindBy(xpath = "//button[@routerlink='/dashboard/myorders']")
     WebElement OrdersButton;
 
-    public void waitForWebElementToAppear(WebElement findBy){
+    public void waitForWebElementToAppear(WebElement findBy) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.visibilityOf(findBy));
     }
 
-    public void waitForElementToAppear(By findBy){
+    public void waitForElementToAppear(By findBy) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.visibilityOfElementLocated(findBy));
     }
 
-    public CartPage goToCartPage(){
+    public CartPage goToCartPage() {
         cartHeader.click();
         CartPage cartPage = new CartPage(driver);
         return cartPage;
     }
 
-    public OrderPage goToOrdersPage(){
+    public OrderPage goToOrdersPage() {
         OrdersButton.click();
         OrderPage OrderPage = new OrderPage(driver);
         return OrderPage;
     }
 
-    public void waitForElementToDisappear(WebElement ele){
+    public void waitForElementToDisappear(WebElement ele) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.invisibilityOf(ele));
     }
