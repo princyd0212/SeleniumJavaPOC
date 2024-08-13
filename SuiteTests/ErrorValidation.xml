@@ -8,17 +8,17 @@
         </run>
     </groups>
     <listeners>
-        <listener class-name="TestComponent.Listeners" />
+        <listener class-name="TestComponents.Listeners" />
     </listeners>
     <test thread-count="5" name="Submit Order Test">
         <classes>
-            <class name="Create_Maven_Project_18.SubmitOrderTest">
+            <class name="tests.SubmitOrderTest">
             </class>
         </classes>
     </test>
     <test thread-count="5" name="Error Validation Message">
         <classes>
-            <class name="Create_Maven_Project_18.ErrorValidationsTest" />
+            <class name="tests.ErrorValidationsTest" />
         </classes>
     </test>
 </suite>
