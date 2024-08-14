@@ -1,13 +1,12 @@
 package com.sam.selenium.tests;
 
 import com.sam.selenium.pageObjects.*;
-import pageObjects.*;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-import com.sam.selenium.TestComponents.BaseTest;
+import com.sam.selenium.base.BaseTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 

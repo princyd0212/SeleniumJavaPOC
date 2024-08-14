@@ -9,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.List;
 
 public class OrderPage extends AbstractComponent {
-    WebDriver driver;
+    private WebDriver driver;
 
     @FindBy(css=".totalRow button")
     WebElement checkoutEle;

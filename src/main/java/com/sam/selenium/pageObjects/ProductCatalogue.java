@@ -10,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.List;
 
 public class ProductCatalogue extends AbstractComponent {
-    WebDriver driver;
+    private WebDriver driver;
 
     public ProductCatalogue(WebDriver driver) {
         super(driver);

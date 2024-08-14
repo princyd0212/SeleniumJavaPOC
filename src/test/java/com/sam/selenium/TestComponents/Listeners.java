@@ -3,11 +3,12 @@ package com.sam.selenium.TestComponents;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
+import com.sam.selenium.base.BaseTest;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-import com.sam.selenium.resources.ExtentReporterNG;
+import com.sam.selenium.utils.ExtentReporterNG;
 
 import java.io.IOException;
 

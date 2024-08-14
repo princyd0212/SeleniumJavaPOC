@@ -1,5 +1,6 @@
 package com.sam.selenium.TestComponents;
 
+import com.sam.selenium.retry.Retry;
 import org.testng.IAnnotationTransformer;
 import org.testng.annotations.ITestAnnotation;
 

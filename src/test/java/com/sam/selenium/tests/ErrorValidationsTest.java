@@ -1,7 +1,7 @@
 package com.sam.selenium.tests;
 
-import com.sam.selenium.TestComponents.BaseTest;
-import com.sam.selenium.TestComponents.Retry;
+import com.sam.selenium.base.BaseTest;
+import com.sam.selenium.retry.Retry;
 import com.sam.selenium.pageObjects.CartPage;
 import com.sam.selenium.pageObjects.ProductCatalogue;
 import org.openqa.selenium.WebElement;

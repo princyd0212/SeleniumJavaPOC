@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class LandingPage extends AbstractComponent {
-    WebDriver driver;
+    private WebDriver driver;
 
     public LandingPage(WebDriver driver){
         super(driver);

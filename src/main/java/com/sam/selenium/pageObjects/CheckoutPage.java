@@ -9,7 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class CheckoutPage extends AbstractComponent {
-    WebDriver driver;
+    private WebDriver driver;
 
     public CheckoutPage(WebDriver driver) {
         super(driver);

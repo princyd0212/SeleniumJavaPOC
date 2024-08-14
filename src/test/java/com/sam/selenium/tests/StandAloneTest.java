@@ -1,7 +1,6 @@
 package com.sam.selenium.tests;
 
 import com.sam.selenium.pageObjects.*;
-import pageObjects.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
