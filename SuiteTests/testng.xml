@@ -2,16 +2,16 @@
         <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Suite">
 <listeners>
-    <listener class-name="TestComponents.Listeners"/>
+    <listener class-name="com.sam.selenium.TestComponents.Listeners"/>
 </listeners>
 <test  name="Submit Order Test">
     <classes>
-        <class name="tests.SubmitOrderTest"/>
+        <class name="com.sam.selenium.tests.SubmitOrderTest"/>
     </classes>
 </test> <!-- Test -->
 <test  name="Error Validations Test">
     <classes>
-        <class name="tests.ErrorValidationsTest"/>
+        <class name="com.sam.selenium.tests.ErrorValidationsTest"/>
     </classes>
 </test> <!-- Test -->
 </suite> <!-- Suite -->

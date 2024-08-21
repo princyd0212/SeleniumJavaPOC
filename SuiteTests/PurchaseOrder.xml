@@ -3,13 +3,13 @@
 <suite name="All Test Suite">
     <test thread-count="5" name="Submit Order Test">
         <classes>
-            <class name="tests.SubmitOrderTest">
+            <class name="com.sam.selenium.tests.SubmitOrderTest">
             </class>
         </classes>
     </test>
     <test thread-count="5" name="Error Validation Message">
         <classes>
-            <class name="tests.ErrorValidationsTest" />
+            <class name="com.sam.selenium.tests.ErrorValidationsTest" />
         </classes>
     </test>
 </suite>
