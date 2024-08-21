@@ -1,7 +1,6 @@
 package com.sam.selenium.tests;
 
 import com.sam.selenium.base.BaseTest;
-import com.sam.selenium.retry.Retry;
 import com.sam.selenium.pageObjects.CartPage;
 import com.sam.selenium.pageObjects.ProductCatalogue;
 import org.openqa.selenium.WebElement;
@@ -13,7 +12,7 @@ import java.util.List;
 
 public class ErrorValidationsTest extends BaseTest {
 
-    @Test(groups = {"ErrorHandling"}, retryAnalyzer = Retry.class)
+    @Test(groups = {"ErrorHandling"})
 
     public void LoginErrorValidation() throws IOException {
         landingPage.LoginApplication("tadmin1@admin.com", "Admin@1123");

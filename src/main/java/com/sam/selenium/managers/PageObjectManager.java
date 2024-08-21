@@ -3,6 +3,8 @@ package com.sam.selenium.managers;
 import com.sam.selenium.pageObjects.*;
 import org.openqa.selenium.WebDriver;
 
+import java.io.IOException;
+
 public class PageObjectManager {
     private WebDriver driver;
 
@@ -18,7 +20,7 @@ public class PageObjectManager {
     }
 
     // Singleton pattern for LandingPage
-    public LandingPage getLandingPage(){
+    public LandingPage getLandingPage() throws IOException {
         if(landingPage == null){
             landingPage =new LandingPage(driver);
         }

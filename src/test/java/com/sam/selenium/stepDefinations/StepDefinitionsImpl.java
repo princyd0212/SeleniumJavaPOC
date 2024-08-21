@@ -1,6 +1,6 @@
 package com.sam.selenium.stepDefinations;
 
-import com.sam.selenium.base.PropertyFileReader;
+import com.sam.selenium.utils.PropertyFileReader;
 import com.sam.selenium.base.BaseTest;
 import com.sam.selenium.managers.PageObjectManager;
 import com.sam.selenium.pageObjects.*;

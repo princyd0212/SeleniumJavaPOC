@@ -1,27 +1,27 @@
 package com.sam.selenium.tests;
 
 import com.sam.selenium.pageObjects.*;
+import com.sam.selenium.retry.Retry;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import com.sam.selenium.base.BaseTest;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class SubmitOrderTest extends BaseTest{
 //    String productName = "ZARA COAT 3";
-    @Test(dataProvider = "getData", groups = {"PurchaseOrder"})
-    public void submitOrder(HashMap<String, String> input) throws IOException {
+    //Add Test = dataProvider = "getData",
+    @Test(groups = {"PurchaseOrder"}, retryAnalyzer = Retry.class)
+    public void submitOrder() throws IOException {
 
-        ProductCatalogue ProductCatalogue = landingPage.LoginApplication(input.get("email"), input.get("password"));
+        ProductCatalogue ProductCatalogue = landingPage.LoginApplication("tadmin@admin.com", "Admin@123");
 
         List<WebElement> Products = ProductCatalogue.getProductList();
-        ProductCatalogue.addProductToCart(input.get("product"));
+        ProductCatalogue.addProductToCart("ZARA COAT 3");
         CartPage cartPage = ProductCatalogue.goToCartPage();
 
-        Boolean match = cartPage.VerifyProductDisplay(input.get("product"));
+        Boolean match = cartPage.VerifyProductDisplay("ZARA COAT 3");
         Assert.assertTrue(match);
         CheckoutPage checkoutPage = cartPage.goToCheckout();
         checkoutPage.selectCountry("india");
@@ -31,19 +31,19 @@ public class SubmitOrderTest extends BaseTest{
     }
 
 
-    @Test(dataProvider = "getData",dependsOnMethods = {"submitOrder"})
-    public void OrderHistoryTest(HashMap<String, String> input){
-        ProductCatalogue ProductCatalogue = landingPage.LoginApplication(input.get("email"), input.get("password"));
+    @Test(dependsOnMethods = {"submitOrder"}, retryAnalyzer = Retry.class)
+    public void OrderHistoryTest(){
+        ProductCatalogue ProductCatalogue = landingPage.LoginApplication("tadmin@admin.com", "Admin@123");
         OrderPage orderPage = ProductCatalogue.goToOrdersPage();
-        Assert.assertTrue(orderPage.VerifyOrderDisplay(input.get("product")));
+        Assert.assertTrue(orderPage.VerifyOrderDisplay("ZARA COAT 3"));
     }
 
-    @DataProvider
-    public Object[][] getData() throws IOException {
-
-        List<HashMap<String,String>> data = getJsonDataToMap(System.getProperty("user.dir")+"\\src\\test\\java\\Data\\PurchaseOrder.json");
-        return new Object[][] { {data.get(0)},{data.get(1)} };
-    }
+//    @DataProvider
+//    public Object[][] getData() throws IOException {
+//
+//        List<HashMap<String,String>> data = getJsonDataToMap(System.getProperty("user.dir")+"\\src\\test\\java\\Data\\PurchaseOrder.json");
+//        return new Object[][] { {data.get(0)},{data.get(1)} };
+//    }
 }
 
 //@DataProvider
