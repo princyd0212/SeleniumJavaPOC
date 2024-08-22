@@ -42,23 +42,23 @@ public class StepDefinitionsImpl extends BaseTest {
     }
 
     @Given("^Logged in with username (.+) and password (.+)$")
-    public void Logged_in_with_username_and_password(String emailKey, String passwordKey) {
+    public void Logged_in_with_username_and_password(String emailKey, String passwordKey) throws IOException {
         String email = propertyFileReader.getProperty(emailKey);
         String password = propertyFileReader.getProperty(passwordKey);
         landingPage.LoginApplication(email, password);
     }
 
     @When("^I add product (.+) to Cart$")
-    public void I_add_product_to_Cart(String productKey) {
+    public void I_add_product_to_Cart(String productKey) throws IOException {
         System.out.println(propertyFileReader.getProperty(productKey));
         String product = propertyFileReader.getProperty(productKey);
-        productCatalogue = pageObjectManager.gProductCataloguePage();
+        productCatalogue = pageObjectManager.getProductCataloguePage();
         List<WebElement> products = productCatalogue.getProductList();
         productCatalogue.addProductToCart(product);
     }
 
     @And("^Checkout (.+) and submit the order$")
-    public void Checkout_and_submit_the_order(String productKey) {
+    public void Checkout_and_submit_the_order(String productKey) throws IOException {
         String product = propertyFileReader.getProperty(productKey);
 //        CartPage cartPage = productCatalogue.goToCartPage();
         productCatalogue.goToCartPage();
@@ -72,7 +72,7 @@ public class StepDefinitionsImpl extends BaseTest {
     }
 
     @Then("^(.+) message is displayed in ConfirmationPage$")
-    public void message_is_displayed_in_ConfirmationPage(String confirmationMessageKey) {
+    public void message_is_displayed_in_ConfirmationPage(String confirmationMessageKey) throws IOException {
         String confirmationMessage = propertyFileReader.getProperty(confirmationMessageKey);
         confirmationPage = pageObjectManager.getOrdersHistoryPage();
         String confMsg = confirmationPage.getConfirmationMessage();

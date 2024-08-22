@@ -32,7 +32,7 @@ public class SubmitOrderTest extends BaseTest{
 
 
     @Test(dependsOnMethods = {"submitOrder"}, retryAnalyzer = Retry.class)
-    public void OrderHistoryTest(){
+    public void OrderHistoryTest() throws IOException {
         ProductCatalogue ProductCatalogue = landingPage.LoginApplication("tadmin@admin.com", "Admin@123");
         OrderPage orderPage = ProductCatalogue.goToOrdersPage();
         Assert.assertTrue(orderPage.VerifyOrderDisplay("ZARA COAT 3"));

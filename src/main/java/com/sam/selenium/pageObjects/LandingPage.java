@@ -16,7 +16,7 @@ public class LandingPage extends AbstractComponent {
         this.propertyFileReader = new PropertyFileReader(System.getProperty("user.dir") + "\\src\\main\\java\\com\\sam\\selenium\\utils\\Xpath.properties");
     }
 
-    public ProductCatalogue LoginApplication(String email, String password){
+    public ProductCatalogue LoginApplication(String email, String password) throws IOException {
         driver.findElement(propertyFileReader.getLocator("user_email_selector")).sendKeys(email);
         driver.findElement(propertyFileReader.getLocator("user_password_selector")).sendKeys(password);
         driver.findElement(propertyFileReader.getLocator("login_button_selector")).click();
