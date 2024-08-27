@@ -50,6 +50,4 @@ public class ProductCatalogue extends AbstractComponent {
         waitForElementToAppear(propertyFileReader.getLocator("productCatalogue.toastMessage"));
         waitForElementToDisappear(propertyFileReader.getLocator("productCatalogue.spinner"));
     }
-
-
 }

@@ -34,7 +34,7 @@ public class CartPage extends AbstractComponent {
     }
 
     public CheckoutPage goToCheckout() throws IOException {
-        driver.findElement(propertyFileReader.getLocator("cartPage.checkoutButton")).click();
+        clickElement(propertyFileReader.getLocator("cartPage.checkoutButton"));
         return new CheckoutPage(driver);
     }
 }

@@ -17,14 +17,18 @@ public class LandingPage extends AbstractComponent {
     }
 
     public ProductCatalogue LoginApplication(String email, String password) throws IOException {
-        driver.findElement(propertyFileReader.getLocator("user_email_selector")).sendKeys(email);
-        driver.findElement(propertyFileReader.getLocator("user_password_selector")).sendKeys(password);
-        driver.findElement(propertyFileReader.getLocator("login_button_selector")).click();
+        enterText(propertyFileReader.getLocator("user_email_selector"), email);
+        enterText(propertyFileReader.getLocator("user_password_selector"), password);
+        clickElement(propertyFileReader.getLocator("login_button_selector"));
+//        driver.findElement(propertyFileReader.getLocator("user_email_selector")).sendKeys(email);
+//        driver.findElement(propertyFileReader.getLocator("user_password_selector")).sendKeys(password);
+//        driver.findElement(propertyFileReader.getLocator("login_button_selector")).click();
         ProductCatalogue ProductCatalogue = new ProductCatalogue(driver);
         return ProductCatalogue;
     }
     public String getErrorMessage(){
-        waitForWebElementToAppear(driver.findElement(propertyFileReader.getLocator("error_message_selector")));
+        waitForElementVisible(propertyFileReader.getLocator("error_message_selector"), 5);
+//        waitForWebElementToAppear(driver.findElement(propertyFileReader.getLocator("error_message_selector")));
         return driver.findElement(propertyFileReader.getLocator("error_message_selector")).getText();
     }
 

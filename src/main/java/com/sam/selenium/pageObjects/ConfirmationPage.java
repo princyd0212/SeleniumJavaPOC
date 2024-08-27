@@ -18,15 +18,13 @@ public class ConfirmationPage extends AbstractComponent {
         this.driver = driver;
 //        PageFactory.initElements(driver, this);
         this.propertyFileReader = new PropertyFileReader(System.getProperty("user.dir") + "\\src\\main\\java\\com\\sam\\selenium\\utils\\Xpath.properties");
-
     }
 
 //    @FindBy(css=".hero-primary")
 //    WebElement confirmationMessage;
 
     public String getConfirmationMessage(){
-
-        return driver.findElement(propertyFileReader.getLocator("ConfirmationPage.getConfiMsg")).getText();
+        return getElementText(propertyFileReader.getLocator("ConfirmationPage.getConfiMsg"));
     }
 
 }

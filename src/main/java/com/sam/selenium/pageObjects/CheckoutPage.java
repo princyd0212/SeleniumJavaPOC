@@ -38,11 +38,11 @@ public class CheckoutPage extends AbstractComponent {
         Actions a = new Actions(driver);
         a.sendKeys(driver.findElement(propertyFileReader.getLocator("checkoutPage.country")), countryName).build().perform();
         waitForElementToAppear(propertyFileReader.getLocator("checkoutPage.results"));
-        driver.findElement(propertyFileReader.getLocator("checkoutPage.selectAnyCountry")).click();
+        clickElement(propertyFileReader.getLocator("checkoutPage.selectAnyCountry"));
     }
 
     public ConfirmationPage submitOrder() throws IOException {
-        driver.findElement(propertyFileReader.getLocator("checkoutPage.submitButton")).click();
+        clickElement(propertyFileReader.getLocator("checkoutPage.submitButton"));
         return new ConfirmationPage(driver);
     }
 }
