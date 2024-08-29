@@ -11,6 +11,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class StepDefinitionsImpl extends BaseTest {
     public CartPage cartPage;
     public CheckoutPage checkoutPage;
     public OrderPage orderPage;
+
     public StepDefinitionsImpl() throws IOException {
         propertyFileReader = new PropertyFileReader(System.getProperty("user.dir") + "\\src\\test\\java\\resources\\config\\testdata.properties");
     }
