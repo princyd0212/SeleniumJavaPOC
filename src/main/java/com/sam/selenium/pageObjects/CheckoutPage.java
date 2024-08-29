@@ -45,4 +45,6 @@ public class CheckoutPage extends AbstractComponent {
         clickElement(propertyFileReader.getLocator("checkoutPage.submitButton"));
         return new ConfirmationPage(driver);
     }
+
+
 }

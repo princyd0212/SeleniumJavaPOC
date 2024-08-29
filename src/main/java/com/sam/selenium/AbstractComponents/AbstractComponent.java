@@ -46,10 +46,7 @@ public class AbstractComponent extends CommonMethod {
 //    }
 
 
-    public void waitForElementVisible(By locator, int timeoutInSeconds) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-    }
+
 
 
     public void waitForWebElementToAppear(WebElement findBy) {
@@ -62,17 +59,9 @@ public class AbstractComponent extends CommonMethod {
         wait.until(ExpectedConditions.visibilityOfElementLocated(findBy));
     }
 
-    public CartPage goToCartPage() throws IOException {
-        driver.findElement(propertyFileReader.getLocator("AbstractComponent.cartHeader")).click();
-        CartPage cartPage = new CartPage(driver);
-        return cartPage;
-    }
 
-    public OrderPage goToOrdersPage() throws IOException {
-        driver.findElement(propertyFileReader.getLocator("AbstractComponent.OrdersButton")).click();
-        OrderPage OrderPage = new OrderPage(driver);
-        return OrderPage;
-    }
+
+
 
     public void waitForElementToDisappear(By findBy){
         WebDriverWait waitForElementDisappear = new WebDriverWait(driver, Duration.ofSeconds(10));

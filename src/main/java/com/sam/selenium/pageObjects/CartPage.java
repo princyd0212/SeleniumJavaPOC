@@ -37,4 +37,6 @@ public class CartPage extends AbstractComponent {
         clickElement(propertyFileReader.getLocator("cartPage.checkoutButton"));
         return new CheckoutPage(driver);
     }
+
+
 }

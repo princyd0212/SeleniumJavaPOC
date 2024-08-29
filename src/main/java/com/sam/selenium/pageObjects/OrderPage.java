@@ -4,15 +4,13 @@ import com.sam.selenium.AbstractComponents.AbstractComponent;
 import com.sam.selenium.utils.PropertyFileReader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 import java.io.IOException;
 import java.util.List;
 
 public class OrderPage extends AbstractComponent {
-    private WebDriver driver;
-    private PropertyFileReader propertyFileReader;
+    private final WebDriver driver;
+    private final PropertyFileReader propertyFileReader;
 
 //    @FindBy(css=".totalRow button")
 //    WebElement checkoutEle;
@@ -34,6 +32,8 @@ public class OrderPage extends AbstractComponent {
         Boolean match = products.stream().anyMatch(product -> product.getText().equalsIgnoreCase(productName));
         return match;
     }
+
+
 
 
 }

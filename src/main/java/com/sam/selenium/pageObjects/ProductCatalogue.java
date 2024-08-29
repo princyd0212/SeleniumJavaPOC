@@ -50,4 +50,16 @@ public class ProductCatalogue extends AbstractComponent {
         waitForElementToAppear(propertyFileReader.getLocator("productCatalogue.toastMessage"));
         waitForElementToDisappear(propertyFileReader.getLocator("productCatalogue.spinner"));
     }
+
+    public CartPage goToCartPage() throws IOException {
+        driver.findElement(propertyFileReader.getLocator("AbstractComponent.cartHeader")).click();
+        CartPage cartPage = new CartPage(driver);
+        return cartPage;
+    }
+
+    public OrderPage goToOrdersPage() throws IOException {
+        driver.findElement(propertyFileReader.getLocator("AbstractComponent.OrdersButton")).click();
+        OrderPage OrderPage = new OrderPage(driver);
+        return OrderPage;
+    }
 }
