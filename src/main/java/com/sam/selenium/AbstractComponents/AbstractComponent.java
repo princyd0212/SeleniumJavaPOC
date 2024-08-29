@@ -1,8 +1,6 @@
 package com.sam.selenium.AbstractComponents;
 
 import com.sam.selenium.CommonMethods.CommonMethod;
-import com.sam.selenium.pageObjects.CartPage;
-import com.sam.selenium.pageObjects.OrderPage;
 import com.sam.selenium.utils.PropertyFileReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 
 import java.io.IOException;
 
-public class PageObjectManager {
+public class PageObjectManager{
     private WebDriver driver;
 
     private LandingPage landingPage;
