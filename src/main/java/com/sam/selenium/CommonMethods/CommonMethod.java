@@ -1,6 +1,7 @@
 package com.sam.selenium.CommonMethods;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -18,6 +19,18 @@ public class CommonMethod {
 
     public CommonMethod(WebDriver driver) {
         this.driver = driver;
+    }
+
+    public static String generateRandomString(int length) {
+        return RandomStringUtils.randomAlphabetic(length);
+    }
+
+    public static String generateRandomEmail() {
+        return generateRandomString(10) + "@test.com";
+    }
+
+    public static String generateRandomNumber(int length) {
+        return RandomStringUtils.randomNumeric(length);
     }
 
     public void clickElement(By locator) {
@@ -74,7 +87,6 @@ public class CommonMethod {
     }
 
 
-
     public boolean isElementPresent(By locator) {
         try {
             driver.findElement(locator);
@@ -83,7 +95,6 @@ public class CommonMethod {
             return false;
         }
     }
-
 
 
     public String getElementText(By locator) {
@@ -196,10 +207,6 @@ public class CommonMethod {
         WebElement element = driver.findElement(locator);
         actions.moveToElement(element).perform();
     }
-
-
-
-
 
 
 }
