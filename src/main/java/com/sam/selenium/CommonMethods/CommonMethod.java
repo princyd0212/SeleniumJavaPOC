@@ -31,6 +31,9 @@ public class CommonMethod {
         element.sendKeys(text);
     }
 
+
+
+
     public void clearTextField(By locator) {
         WebElement element = driver.findElement(locator);
         element.clear();
