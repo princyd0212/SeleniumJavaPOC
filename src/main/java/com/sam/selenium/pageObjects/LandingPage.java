@@ -17,7 +17,6 @@ public class LandingPage extends AbstractComponent {
     }
 
     public ProductCatalogue LoginApplication(String email, String password) throws IOException {
-        System.out.println("Test");
         enterText(propertyFileReader.getLocator("user_email_selector"), email);
         enterText(propertyFileReader.getLocator("user_password_selector"), password);
         clickElement(propertyFileReader.getLocator("login_button_selector"));
