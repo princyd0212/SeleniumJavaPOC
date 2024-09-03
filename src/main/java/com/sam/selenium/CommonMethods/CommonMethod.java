@@ -45,8 +45,6 @@ public class CommonMethod {
     }
 
 
-
-
     public void clearTextField(By locator) {
         WebElement element = driver.findElement(locator);
         element.clear();
