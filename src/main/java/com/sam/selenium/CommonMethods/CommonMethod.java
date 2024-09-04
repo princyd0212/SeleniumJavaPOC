@@ -1,8 +1,5 @@
 package com.sam.selenium.CommonMethods;
 
-import com.sam.selenium.DataHelper.ReadCSVData;
-import com.sam.selenium.DataHelper.ReadExcelData;
-import io.cucumber.java.Before;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -15,7 +12,6 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class CommonMethod {
     WebDriver driver;
@@ -33,26 +29,6 @@ public class CommonMethod {
         WebElement element = driver.findElement(locator);
         element.clear();
         element.sendKeys(text);
-    }
-    public static List<Map<String, String>> testData;
-    public void ExcelTestData() throws IOException {
-        // Load data from the Excel file
-        String filePath = "src\\test\\java\\com\\sam\\selenium\\Files\\testdata.xlsx";
-        testData = ReadExcelData.readExcelData(filePath, "Sheet1");
-
-        for (Map<String, String> data : testData) {
-            System.out.println(data);
-        }
-    }
-    public static List<Map<String,String>> testDatacsv;
-
-    public void CSVTestData() throws IOException {
-        String filePathcsv = "src\\test\\java\\com\\sam\\selenium\\Files\\testdatacsv.csv";
-        testDatacsv = ReadCSVData.readCSVData(filePathcsv);
-
-        for (Map<String, String> csvdata : testDatacsv) {
-            System.out.println(csvdata);
-        }
     }
 
     public void clearTextField(By locator) {
