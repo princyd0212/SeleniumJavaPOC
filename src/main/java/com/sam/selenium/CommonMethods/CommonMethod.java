@@ -1,7 +1,9 @@
 package com.sam.selenium.CommonMethods;
 
+import com.sam.selenium.DataHelper.ReadCSVData;
+import com.sam.selenium.DataHelper.ReadExcelData;
+import io.cucumber.java.Before;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -13,24 +15,13 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CommonMethod {
     WebDriver driver;
 
     public CommonMethod(WebDriver driver) {
         this.driver = driver;
-    }
-
-    public static String generateRandomString(int length) {
-        return RandomStringUtils.randomAlphabetic(length);
-    }
-
-    public static String generateRandomEmail() {
-        return generateRandomString(10) + "@test.com";
-    }
-
-    public static String generateRandomNumber(int length) {
-        return RandomStringUtils.randomNumeric(length);
     }
 
     public void clickElement(By locator) {
@@ -43,7 +34,26 @@ public class CommonMethod {
         element.clear();
         element.sendKeys(text);
     }
+    public static List<Map<String, String>> testData;
+    public void ExcelTestData() throws IOException {
+        // Load data from the Excel file
+        String filePath = "src\\test\\java\\com\\sam\\selenium\\Files\\testdata.xlsx";
+        testData = ReadExcelData.readExcelData(filePath, "Sheet1");
 
+        for (Map<String, String> data : testData) {
+            System.out.println(data);
+        }
+    }
+    public static List<Map<String,String>> testDatacsv;
+
+    public void CSVTestData() throws IOException {
+        String filePathcsv = "src\\test\\java\\com\\sam\\selenium\\Files\\testdatacsv.csv";
+        testDatacsv = ReadCSVData.readCSVData(filePathcsv);
+
+        for (Map<String, String> csvdata : testDatacsv) {
+            System.out.println(csvdata);
+        }
+    }
 
     public void clearTextField(By locator) {
         WebElement element = driver.findElement(locator);
@@ -85,6 +95,7 @@ public class CommonMethod {
     }
 
 
+
     public boolean isElementPresent(By locator) {
         try {
             driver.findElement(locator);
@@ -93,6 +104,7 @@ public class CommonMethod {
             return false;
         }
     }
+
 
 
     public String getElementText(By locator) {
@@ -205,6 +217,10 @@ public class CommonMethod {
         WebElement element = driver.findElement(locator);
         actions.moveToElement(element).perform();
     }
+
+
+
+
 
 
 }
