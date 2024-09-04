@@ -1,5 +1,6 @@
 package com.sam.selenium.stepDefinations;
 
+import com.sam.selenium.utils.ExcelReader;
 import com.sam.selenium.utils.PropertyFileReader;
 import com.sam.selenium.base.BaseTest;
 import com.sam.selenium.managers.PageObjectManager;
@@ -18,16 +19,18 @@ import java.util.List;
 public class StepDefinitionsImpl extends BaseTest {
 
     private PageObjectManager pageObjectManager;
-    private final PropertyFileReader propertyFileReader;
+//    private final PropertyFileReader propertyFileReader;
     public LandingPage landingPage;
     public ProductCatalogue productCatalogue;
     public ConfirmationPage confirmationPage;
     public CartPage cartPage;
     public CheckoutPage checkoutPage;
     public OrderPage orderPage;
+    private ExcelReader excelReader;
 
     public StepDefinitionsImpl() throws IOException {
-        propertyFileReader = new PropertyFileReader(System.getProperty("user.dir") + "\\src\\test\\java\\resources\\config\\testdata.properties");
+//        propertyFileReader = new PropertyFileReader(System.getProperty("user.dir") + "\\src\\test\\java\\resources\\config\\testdata.properties");
+        String excelFilePath = System.getProperty("user.dir") + "\\src\\test\\java\\resources\\config\\TestData.xlsx";
     }
 
     @Before
@@ -45,15 +48,17 @@ public class StepDefinitionsImpl extends BaseTest {
 
     @Given("^Logged in with username (.+) and password (.+)$")
     public void Logged_in_with_username_and_password(String emailKey, String passwordKey) throws IOException {
-        String email = propertyFileReader.getProperty(emailKey);
-        String password = propertyFileReader.getProperty(passwordKey);
+        String email = excelReader.getCellData(emailKey);
+        String password = excelReader.getCellData(passwordKey);
+//        String email = propertyFileReader.getProperty(emailKey);
+//        String password = propertyFileReader.getProperty(passwordKey);
         landingPage.LoginApplication(email, password);
     }
 
     @When("^I add product (.+) to Cart$")
     public void I_add_product_to_Cart(String productKey) throws IOException {
-        System.out.println(propertyFileReader.getProperty(productKey));
-        String product = propertyFileReader.getProperty(productKey);
+        String product = excelReader.getCellData(productKey);
+//        String product = propertyFileReader.getProperty(productKey);
         productCatalogue = pageObjectManager.getProductCataloguePage();
         List<WebElement> products = productCatalogue.getProductList();
         productCatalogue.addProductToCart(product);
@@ -61,8 +66,8 @@ public class StepDefinitionsImpl extends BaseTest {
 
     @And("^Checkout (.+) and submit the order$")
     public void Checkout_and_submit_the_order(String productKey) throws IOException {
-        String product = propertyFileReader.getProperty(productKey);
-//        CartPage cartPage = productCatalogue.goToCartPage();
+        String product = excelReader.getCellData(productKey);
+//        String product = propertyFileReader.getProperty(productKey);
         productCatalogue.goToCartPage();
         cartPage = pageObjectManager.getCartPage();
         Boolean match = cartPage.VerifyProductDisplay(product);
@@ -75,7 +80,8 @@ public class StepDefinitionsImpl extends BaseTest {
 
     @Then("^(.+) message is displayed in ConfirmationPage$")
     public void message_is_displayed_in_ConfirmationPage(String confirmationMessageKey) throws IOException {
-        String confirmationMessage = propertyFileReader.getProperty(confirmationMessageKey);
+        String confirmationMessage = excelReader.getCellData(confirmationMessageKey);
+//        String confirmationMessage = propertyFileReader.getProperty(confirmationMessageKey);
         confirmationPage = pageObjectManager.getOrdersHistoryPage();
         String confMsg = confirmationPage.getConfirmationMessage();
         Assert.assertTrue(confMsg.equalsIgnoreCase(confirmationMessage));
@@ -84,7 +90,8 @@ public class StepDefinitionsImpl extends BaseTest {
 
     @Then("^(.+) message is displayed$")
     public void message_is_displayed(String errorMessageKey) {
-        String errorMessage = propertyFileReader.getProperty(errorMessageKey);
+        String errorMessage = excelReader.getCellData(errorMessageKey);
+//        String errorMessage = propertyFileReader.getProperty(errorMessageKey);
         Assert.assertEquals(errorMessage, landingPage.getErrorMessage());
         driver.close();
     }
