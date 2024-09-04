@@ -14,9 +14,6 @@ import java.util.Map;
 
 public class Hooks extends BaseTest {
 
-    public static List<Map<String, String>> testData;
-    public static List<Map<String,String>> testDatacsv;
-
     @After
     public void takeScreenshotOnFailure(Scenario scenario) {
         if (scenario.isFailed()) {
