@@ -1,7 +1,6 @@
 package com.sam.selenium.stepDefinations;
 
 import com.sam.selenium.utils.ExcelReader;
-import com.sam.selenium.utils.PropertyFileReader;
 import com.sam.selenium.base.BaseTest;
 import com.sam.selenium.managers.PageObjectManager;
 import com.sam.selenium.pageObjects.*;
@@ -31,6 +30,7 @@ public class StepDefinitionsImpl extends BaseTest {
     public StepDefinitionsImpl() throws IOException {
 //        propertyFileReader = new PropertyFileReader(System.getProperty("user.dir") + "\\src\\test\\java\\resources\\config\\testdata.properties");
         String excelFilePath = System.getProperty("user.dir") + "\\src\\test\\java\\resources\\config\\TestData.xlsx";
+        excelReader = new ExcelReader(excelFilePath);
     }
 
     @Before
