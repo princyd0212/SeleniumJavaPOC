@@ -12,7 +12,6 @@ import java.io.IOException;
 
 public class Hooks extends BaseTest {
 
-
     @After
     public void takeScreenshotOnFailure(Scenario scenario) {
         if (scenario.isFailed()) {
