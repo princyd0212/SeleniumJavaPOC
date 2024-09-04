@@ -38,5 +38,4 @@ public class CartPage extends AbstractComponent {
         return new CheckoutPage(driver);
     }
 
-
 }

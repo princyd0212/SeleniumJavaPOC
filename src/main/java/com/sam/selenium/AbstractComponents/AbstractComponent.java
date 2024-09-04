@@ -57,10 +57,6 @@ public class AbstractComponent extends CommonMethod {
         wait.until(ExpectedConditions.visibilityOfElementLocated(findBy));
     }
 
-
-
-
-
     public void waitForElementToDisappear(By findBy){
         WebDriverWait waitForElementDisappear = new WebDriverWait(driver, Duration.ofSeconds(10));
         waitForElementDisappear.until(ExpectedConditions.invisibilityOfElementLocated(findBy));
