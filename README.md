@@ -21,7 +21,7 @@ Automation frameworks need to be scalable, reusable, and efficient across variou
 
 ## 4. Requirements
 
-## Software
+### Software
 - **Java (JDK)**: Java Development Kit.
 - **IDE**: IntelliJ IDEA or any Java-supported IDE.
 - **Maven**: Dependency management.
