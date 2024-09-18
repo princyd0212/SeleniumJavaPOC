@@ -76,28 +76,29 @@ ________________________________________
    •	IAnnotationTransformer dynamically modifies test annotations at runtime, useful for altering parameters and test logic without hard-coding.
 ________________________________________
 ## 8. CI/CD Integration
-   8.1 Jenkins Setup
-1.	Install Jenkins and ensure it has access to Maven and JDK.
-2.	Configure Source Code Management using Git.
-3.	Define Build Triggers for periodic builds or Git-based triggers.
-4.	Use Maven goals like clean test -P{profile} -D{browserName} in build steps.
-5.	Configure Post-build Actions:
-      o	Publish Allure test results.
-      o	Optional: Add email notifications for test summaries.
+        8.1 Jenkins Setup
+            1.	Install Jenkins and ensure it has access to Maven and JDK.
+            2.	Configure Source Code Management using Git.
+            3.	Define Build Triggers for periodic builds or Git-based triggers.
+            4.	Use Maven goals like clean test -P{profile} -D{browserName} in build steps.
+            5.	Configure Post-build Actions:
+                o	Publish Allure test results.
+                o	Optional: Add email notifications for test summaries.
 ________________________________________
-## 9. Test Execution
-   9.1 Running Tests
-   •	Execute tests using TestNG XML files, enabling parallel execution across browsers.
-   •	Use Maven profiles to select browser-specific test execution (-Pchrome, -Pfirefox, etc.).
-   9.2 Allure Report Generation
-   •	After test execution, an allure-results folder will be generated.
-   •	Use the command allure serve allure-results to generate and view the report.
+##  9. Test Execution
+        9.1 Running Tests
+            •	Execute tests using TestNG XML files, enabling parallel execution across browsers.
+            •	Use Maven profiles to select browser-specific test execution (-Pchrome, -Pfirefox, etc.).
+        9.2 Allure Report Generation
+            •	After test execution, an allure-results folder will be generated.
+            •	Use the command allure serve allure-results to generate and view the report.
 ________________________________________
 ## 10. Test Reporting
-    10.1 Allure Reports
-    •	Overall Report: Provides a summary of the test execution.
-    •	Detailed Report: Offers in-depth details of each test case, including screenshots, logs, and exceptions.
-    •	Failure Report: Highlights failed tests with reasons and logs.
+
+        10.1 Allure Reports
+            •	Overall Report: Provides a summary of the test execution.
+            •	Detailed Report: Offers in-depth details of each test case, including screenshots, logs, and exceptions.
+            •	Failure Report: Highlights failed tests with reasons and logs.
 ________________________________________
 ## 11. Hooks and Listeners
     11.1 Cucumber Hooks
