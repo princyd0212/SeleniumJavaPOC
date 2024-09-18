@@ -2,22 +2,21 @@ package com.sam.selenium.tests;
 
 import com.sam.selenium.pageObjects.*;
 import com.sam.selenium.retry.Retry;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import java.io.IOException;
-import java.util.List;
+
 import com.sam.selenium.base.BaseTest;
 import org.testng.annotations.Test;
 
-public class SubmitOrderTest extends BaseTest{
-//    String productName = "ZARA COAT 3";
+public class SubmitOrderTest extends BaseTest {
+    //    String productName = "ZARA COAT 3";
     //Add Test = dataProvider = "getData",
     @Test(groups = {"PurchaseOrder"}, retryAnalyzer = Retry.class)
     public void submitOrder() throws IOException {
 
         ProductCatalogue ProductCatalogue = landingPage.LoginApplication("tadmin@admin.com", "Admin@123");
 
-        List<WebElement> Products = ProductCatalogue.getProductList();
+//        List<WebElement> Products = ProductCatalogue.getProductList();
         ProductCatalogue.addProductToCart("ZARA COAT 3");
         CartPage cartPage = ProductCatalogue.goToCartPage();
 
@@ -37,14 +36,14 @@ public class SubmitOrderTest extends BaseTest{
         OrderPage orderPage = ProductCatalogue.goToOrdersPage();
         Assert.assertTrue(orderPage.VerifyOrderDisplay("ZARA COAT 3"));
     }
-
+}
 //    @DataProvider
 //    public Object[][] getData() throws IOException {
 //
 //        List<HashMap<String,String>> data = getJsonDataToMap(System.getProperty("user.dir")+"\\src\\test\\java\\Data\\PurchaseOrder.json");
 //        return new Object[][] { {data.get(0)},{data.get(1)} };
 //    }
-}
+
 
 //@DataProvider
 //public Object[][] getData(){
