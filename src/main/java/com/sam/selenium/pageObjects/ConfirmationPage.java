@@ -9,7 +9,8 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.io.IOException;
 
-public class ConfirmationPage extends AbstractComponent {
+public class
+ConfirmationPage extends AbstractComponent {
     private WebDriver driver;
     private PropertyFileReader propertyFileReader;
 

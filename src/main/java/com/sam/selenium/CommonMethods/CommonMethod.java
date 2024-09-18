@@ -82,7 +82,6 @@ public class CommonMethod {
     }
 
 
-
     public String getElementText(By locator) {
         WebElement element = driver.findElement(locator);
         return element.getText();
@@ -193,10 +192,5 @@ public class CommonMethod {
         WebElement element = driver.findElement(locator);
         actions.moveToElement(element).perform();
     }
-
-
-
-
-
 
 }
