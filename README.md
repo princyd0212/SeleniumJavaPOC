@@ -1,4 +1,3 @@
-```markdown
 # Selenium-Java Automation Testing Framework
 
 ## 1. Overview
@@ -22,7 +21,7 @@ Automation frameworks need to be scalable, reusable, and efficient across variou
 
 ## 4. Requirements
 
-### Software
+## Software
 - **Java (JDK)**: Java Development Kit.
 - **IDE**: IntelliJ IDEA or any Java-supported IDE.
 - **Maven**: Dependency management.
@@ -90,20 +89,20 @@ Selenium-Java-Automation-Framework/
 
 ## 7. Key Components
 
-### 7.1 ThreadSafe WebDriver Management
+## 7.1 ThreadSafe WebDriver Management
 - ThreadLocal is used to ensure WebDriver instances are thread-safe during parallel test execution.
 
-### 7.2 Retry Mechanism
+## 7.2 Retry Mechanism
 - Implemented via IRetryAnalyzer to retry failed tests, improving overall stability.
 
-### 7.3 Dynamic Test Configuration
+## 7.3 Dynamic Test Configuration
 - IAnnotationTransformer dynamically modifies test annotations at runtime, useful for altering parameters and test logic without hard-coding.
 
 ---
 
 ## 8. CI/CD Integration
 
-### 8.1 Jenkins Setup
+## 8.1 Jenkins Setup
 1. Install Jenkins and ensure it has access to Maven and JDK.
 2. Configure Source Code Management using Git.
 3. Define Build Triggers for periodic builds or Git-based triggers.
@@ -116,11 +115,11 @@ Selenium-Java-Automation-Framework/
 
 ## 9. Test Execution
 
-### 9.1 Running Tests
+## 9.1 Running Tests
 - Execute tests using TestNG XML files, enabling parallel execution across browsers.
 - Use Maven profiles to select browser-specific test execution (`-Pchrome`, `-Pfirefox`, etc.).
 
-### 9.2 Allure Report Generation
+## 9.2 Allure Report Generation
 - After test execution, an `allure-results` folder will be generated.
 - Use the command `allure serve allure-results` to generate and view the report.
 
@@ -128,7 +127,7 @@ Selenium-Java-Automation-Framework/
 
 ## 10. Test Reporting
 
-### 10.1 Allure Reports
+## 10.1 Allure Reports
 - **Overall Report**: Provides a summary of the test execution.
 - **Detailed Report**: Offers in-depth details of each test case, including screenshots, logs, and exceptions.
 - **Failure Report**: Highlights failed tests with reasons and logs.
@@ -137,23 +136,23 @@ Selenium-Java-Automation-Framework/
 
 ## 11. Hooks and Listeners
 
-### 11.1 Cucumber Hooks
+## 11.1 Cucumber Hooks
 - **Before Hook**: Runs before each test scenario, useful for setup.
 - **After Hook**: Runs after each test scenario, useful for cleanup and teardown.
 
-### 11.2 TestNG Listeners
+## 11.2 TestNG Listeners
 - **ITestListener**: Custom listeners to handle test events, such as logging or reporting.
 
 ---
 
 ## 12. Running Commands
 
-### 12.1 Running All Tests
+## 12.1 Running All Tests
 ```sh
 mvn clean test
 ```
 
-### 12.2 Running Tests with Specific Profiles
+## 12.2 Running Tests with Specific Profiles
 - **Chrome**:
 ```sh
 mvn clean test -Pchrome
@@ -167,12 +166,12 @@ mvn clean test -Pfirefox
 mvn clean test -Pedge
 ```
 
-### 12.3 Running Tests in Parallel
+## 12.3 Running Tests in Parallel
 ```sh
 mvn clean test
 ```
 
-### 12.4 Running Tests with Specific Browser Configurations
+## 12.4 Running Tests with Specific Browser Configurations
 - **Chrome with a Specific Profile**:
 ```sh
 mvn clean test -Pchrome -DbrowserName=chrome
@@ -182,7 +181,7 @@ mvn clean test -Pchrome -DbrowserName=chrome
 mvn clean test -Pfirefox -DbrowserName=firefox
 ```
 
-### 12.5 Allure Report Commands
+## 12.5 Allure Report Commands
 - **Generate Report**:
 ```sh
 mvn allure:report
@@ -192,15 +191,7 @@ mvn allure:report
 allure serve allure-results
 ```
 
-### 12.6 Running Tests on Jenkins
+## 12.6 Running Tests on Jenkins
 ```sh
 clean test -P{profile} -D{browserName}
 ```
-```
-
-### Instructions for Use
-1. Create a new file named `README.md` in your repository.
-2. Copy and paste the formatted Markdown content into this file.
-3. Commit and push your changes.
-
-This format will render well on GitHub, making your documentation clear and structured!
