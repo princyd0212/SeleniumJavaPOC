@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class LandingPage extends AbstractComponent {
     private WebDriver driver;
-    private PropertyFileReader propertyFileReader;
+     PropertyFileReader propertyFileReader;
 
     public LandingPage(WebDriver driver) throws IOException {
         super(driver);
