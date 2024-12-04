@@ -8,10 +8,10 @@
     <classes>
         <class name="com.sam.selenium.tests.SubmitOrderTest"/>
     </classes>
-</test> <!-- Test -->
+</test>
 <test  name="Error Validations Test">
     <classes>
         <class name="com.sam.selenium.tests.ErrorValidationsTest"/>
     </classes>
-</test> <!-- Test -->
-</suite> <!-- Suite -->
+</test>
+</suite>

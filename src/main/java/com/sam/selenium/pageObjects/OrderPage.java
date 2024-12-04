@@ -12,17 +12,10 @@ public class OrderPage extends AbstractComponent {
     private final WebDriver driver;
     private final PropertyFileReader propertyFileReader;
 
-//    @FindBy(css=".totalRow button")
-//    WebElement checkoutEle;
-//
-//    @FindBy(css="tr td:nth-child(3)")
-//    private List<WebElement> ProductsNames;
-
 
     public OrderPage(WebDriver driver) throws IOException {
         super(driver);
         this.driver = driver;
-//        PageFactory.initElements(driver, this);
         this.propertyFileReader = new PropertyFileReader(System.getProperty("user.dir") + "\\src\\main\\java\\com\\sam\\selenium\\utils\\Xpath.properties");
 
     }

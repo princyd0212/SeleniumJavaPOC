@@ -21,31 +21,6 @@ public class AbstractComponent extends CommonMethod {
         this.propertyFileReader = new PropertyFileReader(System.getProperty("user.dir") + "\\src\\main\\java\\com\\sam\\selenium\\utils\\Xpath.properties");
     }
 
-//    @FindBy(xpath = "//button[@routerlink='/dashboard/cart']")
-//    WebElement cartHeader;
-
-//    @FindBy(xpath = "//button[@routerlink='/dashboard/myorders']")
-//    WebElement OrdersButton;
-
-//    public void clickElement(By locator) {
-//        WebElement element = driver.findElement(locator);
-//        element.click();
-//    }
-
-//    public void enterText(By locator, String text) {
-//        WebElement element = driver.findElement(locator);
-//        element.clear();
-//        element.sendKeys(text);
-//    }
-//
-//    public String getElementText(By locator) {
-//        WebElement element = driver.findElement(locator);
-//        return element.getText();
-//    }
-
-
-
-
 
     public void waitForWebElementToAppear(WebElement findBy) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));

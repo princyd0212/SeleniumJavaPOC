@@ -16,7 +16,6 @@ public class SubmitOrderTest extends BaseTest {
 
         ProductCatalogue ProductCatalogue = landingPage.LoginApplication("tadmin@admin.com", "Admin@123");
 
-//        List<WebElement> Products = ProductCatalogue.getProductList();
         ProductCatalogue.addProductToCart("ZARA COAT 3");
         CartPage cartPage = ProductCatalogue.goToCartPage();
 
@@ -37,24 +36,3 @@ public class SubmitOrderTest extends BaseTest {
         Assert.assertTrue(orderPage.VerifyOrderDisplay("ZARA COAT 3"));
     }
 }
-//    @DataProvider
-//    public Object[][] getData() throws IOException {
-//
-//        List<HashMap<String,String>> data = getJsonDataToMap(System.getProperty("user.dir")+"\\src\\test\\java\\Data\\PurchaseOrder.json");
-//        return new Object[][] { {data.get(0)},{data.get(1)} };
-//    }
-
-
-//@DataProvider
-//public Object[][] getData(){
-//    return new Object[][] { {"tadmin@admin.com","Admin@123", "ZARA COAT 3"},{"tadmin@admin.com", "Admin@123", "ADIDAS ORIGINAL"} };
-//}
-//        HashMap <String, String> map = new HashMap<String, String>();
-//        map.put("email" , "tadmin@admin.com");
-//        map.put("password" , "Admin@123");
-//        map.put("product" , "ZARA COAT 3");
-//
-//        HashMap <String, String> map1 = new HashMap<String, String>();
-//        map1.put("email" , "tadmin@admin.com");
-//        map1.put("password" , "Admin@123");
-//        map1.put("product" , "ADIDAS ORIGINAL");

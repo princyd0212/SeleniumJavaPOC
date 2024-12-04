@@ -31,7 +31,7 @@ public class BaseTest {
         FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + "\\src\\main\\java\\com\\sam\\selenium\\utils\\GlobleData.properties");
         prop.load(fis);
         String browserName = System.getProperty("browser") != null ? System.getProperty("browser") : prop.getProperty("browser");
-//        prop.getProperty("browser");
+
         if (browserName.contains("chrome")) {
             ChromeOptions option = new ChromeOptions();
             WebDriverManager.chromedriver().setup();
@@ -71,7 +71,6 @@ public class BaseTest {
     public List<HashMap<String, String>> getJsonDataToMap(String filePath) throws IOException {
         String jsonContent = FileUtils.readFileToString(new File(filePath), StandardCharsets.UTF_8);
 
-        //String to hasmap
         ObjectMapper mapper = new ObjectMapper();
         List<HashMap<String, String>> data = mapper.readValue(jsonContent, new TypeReference<List<HashMap<String, String>>>() {
         });

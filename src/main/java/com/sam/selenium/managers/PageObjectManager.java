@@ -19,7 +19,6 @@ public class PageObjectManager{
         this.driver = driver;
     }
 
-    // Singleton pattern for LandingPage
     public LandingPage getLandingPage() throws IOException {
         if(landingPage == null){
             landingPage =new LandingPage(driver);
@@ -27,7 +26,6 @@ public class PageObjectManager{
         return landingPage;
     }
 
-    // Singleton pattern for ProductCatalogue
     public ProductCatalogue getProductCataloguePage() throws IOException {
         if(ProductCatalogue == null){
             ProductCatalogue =new ProductCatalogue(driver);
@@ -35,7 +33,6 @@ public class PageObjectManager{
         return ProductCatalogue;
     }
 
-    // Singleton pattern for CartPage
     public CartPage getCartPage() throws IOException {
         if(cartPage == null){
             cartPage =new CartPage(driver);
@@ -43,7 +40,6 @@ public class PageObjectManager{
         return cartPage;
     }
 
-    // Singleton pattern for PlaceOrder
     public CheckoutPage CheckoutPage() throws IOException {
         if(CheckoutPage == null){
             CheckoutPage =new CheckoutPage(driver);
@@ -51,7 +47,6 @@ public class PageObjectManager{
         return CheckoutPage;
     }
 
-    // Singleton pattern for ConfirmationPage
     public ConfirmationPage getOrdersHistoryPage() throws IOException {
         if(ConfirmationPage == null){
             ConfirmationPage =new ConfirmationPage(driver);
@@ -59,7 +54,6 @@ public class PageObjectManager{
         return ConfirmationPage;
     }
 
-    // Singleton pattern for ConfirmationPage
     public OrderPage OrderPagePage() throws IOException {
         if(OrderPage == null){
             OrderPage =new OrderPage(driver);
