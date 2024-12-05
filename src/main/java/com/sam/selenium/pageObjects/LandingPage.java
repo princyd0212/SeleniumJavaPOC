@@ -12,7 +12,6 @@ public class LandingPage extends AbstractComponent {
     public LandingPage(WebDriver driver) throws IOException {
         super(driver);
         this.driver = driver;
-//        PageFactory.initElements(driver, this);
         this.propertyFileReader = new PropertyFileReader(System.getProperty("user.dir") + "\\src\\main\\java\\com\\sam\\selenium\\utils\\Xpath.properties");
     }
 
@@ -20,9 +19,6 @@ public class LandingPage extends AbstractComponent {
         enterText(propertyFileReader.getLocator("user_email_selector"), email);
         enterText(propertyFileReader.getLocator("user_password_selector"), password);
         clickElement(propertyFileReader.getLocator("login_button_selector"));
-//        driver.findElement(propertyFileReader.getLocator("user_email_selector")).sendKeys(email);
-//        driver.findElement(propertyFileReader.getLocator("user_password_selector")).sendKeys(password);
-//        driver.findElement(propertyFileReader.getLocator("login_button_selector")).click();
         ProductCatalogue ProductCatalogue = new ProductCatalogue(driver);
         return ProductCatalogue;
     }

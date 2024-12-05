@@ -9,4 +9,4 @@
             <class name="com.sam.selenium.runners.TestNGTestRunner"/>
         </classes>
     </test>
-</suite> <!-- Suite -->
+</suite>

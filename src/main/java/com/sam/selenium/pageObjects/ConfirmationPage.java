@@ -17,12 +17,9 @@ ConfirmationPage extends AbstractComponent {
     public ConfirmationPage(WebDriver driver) throws IOException {
         super(driver);
         this.driver = driver;
-//        PageFactory.initElements(driver, this);
         this.propertyFileReader = new PropertyFileReader(System.getProperty("user.dir") + "\\src\\main\\java\\com\\sam\\selenium\\utils\\Xpath.properties");
     }
 
-//    @FindBy(css=".hero-primary")
-//    WebElement confirmationMessage;
 
     public String getConfirmationMessage(){
         return getElementText(propertyFileReader.getLocator("ConfirmationPage.getConfiMsg"));
