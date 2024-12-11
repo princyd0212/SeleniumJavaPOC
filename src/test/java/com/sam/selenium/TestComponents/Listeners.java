@@ -4,6 +4,7 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.sam.selenium.base.BaseTest;
+import com.sam.selenium.tests.EmailUtility;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
@@ -56,6 +57,12 @@ public class Listeners extends BaseTest implements ITestListener {
         }
         extentTest.get().addScreenCaptureFromPath(filePath, testMethodName);
         //screenshot
+        String testName = result.getName();
+        String failureMessage = result.getThrowable().getMessage();
+
+        // Send an email notification
+        EmailUtility.sendEmail("samir.p@tridhyatech.com", "Test Failure: " + testName, failureMessage);
+
     }
 
     /**
