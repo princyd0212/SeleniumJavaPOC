@@ -33,7 +33,7 @@ public class ApiTests {
                 "  ],\n" +
                 "  \"status\": \"available\"\n" +
                 "}";
-        Response response = ApiHelper.sendPostRequest("https://petstore.swagger.io/v2/pet", body);
+        Response response = ApiHelper.sendPostRequest("https://petstore.swagger.io/v2/pett", body);
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertTrue(response.getBody().asString().contains("id"));
     }
