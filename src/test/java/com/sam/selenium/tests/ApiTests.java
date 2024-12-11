@@ -37,4 +37,39 @@ public class ApiTests {
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertTrue(response.getBody().asString().contains("id"));
     }
+
+    @Test
+    public void validatePutRequest() {
+        String body = "{\n" +
+                "  \"id\": 4546,\n" +
+                "  \"category\": {\n" +
+                "    \"id\": 4546,\n" +
+                "    \"name\": \"Lucky Updated\"\n" +
+                "  },\n" +
+                "  \"name\": \"doggie\",\n" +
+                "  \"photoUrls\": [\n" +
+                "    \"updated-string\"\n" +
+                "  ],\n" +
+                "  \"tags\": [\n" +
+                "    {\n" +
+                "      \"id\": 4546,\n" +
+                "      \"name\": \"Lucky Updated\"\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"status\": \"sold\"\n" +
+                "}";
+
+        Response response = ApiHelper.sendPutRequest("https://petstore.swagger.io/v2/pet", body);
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertTrue(response.getBody().asString().contains("Lucky Updated"));
+    }
+
+    @Test
+    public void validateDeleteRequest() {
+        Response response = ApiHelper.sendDeleteRequest("https://petstore.swagger.io/v2/pet/4546");
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertTrue(response.getBody().asString().contains("Pet deleted successfully"));
+    }
+
+
 }
