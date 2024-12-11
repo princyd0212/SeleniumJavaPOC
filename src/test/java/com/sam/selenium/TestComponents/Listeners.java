@@ -61,7 +61,7 @@ public class Listeners extends BaseTest implements ITestListener {
         String failureMessage = result.getThrowable().getMessage();
 
         // Send an email notification
-        EmailUtility.sendEmail("samir.p@tridhyatech.com", "Test Faiilure: " + testName, failureMessage);
+        EmailUtility.sendEmail("samir.p@tridhyatech.com", "Test Failure: " + testName, failureMessage);
 
     }
 
