@@ -1,5 +1,6 @@
 package com.sam.selenium.base;
 
+import com.sam.selenium.utils.ScreenRecorderUtil;
 import org.openqa.selenium.*;
 import com.sam.selenium.pageObjects.LandingPage;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -23,6 +24,7 @@ import java.util.Properties;
 public class BaseTest {
     public static WebDriver driver;
     public LandingPage landingPage;
+    public ScreenRecorderUtil screenRecordingUtil;
 
     private static ThreadLocal<WebDriver> tdriver = new ThreadLocal<>();
 
@@ -57,6 +59,11 @@ public class BaseTest {
     @BeforeMethod(alwaysRun = true)
     public LandingPage lunchApplication() throws IOException {
         initializeDriver();
+        try {
+            screenRecordingUtil.startRecording(this.getClass().getSimpleName());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         landingPage = new LandingPage(driver);
         landingPage.GoTo();
         return landingPage;
@@ -65,6 +72,11 @@ public class BaseTest {
     @AfterMethod
     public void closeDriver() {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        try {
+            screenRecordingUtil.stopRecording();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         driver.quit();
     }
 
