@@ -5,6 +5,7 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.sam.selenium.base.BaseTest;
 import com.sam.selenium.tests.EmailUtility;
+
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
@@ -51,18 +52,29 @@ public class Listeners extends BaseTest implements ITestListener {
 
         String filePath = null;
         try {
-            filePath = getScreenshot(testMethodName, driver);
+            filePath = getScreenshot(testMethodName, driver); // Capture screenshot
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         extentTest.get().addScreenCaptureFromPath(filePath, testMethodName);
-        //screenshot
+
+        // Gather test failure details
         String testName = result.getName();
         String failureMessage = result.getThrowable().getMessage();
+        String testCaseId = "TC_" + testMethodName;  // Example: Use the test method name as the test case ID
+        String testCaseName = testMethodName; // Example: The test name itself can be used
+        String failedStep = "Step description not available"; // Provide detailed failure steps if possible
+        String expectedResult = "Expected result description"; // Provide the expected result
+        String actualResult = "Actual result description"; // Provide the actual result from the failure
+        String errorMessage = failureMessage;  // Pass the error message
+        String testSteps = "Test steps description";  // Provide the test steps executed
+        String severity = "Critical";  // You can categorize the severity if needed
+        String testExecutionDate = "2024-12-12"; // Example: Test execution date
+        String testEnvironment = "Chrome 94, Windows 10"; // Example: Test environment
 
-        // Send an email notification
-        EmailUtility.sendEmail("kartavya.b@tridhyatech.com", "Test Failure: " + testName, failureMessage);
-
+        // Send the email with failure details and screenshot
+        EmailUtility.sendEmail("kartavya.b@tridhyatech.com", testCaseId, testCaseName, failedStep, expectedResult,
+                actualResult, errorMessage, testSteps, severity, testExecutionDate, testEnvironment, filePath);
     }
 
     /**
