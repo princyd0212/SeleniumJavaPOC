@@ -17,6 +17,7 @@ import static org.monte.media.VideoFormatKeys.QualityKey;
 public class ScreenRecorderUtil extends ScreenRecorder {
     public static ScreenRecorder screenRecorder;
     public static String recordingDir = "./test-recordings/"; //It will create under project folder
+    private static String currentRecordingFileName; // To store the current test recording file name
 
     public ScreenRecorderUtil(GraphicsConfiguration cfg, Rectangle captureArea, Format fileFormat, Format screenFormat, Format mouseFormat, Format audioFormat, File movieFolder) throws IOException, AWTException {
         super(cfg, captureArea, fileFormat, screenFormat, mouseFormat, audioFormat, movieFolder);
@@ -27,6 +28,12 @@ public class ScreenRecorderUtil extends ScreenRecorder {
             if (!file.exists()) {
                 file.mkdir();
             }
+
+            // File name for the current scenario
+            currentRecordingFileName = methodName.replaceAll("[^a-zA-Z0-9]", "_") + ".avi";
+            // Define the full path for the recording file
+            File recordingFile = new File(recordingDir + currentRecordingFileName);
+
             GraphicsConfiguration gc = GraphicsEnvironment
                     .getLocalGraphicsEnvironment()
                     .getDefaultScreenDevice()
@@ -42,7 +49,7 @@ public class ScreenRecorderUtil extends ScreenRecorder {
                             KeyFrameIntervalKey, 15 * 60),
                     new Format(MediaTypeKey, MediaType.VIDEO, EncodingKey, "black",
                             FrameRateKey, Rational.valueOf(30)),
-                    null, file);
+                    null, recordingFile);
             screenRecorder.start();
             System.out.println("Recording started for test: " + methodName);
         } catch (Exception e){
@@ -55,6 +62,7 @@ public class ScreenRecorderUtil extends ScreenRecorder {
             if (screenRecorder != null) {
                 screenRecorder.stop();
                 System.out.println("Recording stopped.");
+                VideoConversionBatch.videoConvertor(currentRecordingFileName); // for converting the video
             }
         } catch (Exception e) {
             System.err.println("Error stopping recording: " + e.getMessage());
