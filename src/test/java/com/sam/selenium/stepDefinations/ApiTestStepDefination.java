@@ -26,14 +26,14 @@ public class ApiTestStepDefination extends BaseTest {
     @Given("I have the API data for {string}")
     public void iHaveTheAPIDataFor(String requestType) {
         System.out.println("Fetching data for request type: " + requestType);
-        JsonNode requestData = jsonFileReader.getNode(requestType); // Use instance method
+        JsonNode requestData = JsonFileReader.getNode(requestType); // Use instance method
         Assert.assertNotNull(requestData, "Request data not found in JSON file!");
     }
 
     @When("I send a POST request")
     public void iSendAPOSTRequest() {
         System.out.println("Sending POST request");
-        JsonNode postNode = jsonFileReader.getNode("post");
+        JsonNode postNode = JsonFileReader.getNode("post");
         String url = postNode.path("url").asText();
         String body = postNode.path("body").toString();
         System.out.println("Request Body: " + body);
@@ -43,7 +43,7 @@ public class ApiTestStepDefination extends BaseTest {
     @When("I send a GET request")
     public void iSendAGETRequest() {
         System.out.println("Sending GET request");
-        JsonNode postNode = jsonFileReader.getNode("get");
+        JsonNode postNode = JsonFileReader.getNode("get");
         String url = postNode.path("url").asText();
         response = ApiHelper.sendGetRequest(url);
     }
@@ -51,7 +51,7 @@ public class ApiTestStepDefination extends BaseTest {
     @When("I send a PUT request")
     public void iSendAPUTRequest() {
         System.out.println("Sending PUT request");
-        JsonNode postNode = jsonFileReader.getNode("put");
+        JsonNode postNode = JsonFileReader.getNode("put");
         String url = postNode.path("url").asText();
         String body = postNode.path("body").toString();
         System.out.println("URL: " + url);
@@ -64,7 +64,7 @@ public class ApiTestStepDefination extends BaseTest {
     @When("I send a DELETE request")
     public void iSendADELETERequest() {
         System.out.println("Sending DELETE request");
-        JsonNode postNode = jsonFileReader.getNode("delete");
+        JsonNode postNode = JsonFileReader.getNode("delete");
         String url = postNode.path("url").asText();
         response = ApiHelper.sendDeleteRequest(url);
     }
@@ -72,16 +72,15 @@ public class ApiTestStepDefination extends BaseTest {
     @Then("the response status code should be from JSON")
     public void theResponseStatusCodeShouldBeFromJson() {
         String requestType = ApiHelper.getRequestType(); // E.g., "post", "get", etc.
-        JsonNode requestData = jsonFileReader.getNode(requestType);
+        JsonNode requestData = JsonFileReader.getNode(requestType);
         int expectedStatusCode = requestData.path("response").path("statusCode").asInt();
         Assert.assertEquals(response.getStatusCode(), expectedStatusCode, "Status code mismatch!");
-
     }
 
     @Then("the response body should contain from JSON")
     public void theResponseBodyShouldContainFromJson() {
         String requestType = ApiHelper.getRequestType(); // This should be a method to identify the request type (POST, GET, etc.)
-        JsonNode requestData = jsonFileReader.getNode(requestType);
+        JsonNode requestData = JsonFileReader.getNode(requestType);
         String assertValue = requestData.path("response").path("assertValue").asText();
         Assert.assertTrue(response.getBody().asString().contains(assertValue),"Response does not contain the expected value!");
     }

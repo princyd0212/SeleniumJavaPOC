@@ -33,15 +33,20 @@ public class BaseTest {
         String browserName = System.getProperty("browser") != null ? System.getProperty("browser") : prop.getProperty("browser");
 
         if (browserName.contains("chrome")) {
-            ChromeOptions option = new ChromeOptions();
+            ChromeOptions options = new ChromeOptions();
             WebDriverManager.chromedriver().setup();
+
+            // Enable headless mode if "headless" keyword is in browserName
             if (browserName.contains("headless")) {
-                option.addArguments("headless");
+                options.addArguments("--headless");
+                options.addArguments("--disable-gpu");
+                options.addArguments("--window-size=1920,1080"); // Optional for better rendering
             }
-            driver = new ChromeDriver(option);
+
+            driver = new ChromeDriver(options);
             driver.manage().window().setSize(new Dimension(1440, 900));
-        } else if (browserName.equalsIgnoreCase("firefox")) {
-            WebDriver driver = new FirefoxDriver();
+        }  else if (browserName.equalsIgnoreCase("firefox")) {
+            WebDriverManager.firefoxdriver().setup();
             driver = new FirefoxDriver();
         }
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
@@ -56,6 +61,13 @@ public class BaseTest {
 
     @BeforeMethod(alwaysRun = true)
     public LandingPage lunchApplication() throws IOException {
+        // Skip browser launch for API tests
+        String skipBrowser = System.getProperty("skipBrowser");
+        if ("true".equalsIgnoreCase(skipBrowser)) {
+            System.out.println("Skipping browser launch for API tests.");
+            return null;
+        }
+
         initializeDriver();
         landingPage = new LandingPage(driver);
         landingPage.GoTo();
