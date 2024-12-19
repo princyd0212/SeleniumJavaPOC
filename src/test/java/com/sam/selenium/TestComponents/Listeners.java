@@ -58,7 +58,7 @@ public class Listeners extends BaseTest implements ITestListener {
             throw new RuntimeException(e);
         }
         extentTest.get().addScreenCaptureFromPath(filePath, testMethodName);
-
+        sendFailureNotification("Test failed: " + result.getMethod().getMethodName());
         // Gather test failure details
         String testCaseId = "TC_" + testMethodName;
         String testCaseName = result.getMethod().getMethodName();
@@ -82,6 +82,7 @@ public class Listeners extends BaseTest implements ITestListener {
         EmailUtility.sendEmail(recipients, testCaseId, testCaseName, failedStep, expectedResult,
                 actualResult, errorMessage, testSteps, severity, testExecutionDate, testEnvironment, filePath);
     }
+
 
     /**
      * @param result <code>ITestResult</code> containing information about the run test
