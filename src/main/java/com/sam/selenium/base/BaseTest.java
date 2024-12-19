@@ -25,16 +25,12 @@ import java.util.Properties;
 import static com.sam.selenium.utils.ConfigReader.properties;
 
 public class BaseTest {
+    private static ThreadLocal<WebDriver> tdriver = new ThreadLocal<>();
     public static WebDriver driver;
     public LandingPage landingPage;
-    private static ThreadLocal<WebDriver> tdriver = new ThreadLocal<>();
 
     // Initialize Driver
     public static WebDriver initializeDriver() throws IOException {
-       // Properties prop = new Properties();
-        //FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + "/src/main/java/com/sam/selenium/utils/GlobleData.properties");
-        //prop.load(fis);
-
         String browserName = System.getProperty("local_browser") != null ? System.getProperty("local_browser") : properties.getProperty("local_browser");
         String runOn = properties.getProperty("runOn"); // "local" or "browserfarm"
 
@@ -66,16 +62,32 @@ public class BaseTest {
     // Browser Farm Setup
     private static void setUpBrowserFarm() {
         String browserFarm = ConfigReader.getConfig("browserfarm_browser");
+        String farmbrowserName = ConfigReader.getConfig("browserstack.browserName");  // Get the browser name from config
+
         try {
             if (browserFarm.equalsIgnoreCase("browserstack")) {
                 driver = browserfarmmanger.getBrowserStackDriver();
+                if (farmbrowserName.contains("chrome")) {
+                   // ChromeOptions options = new ChromeOptions();
+                    WebDriverManager.chromedriver().setup();
+                   // if (farmbrowserName.contains("headless")) {
+                       // options.addArguments("headless");
+                  //  }
+                   // driver = new ChromeDriver(options);
+                    driver.manage().window().setSize(new Dimension(1440, 900));
+                } else if (farmbrowserName.equalsIgnoreCase("firefox")) {
+                    WebDriverManager.firefoxdriver().setup();
+//driver = new FirefoxDriver();
+                } else {
+                    throw new IllegalArgumentException("Unsupported Farm browser: " + farmbrowserName);
+                }
             } else if (browserFarm.equalsIgnoreCase("aws")) {
                 driver = browserfarmmanger.getAWSDriver();
-            } else if (browserFarm.equalsIgnoreCase("lambdatest")) {
+            } else if (browserFarm.equalsIgnoreCase("lambdaTest")) {
                 driver = browserfarmmanger.getLambdaTestDriver();
             } else if (browserFarm.equalsIgnoreCase("qyrus")) {
                 driver = browserfarmmanger.getQyrusDriver();
-            } else if (browserFarm.equalsIgnoreCase("saucelabs")) {
+            } else if (browserFarm.equalsIgnoreCase("sauceLabs")) {
                 driver = browserfarmmanger.getSauceLabsDriver();
             } else {
                 throw new IllegalArgumentException("Unknown browser farm: " + browserFarm);
@@ -86,8 +98,7 @@ public class BaseTest {
         }
     }
 
-
-    // Get Driver using in failure Screenshort
+    // Get Driver using in failure Screenshot
     public static WebDriver getDriver() {
         return tdriver.get();
     }
@@ -103,7 +114,6 @@ public class BaseTest {
     @AfterMethod
     public void closeDriver() {
         if (driver != null) {
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             driver.quit();
         }
     }
