@@ -1,5 +1,6 @@
 package com.sam.selenium.stepDefinations;
 
+import com.sam.selenium.tests.EmailUtility;
 import com.sam.selenium.base.BaseTest;
 import org.openqa.selenium.WebDriver;
 import io.cucumber.java.After;
@@ -9,6 +10,7 @@ import io.qameta.allure.Allure;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
 
 public class Hooks extends BaseTest {
 
@@ -19,16 +21,35 @@ public class Hooks extends BaseTest {
             if (driver != null) {
                 try {
                     String screenshotPath = getScreenshot(scenario.getName(), driver);
-                    FileInputStream fis = new FileInputStream(screenshotPath);
-                    Allure.addAttachment("Screenshot", new ByteArrayInputStream(fis.readAllBytes()));
-                    fis.close();
+
+                    // Prepare email details
+                    String testCaseId = "TC_" + scenario.getName();
+                    String testCaseName = scenario.getName();
+                    String failedStep = "Step description not available";
+                    String expectedResult = "Expected result description";
+                    String actualResult = "Actual result description";
+                    String errorMessage = scenario.getStatus().toString();
+                    String testSteps = "Steps leading to failure";
+                    String severity = "Critical";
+                    String testExecutionDate = "2024-12-18";
+                    String testEnvironment = "Chrome, Windows 10";
+
+                    // List of recipients
+                    List<String> recipients = List.of(
+                            "kartavya.b@tridhyatech.com",
+                            "kaushalbrahmbhattt@gmail.com.com"
+
+                    );
+
+                    // Send email
+                    EmailUtility.sendEmail(recipients, testCaseId, testCaseName, failedStep, expectedResult,
+                            actualResult, errorMessage, testSteps, severity, testExecutionDate, testEnvironment, screenshotPath);
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
+            driver.quit();
         }
-       driver.quit();
     }
-
-
 }

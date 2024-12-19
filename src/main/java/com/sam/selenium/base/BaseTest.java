@@ -80,11 +80,28 @@ public class BaseTest {
 
 
     public String getScreenshot(String testCaseName, WebDriver driver) throws IOException {
+        // Capture screenshot as a file
         TakesScreenshot ts = (TakesScreenshot) driver;
         File source = ts.getScreenshotAs(OutputType.FILE);
-        String destPath = System.getProperty("user.dir") + "/reports/" + testCaseName + ".png";
+
+        // Define the screenshot folder (reports directory)
+        File reportsDir = new File(System.getProperty("user.dir") + "/reports/");
+
+        // If the reports directory doesn't exist, create it
+        if (!reportsDir.exists()) {
+            reportsDir.mkdirs();  // Create the folder if it doesn't exist
+        }
+
+        // Define the destination path for the screenshot
+        String destPath = reportsDir + "/" + testCaseName + ".png";
         File destination = new File(destPath);
+
+        // Copy the screenshot file to the destination
         FileUtils.copyFile(source, destination);
-        return destPath; // Return the path of the screenshot
+
+        // Return the path where the screenshot is saved
+        return destPath;
     }
+
 }
+

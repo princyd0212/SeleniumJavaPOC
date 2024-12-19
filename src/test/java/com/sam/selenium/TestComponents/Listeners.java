@@ -13,6 +13,7 @@ import org.testng.ITestResult;
 import com.sam.selenium.utils.ExtentReporterNG;
 
 import java.io.IOException;
+import java.util.List;
 
 public class Listeners extends BaseTest implements ITestListener {
     ExtentTest test;
@@ -59,21 +60,26 @@ public class Listeners extends BaseTest implements ITestListener {
         extentTest.get().addScreenCaptureFromPath(filePath, testMethodName);
 
         // Gather test failure details
-        String testName = result.getName();
-        String failureMessage = result.getThrowable().getMessage();
-        String testCaseId = "TC_" + testMethodName;  // Example: Use the test method name as the test case ID
-        String testCaseName = testMethodName; // Example: The test name itself can be used
-        String failedStep = "Step description not available"; // Provide detailed failure steps if possible
-        String expectedResult = "Expected result description"; // Provide the expected result
-        String actualResult = "Actual result description"; // Provide the actual result from the failure
-        String errorMessage = failureMessage;  // Pass the error message
-        String testSteps = "Test steps description";  // Provide the test steps executed
-        String severity = "Critical";  // You can categorize the severity if needed
-        String testExecutionDate = "2024-12-12"; // Example: Test execution date
-        String testEnvironment = "Chrome 94, Windows 10"; // Example: Test environment
+        String testCaseId = "TC_" + testMethodName;
+        String testCaseName = result.getMethod().getMethodName();
+        String failedStep = "Step description not available";
+        String expectedResult = "Expected result description";
+        String actualResult = "Actual result description";
+        String errorMessage = result.getThrowable().getMessage();
+        String testSteps = "Steps leading to failure";
+        String severity = "Critical";
+        String testExecutionDate = "2024-12-18";
+        String testEnvironment = "Chrome, Windows 10";
 
-        // Send the email with failure details and screenshot
-        EmailUtility.sendEmail("kartavya.b@tridhyatech.com", testCaseId, testCaseName, failedStep, expectedResult,
+        // List of recipients
+        List<String> recipients = List.of(
+                "kartavya.b@tridhyatech.com",
+                "kaushalbrahmbhattt@gmail.com"
+
+        );
+
+        // Send email with details and screenshot
+        EmailUtility.sendEmail(recipients, testCaseId, testCaseName, failedStep, expectedResult,
                 actualResult, errorMessage, testSteps, severity, testExecutionDate, testEnvironment, filePath);
     }
 
