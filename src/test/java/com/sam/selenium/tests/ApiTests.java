@@ -115,4 +115,35 @@ public class ApiTests {
         // Assert the status code and assert value in the response body
         Assert.assertEquals(response.getStatusCode(), expectedStatusCode, "Status Code mismatch!");
     }
+    @Test
+    public void testBasicAuth() {
+        String endpoint = "https://api.example.com/resource";
+        String username = "testUser";
+        String password = "testPassword";
+
+        Response response = ApiHelper.getWithBasicAuth(endpoint, username, password);
+        Assert.assertEquals(response.getStatusCode(), 200);
+        System.out.println("Response Body: " + response.getBody().asString());
+    }
+
+    @Test
+    public void testBearerTokenAuth() {
+        String endpoint = "https://api.example.com/resource";
+        String token = "yourAccessToken";
+
+        Response response = ApiHelper.getWithBearerToken(endpoint, token);
+        Assert.assertEquals(response.getStatusCode(), 200);
+        System.out.println("Response Body: " + response.getBody().asString());
+    }
+
+    @Test
+    public void testApiKeyAuth() {
+        String endpoint = "https://api.example.com/resource";
+        String apiKey = "yourApiKey";
+
+        Response response = ApiHelper.getWithApiKey(endpoint, apiKey);
+        Assert.assertEquals(response.getStatusCode(), 200);
+        System.out.println("Response Body: " + response.getBody().asString());
+    }
+
 }

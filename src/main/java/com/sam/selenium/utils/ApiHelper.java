@@ -39,4 +39,28 @@ public class ApiHelper {
         }
         return requestMethod.toLowerCase();
     }
+
+    // Method for Basic Authentication
+    public static Response getWithBasicAuth(String endpoint, String username, String password) {
+        return RestAssured.given()
+                .auth().basic(username, password)
+                .when()
+                .get(endpoint);
+    }
+
+    // Method for Bearer Token Authentication
+    public static Response getWithBearerToken(String endpoint, String token) {
+        return RestAssured.given()
+                .header("Authorization", "Bearer " + token)
+                .when()
+                .get(endpoint);
+    }
+
+    // Method for API Key Authentication
+    public static Response getWithApiKey(String endpoint, String apiKey) {
+        return RestAssured.given()
+                .header("x-api-key", apiKey)
+                .when()
+                .get(endpoint);
+    }
 }

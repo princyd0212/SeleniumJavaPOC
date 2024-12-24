@@ -55,7 +55,7 @@ public class Listeners extends BaseTest implements ITestListener {
             throw new RuntimeException(e);
         }
         extentTest.get().addScreenCaptureFromPath(filePath, testMethodName);
-        //screenshot
+        //screenshot[
 
         sendFailureNotification("Test failed: " + result.getMethod().getMethodName());
 
