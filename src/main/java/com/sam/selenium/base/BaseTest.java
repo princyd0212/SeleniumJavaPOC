@@ -101,7 +101,7 @@ public class BaseTest {
     }
 
     public static void sendFailureNotification(String failureMessage) {
-        String webhookUrl = "https://contcentricpvtltd.webhook.office.com/webhookb2/1e82d6a2-3afe-4834-a55d-891d9d1592c7@92df81cd-dcf2-490a-884c-13b58b3a8ca6/IncomingWebhook/9af277769777440e81775bb19a493a0d/a98cea20-3ca3-474e-9414-4d238c6c92a0/V2eSPAAX8zwb9TWwgiRLYumUBhzr6m179DGJA6PRoyBy41";
+        String webhookUrl = "https://contcentricpvtltd.webhook.office.com/webhookb2/1e82d6a2-3afe-4834-a55d-891d9d1592c7@92df81cd-dcf2-490a-884c-13b58b3a8ca6/IncomingWebhook/582fb0f20f2c485ba11f8dad3d258b8f/a98cea20-3ca3-474e-9414-4d238c6c92a0/V2hZ7Fcn-jza0Xous5ChFQPJEcM6J0LbL4MKlCYSja8Ew1";
         String jsonPayload = String.format(
                 "{ \"text\": \"🚨 Test Failure Alert: %s\" }",
                 failureMessage
