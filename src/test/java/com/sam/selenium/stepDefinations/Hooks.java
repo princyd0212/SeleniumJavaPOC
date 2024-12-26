@@ -19,17 +19,17 @@ public class Hooks extends BaseTest {
 
     @Before
     public void beforeScenario(Scenario scenario){
+        String scenarioName = scenario.getName();
         try {
             if (!isRecordingEnabled()) {
-                System.out.println("Screen recording is disabled. Skipping recording.");
+                System.out.println("Screen recording is disabled for all scenarios. Will record only on failure.");
                 return;
-            } else {
-                String scenarioName = scenario.getName();
-                System.out.println("Scenario failed: " + scenarioName);
-                ScreenRecorderUtil.startRecording(scenarioName);
             }
+                System.out.println("Recording Scenario: " + scenarioName);
+                ScreenRecorderUtil.startRecording(scenarioName);
+
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.err.println("Error starting recording for scenario: " + scenarioName + " - " + e.getMessage());
         }
     }
 
@@ -44,22 +44,38 @@ public class Hooks extends BaseTest {
                     Allure.addAttachment("Screenshot", new ByteArrayInputStream(fis.readAllBytes()));
                     String scenarioName = scenario.getName();
                     System.out.println("Scenario failed: " + scenarioName);
+
+                    if (!isRecordingEnabled()) {
+                        if (scenario.isFailed()) {
+                            System.out.println("Scenario failed: " + scenarioName + ". Starting and stopping recording for failure.");
+                            ScreenRecorderUtil.startRecording(scenarioName); // Start recording for the failed scenario
+                            ScreenRecorderUtil.stopRecording(); // Stop the recording immediately
+                            attachRecordingToAllure(VideoConversionBatch.convertedFileName);
+                        } else {
+                            System.out.println("Scenario passed: " + scenarioName + ". No recording needed.");
+                        }
+                        return;
+                    }
                     Thread.sleep(2000);
                     // Stop the recording after capturing failure context
                     ScreenRecorderUtil.stopRecording();
-                    System.out.println("Recording captured for failed scenario: " + scenarioName);
-                    // Attach recording to Allure report
-                    attachRecordingToAllure(VideoConversionBatch.convertedFileName);
+                    if (scenario.isFailed()) {
+                        System.out.println("Scenario failed: " + scenarioName + ". Attaching recording to Allure report.");
+                        // Attach recording to Allure report
+                        attachRecordingToAllure(VideoConversionBatch.convertedFileName);
+                    } else {
+                        System.out.println("Scenario passed: " + scenarioName + ". No recording will be attached.");
+                    }
                     fis.close();
                 } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
+                } finally {
+                    if (driver != null) {
+                        driver.quit();
+                    }
                 }
             }
-        }  else {
-            System.out.println("Test passed: " + scenario.getName());
-            ScreenRecorderUtil.stopRecording(); // Stop even if passed (no Allure attachment)
         }
-       driver.quit();
     }
 
     private void attachRecordingToAllure(String recordingFilePath) {
@@ -76,13 +92,13 @@ public class Hooks extends BaseTest {
         }
     }
     private static boolean isRecordingEnabled() throws IOException {
-        String flag = new PropertyFileReader(System.getProperty("user.dir")+"//src/test/java/resources/config/testdata.properties").getProperty("screen.recording.enabled");
+        String recordingflag = new PropertyFileReader(System.getProperty("user.dir")+"//src/test/java/resources/config/testdata.properties").getProperty("screen.recording.enabled");
         boolean isheadless = Boolean.parseBoolean(new PropertyFileReader(System.getProperty("user.dir")+"//src/test/java/resources/config/testdata.properties").getProperty("isheadless"));
         if (isheadless) {
             System.out.println("Headless mode detected. Screen recording is disabled.");
             return false;
         }
-        return "ON".equalsIgnoreCase(flag);
+        return "ON".equalsIgnoreCase(recordingflag);
     }
 
 
