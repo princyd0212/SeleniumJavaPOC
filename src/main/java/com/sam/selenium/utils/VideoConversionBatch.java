@@ -3,6 +3,7 @@ package com.sam.selenium.utils;
 import java.io.File;
 
 public class VideoConversionBatch {
+    public static String convertedFileName;
     public static void videoConvertor(String CurrentFileName){
         // Get the path to the directory where the .avi files are located
         String directoryPath = System.getProperty("user.dir") + "/test-recordings/";
@@ -22,7 +23,14 @@ public class VideoConversionBatch {
                     // Construct the input and output file paths
                     String inputFilePath = file.getAbsolutePath();
                     System.out.println("Recording file found:" +inputFilePath);
-                    String outputFilePath = file + file.getName().replace(".avi", ".mp4");
+                    // Correct way to replace the extension .avi with .mp4
+                    // Extract the file name without the extension
+                    String fileNameWithoutExtension = file.getName().replace(".avi", "");
+
+                    // Construct the output file path with the .mp4 extension
+                    String outputFilePath = file.getParent() + "/" + fileNameWithoutExtension + ".mp4";
+
+                    //  String outputFilePath = file + file.getName().replace(".avi", ".mp4");
                     System.out.println("Saved recording path: "+outputFilePath);
 
                     // Convert the AVI to MP4
@@ -32,6 +40,7 @@ public class VideoConversionBatch {
                         throw new RuntimeException(e);
                     }
                     System.out.println("Converted: " + inputFilePath + " to " + outputFilePath);
+                    convertedFileName = outputFilePath;
                     // Optionally, delete the original .avi file after successful conversion
                     boolean deleted = file.delete();
                     if (deleted) {
@@ -46,6 +55,5 @@ public class VideoConversionBatch {
         } else {
             System.out.println("Directory does not exist or is not a directory.");
         }
-
     }
 }

@@ -24,7 +24,6 @@ import java.util.Properties;
 public class BaseTest {
     public static WebDriver driver;
     public LandingPage landingPage;
-    public ScreenRecorderUtil screenRecordingUtil;
 
     private static ThreadLocal<WebDriver> tdriver = new ThreadLocal<>();
 
@@ -59,11 +58,6 @@ public class BaseTest {
     @BeforeMethod(alwaysRun = true)
     public LandingPage lunchApplication() throws IOException {
         initializeDriver();
-        try {
-            screenRecordingUtil.startRecording(this.getClass().getSimpleName());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
         landingPage = new LandingPage(driver);
         landingPage.GoTo();
         return landingPage;
@@ -72,11 +66,6 @@ public class BaseTest {
     @AfterMethod
     public void closeDriver() {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-        try {
-            screenRecordingUtil.stopRecording();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
         driver.quit();
     }
 
@@ -88,8 +77,6 @@ public class BaseTest {
         });
         return data;
     }
-
-
 
     public String getScreenshot(String testCaseName, WebDriver driver) throws IOException {
         TakesScreenshot ts = (TakesScreenshot) driver;
