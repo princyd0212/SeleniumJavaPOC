@@ -1,16 +1,19 @@
 package com.sam.selenium.tests;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.sam.selenium.CommonMethods.APICommonMethod;
 import com.sam.selenium.utils.ApiHelper;
 import com.sam.selenium.utils.JsonFileReader;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
+import java.util.HashMap;
+import java.util.Map;
 import java.io.IOException;
 
-public class ApiTests {
+
+public class ApiTests extends APICommonMethod {
 
     @BeforeClass
     public void setup() throws IOException {
@@ -23,18 +26,28 @@ public class ApiTests {
     public void validatePostRequest() {
         // Get data from the JSON file
         JsonNode postNode = JsonFileReader.getNode("post");
-        String url = postNode.path("url").asText();
+        String apiUrl = postNode.path("url").asText();
         String body = postNode.path("body").toString(); // Convert JSON object to String
         int expectedStatusCode = postNode.path("response").path("statusCode").asInt();
         String assertValue = postNode.path("response").path("assertValue").asText();
+        JsonNode defaultHeadersNode = JsonFileReader.getNode("headers");
+        JsonNode additionalHeadersNode = JsonFileReader.getNode("additional headers");
 
         // Log for debugging
-        System.out.println("URL: " + url);
+        System.out.println("URL: " + apiUrl);
         System.out.println("Request Body: " + body);
         System.out.println("Expected Status Code: " + expectedStatusCode);
 
+        // Merge headers or use default headers if additional headers are not present
+        Map<String, String> headers = additionalHeadersNode != null
+                ? APICommonMethod.mergeHeadersFromJsonNodes(defaultHeadersNode, additionalHeadersNode)
+                : APICommonMethod.jsonNodeToMap(defaultHeadersNode);
+
+        System.out.println("Merged Headers: " + headers);
+
         // Send the POST request
-        Response response = ApiHelper.sendPostRequest(url, body);
+        Response response = APICommonMethod.sendRequest("POST", apiUrl, headers, body);
+//        Response response = ApiHelper.sendPostRequest(apiUrl, body);
 
         // Debugging: Log the actual response status code and body
         System.out.println("Actual Status Code: " + response.getStatusCode());
@@ -49,16 +62,20 @@ public class ApiTests {
     public void validateGetRequest() {
         // Get data from the JSON file
         JsonNode getNode = JsonFileReader.getNode("get");
-        String url = getNode.path("url").asText();
+        String apiUrl = getNode.path("url").asText();
         int expectedStatusCode = getNode.path("response").path("statusCode").asInt();
         String assertValue = getNode.path("response").path("assertValue").asText();
-
+        // Dynamic headers
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Content-Type", "application/json");
+//        headers.put("Authorization", "Bearer your_token_here");
         // Log for debugging
-        System.out.println("URL: " + url);
+        System.out.println("URL: " + apiUrl);
         System.out.println("Expected Status Code: " + expectedStatusCode);
 
-        // Send the GET request
-        Response response = ApiHelper.sendGetRequest(url);
+//        // Send the GET request
+        Response response = APICommonMethod.sendRequest("GET", apiUrl, headers, null);
+//        Response response = ApiHelper.sendGetRequest(url);
 
         // Debugging: Log the actual response status code and body
         System.out.println("Actual Status Code: " + response.getStatusCode());
@@ -73,18 +90,23 @@ public class ApiTests {
     public void validatePutRequest() {
         // Get data from the JSON file
         JsonNode putNode = JsonFileReader.getNode("put");
-        String url = putNode.path("url").asText();
+        String apiUrl = putNode.path("url").asText();
         String body = putNode.path("body").toString(); // Convert JSON object to String
         int expectedStatusCode = putNode.path("response").path("statusCode").asInt();
         String assertValue = putNode.path("response").path("assertValue").asText();
 
         // Log for debugging
-        System.out.println("URL: " + url);
+        System.out.println("URL: " + apiUrl);
         System.out.println("Request Body: " + body);
         System.out.println("Expected Status Code: " + expectedStatusCode);
 
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Content-Type", "application/json");
+//        headers.put("Authorization", "Bearer your_token_here");
+
         // Send the PUT request
-        Response response = ApiHelper.sendPutRequest(url, body);
+        Response response = APICommonMethod.sendRequest("PUT", apiUrl, headers, body);
+//        Response response = ApiHelper.sendPutRequest(apiUrl, body);
 
         // Debugging: Log the actual response status code and body
         System.out.println("Actual Status Code: " + response.getStatusCode());
@@ -99,15 +121,20 @@ public class ApiTests {
     public void validateDeleteRequest() {
         // Get data from the JSON file
         JsonNode deleteNode = JsonFileReader.getNode("delete");
-        String url = deleteNode.path("url").asText();
+        String apiUrl = deleteNode.path("url").asText();
         int expectedStatusCode = deleteNode.path("response").path("statusCode").asInt();
 
         // Log for debugging
-        System.out.println("URL: " + url);
+        System.out.println("URL: " + apiUrl);
         System.out.println("Expected Status Code: " + expectedStatusCode);
 
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Content-Type", "application/json");
+//        headers.put("Authorization", "Bearer your_token_here");
+
         // Send the DELETE request
-        Response response = ApiHelper.sendDeleteRequest(url);
+        Response response = APICommonMethod.sendRequest("DELETE", apiUrl, headers, null);
+//        Response response = ApiHelper.sendDeleteRequest(apiUrl);
 
         // Debugging: Log the actual response status code and body
         System.out.println("Actual Status Code: " + response.getStatusCode());
@@ -145,5 +172,7 @@ public class ApiTests {
         Assert.assertEquals(response.getStatusCode(), 200);
         System.out.println("Response Body: " + response.getBody().asString());
     }
+
+
 
 }
