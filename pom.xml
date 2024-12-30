@@ -86,6 +86,12 @@
             <version>7.18.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.browserstack</groupId>
+            <artifactId>browserstack-local-java</artifactId>
+            <version>1.1.4</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-testng -->
         <dependency>
             <groupId>io.cucumber</groupId>

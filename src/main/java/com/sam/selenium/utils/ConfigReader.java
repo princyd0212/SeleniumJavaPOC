@@ -11,7 +11,7 @@ public class ConfigReader {
         try (FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + "/src/main/java/com/sam/selenium/utils/GlobleData.properties")) {
             properties.load(fis);
         } catch (IOException e) {
-            throw new RuntimeException("Failed to load config.properties file.", e);
+            throw new RuntimeException("Failed to load GlobleData.properties file.", e);
         }
     }
 

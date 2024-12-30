@@ -16,10 +16,10 @@ public class SubmitOrderTest extends BaseTest {
 
         ProductCatalogue ProductCatalogue = landingPage.LoginApplication("tadmin@admin.com", "Admin@123");
 
-        ProductCatalogue.addProductToCart("ZARA COAT 3");
+        ProductCatalogue.addProductToCart("ADIDAS ORIGINAL");
         CartPage cartPage = ProductCatalogue.goToCartPage();
 
-        Boolean match = cartPage.VerifyProductDisplay("ZARA COAT 3");
+        Boolean match = cartPage.VerifyProductDisplay("ADIDAS ORIGINAL");
         Assert.assertTrue(match);
         CheckoutPage checkoutPage = cartPage.goToCheckout();
         checkoutPage.selectCountry("india");
@@ -33,6 +33,6 @@ public class SubmitOrderTest extends BaseTest {
     public void OrderHistoryTest() throws IOException {
         ProductCatalogue ProductCatalogue = landingPage.LoginApplication("tadmin@admin.com", "Admin@123");
         OrderPage orderPage = ProductCatalogue.goToOrdersPage();
-        Assert.assertTrue(orderPage.VerifyOrderDisplay("ZARA COAT 3"));
+        Assert.assertTrue(orderPage.VerifyOrderDisplay("ADIDAS ORIGINAL"));
     }
 }

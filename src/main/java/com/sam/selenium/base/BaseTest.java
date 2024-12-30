@@ -28,11 +28,14 @@ public class BaseTest {
     private static ThreadLocal<WebDriver> tdriver = new ThreadLocal<>();
     public static WebDriver driver;
     public LandingPage landingPage;
+    public static ConfigReader ConfigReader;
 
     // Initialize Driver
     public static WebDriver initializeDriver() throws IOException {
         String browserName = System.getProperty("local_browser") != null ? System.getProperty("local_browser") : properties.getProperty("local_browser");
         String runOn = properties.getProperty("runOn"); // "local" or "browserfarm"
+        String browserFarm = ConfigReader.getConfig("browserfarm_browser");
+        String farmbrowserName = System.getProperty("browserstack.browserName") != null ? System.getProperty("browserstack.browserName") : properties.getProperty("browserstack.browserName");
 
         if (runOn.equalsIgnoreCase("local")) {
             if (browserName.contains("chrome")) {
@@ -49,38 +52,17 @@ public class BaseTest {
             } else {
                 throw new IllegalArgumentException("Unsupported local browser: " + browserName);
             }
-        } else {
-            setUpBrowserFarm();
-        }
-
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.manage().window().maximize();
-        tdriver.set(driver);
-        return driver;
-    }
-
-    // Browser Farm Setup
-    private static void setUpBrowserFarm() {
-        String browserFarm = ConfigReader.getConfig("browserfarm_browser");
-        String farmbrowserName = ConfigReader.getConfig("browserstack.browserName");  // Get the browser name from config
-
-        try {
+        } else if (runOn.equalsIgnoreCase("browserfarm")) {
             if (browserFarm.equalsIgnoreCase("browserstack")) {
                 driver = browserfarmmanger.getBrowserStackDriver();
-                if (farmbrowserName.contains("chrome")) {
-                   // ChromeOptions options = new ChromeOptions();
+               if (farmbrowserName.contains("chrome")) {
                     WebDriverManager.chromedriver().setup();
-                   // if (farmbrowserName.contains("headless")) {
-                       // options.addArguments("headless");
-                  //  }
-                   // driver = new ChromeDriver(options);
                     driver.manage().window().setSize(new Dimension(1440, 900));
                 } else if (farmbrowserName.equalsIgnoreCase("firefox")) {
                     WebDriverManager.firefoxdriver().setup();
-//driver = new FirefoxDriver();
                 } else {
                     throw new IllegalArgumentException("Unsupported Farm browser: " + farmbrowserName);
-                }
+                }// Calls the updated BrowserStack method
             } else if (browserFarm.equalsIgnoreCase("aws")) {
                 driver = browserfarmmanger.getAWSDriver();
             } else if (browserFarm.equalsIgnoreCase("lambdaTest")) {
@@ -92,10 +74,14 @@ public class BaseTest {
             } else {
                 throw new IllegalArgumentException("Unknown browser farm: " + browserFarm);
             }
-        } catch (Exception e) {
-            System.err.println("Error initializing browser farm driver for: " + browserFarm);
-            e.printStackTrace();
+        } else {
+            throw new IllegalArgumentException("Unsupported run environment: " + runOn);
         }
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().window().maximize();
+        tdriver.set(driver);
+        return driver;
     }
 
     // Get Driver using in failure Screenshot
