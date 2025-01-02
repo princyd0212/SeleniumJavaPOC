@@ -6,10 +6,12 @@ import org.openqa.selenium.WebDriver;
 import io.cucumber.java.After;
 import io.cucumber.java.Scenario;
 import io.qameta.allure.Allure;
+import utils.ConfigReader;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 public class Hooks extends BaseTest {
@@ -35,14 +37,12 @@ public class Hooks extends BaseTest {
                     String testEnvironment = "Chrome, Windows 10";
 
                     // List of recipients
-                    List<String> recipients = List.of(
-                            "kartavya.b@tridhyatech.com",
-                            "kaushalbrahmbhattt@gmail.com.com"
-
-                    );
+                    // Get recipients from the config file
+                    String recipientsString = ConfigReader.getProperty("email.recipients");
+                    List<String> recipients = Arrays.asList(recipientsString.split(","));
 
                     // Send email
-                    EmailUtility.sendEmail(recipients, testCaseId, testCaseName, failedStep, expectedResult,
+                    EmailUtility.sendEmail(recipients,testCaseId, testCaseName, failedStep, expectedResult,
                             actualResult, errorMessage, testSteps, severity, testExecutionDate, testEnvironment, screenshotPath);
 
                 } catch (IOException e) {
