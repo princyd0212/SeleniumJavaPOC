@@ -12,6 +12,8 @@ import com.sam.selenium.utils.ExtentReporterNG;
 
 import java.io.IOException;
 
+import static com.sam.selenium.CommonMethods.CommonMethod.sendFailureNotification;
+
 public class Listeners extends BaseTest implements ITestListener {
     ExtentTest test;
     ExtentReports extent = ExtentReporterNG.getReportObject();

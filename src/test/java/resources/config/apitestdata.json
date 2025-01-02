@@ -59,10 +59,19 @@
     }
   },
   "headers": {
-    "Content-Type": "application/json",
-    "Authorization": "Bearer your_token_here"
+    "Content-Type": "application/json"
   },
   "additional headers": {
     "Cache-Control": "no-cache"
+  },
+  "login": {
+    "url": "https://reqres.in/api/login",
+    "credentials": {
+      "email": "eve.holt@reqres.in",
+      "password": "cityslicka"
+    },
+    "response": {
+      "statusCode": 200
+    }
   }
 }

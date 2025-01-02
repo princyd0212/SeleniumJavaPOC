@@ -38,12 +38,21 @@ public class ApiTests extends APICommonMethod {
         System.out.println("Request Body: " + body);
         System.out.println("Expected Status Code: " + expectedStatusCode);
 
+        // Fetch authentication token
+        String authUrl = JsonFileReader.getNode("login").path("url").asText();
+        Map<String, String> credentials = APICommonMethod.jsonNodeToMap(JsonFileReader.getNode("login").path("credentials"));
+        String authToken = getAuthToken(authUrl, credentials);
+        System.out.println("Auth Token: " + authToken);
+
         // Merge headers or use default headers if additional headers are not present
         Map<String, String> headers = additionalHeadersNode != null
                 ? APICommonMethod.mergeHeadersFromJsonNodes(defaultHeadersNode, additionalHeadersNode)
                 : APICommonMethod.jsonNodeToMap(defaultHeadersNode);
 
+        headers.put("Authorization", "Bearer " + authToken);
+
         System.out.println("Merged Headers: " + headers);
+
 
         // Send the POST request
         Response response = APICommonMethod.sendRequest("POST", apiUrl, headers, body);
