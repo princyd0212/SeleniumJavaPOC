@@ -23,7 +23,7 @@ public class ApiTests extends APICommonMethod {
 
 
     @Test
-    public void validatePostRequest() {
+    public void APIRequest() {
         // Get data from the JSON file
         JsonNode postNode = JsonFileReader.getNode("post");
         String apiUrl = postNode.path("url").asText();
