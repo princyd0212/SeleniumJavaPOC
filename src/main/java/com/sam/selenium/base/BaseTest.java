@@ -1,5 +1,11 @@
 package com.sam.selenium.base;
 
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.http.ContentType;
+import org.apache.hc.core5.http.io.entity.StringEntity;
 import com.sam.selenium.utils.ScreenRecorderUtil;
 import org.openqa.selenium.*;
 import com.sam.selenium.pageObjects.LandingPage;
@@ -57,6 +63,13 @@ public class BaseTest {
 
     @BeforeMethod(alwaysRun = true)
     public LandingPage lunchApplication() throws IOException {
+        // Skip browser launch for API tests
+        String skipBrowser = System.getProperty("skipBrowser");
+        if ("true".equalsIgnoreCase(skipBrowser)) {
+            System.out.println("Skipping browser launch for API tests.");
+            return null;
+        }
+
         initializeDriver();
         landingPage = new LandingPage(driver);
         landingPage.GoTo();
