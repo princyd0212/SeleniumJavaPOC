@@ -56,6 +56,7 @@ public class Listeners extends BaseTest implements ITestListener {
             throw new RuntimeException(e);
         }
 
+
         String filePath = null;
         try {
             filePath = getScreenshot(testMethodName, driver);

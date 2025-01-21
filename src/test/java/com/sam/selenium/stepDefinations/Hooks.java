@@ -24,6 +24,7 @@ public class Hooks extends BaseTest {
                 try {
                     String screenshotPath = getScreenshot(scenario.getName(), driver);
 
+
                     // Prepare email details
                     String testCaseId = "TC_" + scenario.getName();
                     String testCaseName = scenario.getName();
@@ -43,7 +44,7 @@ public class Hooks extends BaseTest {
 
                     // Send email
                     EmailUtility.sendEmail(recipients,testCaseId, testCaseName, failedStep, expectedResult,
-                            actualResult, errorMessage, testSteps, severity, testExecutionDate, testEnvironment, screenshotPath);
+                            actualResult, errorMessage, testSteps, severity, testExecutionDate, testEnvironment, screenshotPath );
 
                 } catch (IOException e) {
                     e.printStackTrace();

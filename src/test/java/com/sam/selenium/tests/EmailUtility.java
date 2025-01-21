@@ -7,19 +7,18 @@ import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-
 public class EmailUtility {
     private static final Logger logger = Logger.getLogger(EmailUtility.class.getName());
     private static final String FROM_EMAIL = ConfigReader.getProperty("from_email");
     private static final String PASSWORD = ConfigReader.getProperty("password");
     private static final String HOST = ConfigReader.getProperty("smtp_host");
 
-    // Existing method to send failure emails with screenshot
     public static void sendEmail(List<String> toEmails, String testCaseId, String testCaseName,
-                                 String failedStep, String expectedResult, String actualResult,
-                                 String errorMessage, String testSteps, String severity,
-                                 String testExecutionDate, String testEnvironment,
-                                 String screenshotPath) {
+                                  String failedStep, String expectedResult, String actualResult,
+                                  String errorMessage, String testSteps, String severity,
+                                  String testExecutionDate, String testEnvironment,
+                                  String screenshotPath) {
+
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
@@ -30,8 +29,8 @@ public class EmailUtility {
                 return new PasswordAuthentication(FROM_EMAIL, PASSWORD);
             }
         });
+
         // Construct the email body for test failure
-        // Construct the email body for test failure with enhanced design
         String body = "<html><body style='font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333;'>"
                 + "<h2 style='color: #333;'>Test Failure Report</h2>"
                 + "<p style='font-size: 16px;'>Dear Team,</p>"
@@ -57,23 +56,33 @@ public class EmailUtility {
         try {
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(FROM_EMAIL));
-            // Loop through the toEmails list to add each email to the message
             for (String email : toEmails) {
                 message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
             }
             message.setSubject("Test Failure Report: " + testCaseId);
+
             MimeBodyPart textPart = new MimeBodyPart();
             textPart.setContent(body, "text/html");
-            MimeBodyPart attachmentPart = new MimeBodyPart();
+
+            // Attach screenshot (ensure the screenshot path is correct and exists)
+            MimeBodyPart screenshotAttachment = new MimeBodyPart();
             if (screenshotPath != null && !screenshotPath.isEmpty()) {
-                File file = new File(screenshotPath);
-                attachmentPart.attachFile(file);
+                File screenshotFile = new File(screenshotPath);
+                if (screenshotFile.exists()) {
+                    screenshotAttachment.attachFile(screenshotFile);
+                } else {
+                    logger.warning("Screenshot file does not exist at path: " + screenshotPath);
+                }
             }
+
             Multipart multipart = new MimeMultipart();
             multipart.addBodyPart(textPart);
-            if (screenshotPath != null && !screenshotPath.isEmpty()) {
-                multipart.addBodyPart(attachmentPart);
+
+            // Only add the screenshot part if the file exists
+            if (screenshotPath != null && !screenshotPath.isEmpty() && new File(screenshotPath).exists()) {
+                multipart.addBodyPart(screenshotAttachment);
             }
+
             message.setContent(multipart);
             Transport.send(message);
             logger.info("Failure notification sent successfully to recipients: " + toEmails);
@@ -81,6 +90,8 @@ public class EmailUtility {
             logger.severe("Failed to send email: " + e.getMessage());
         }
     }
+
+
 
     // New method to send a consolidated email with the results of all tests
     public static void sendConsolidatedEmail(List<String> toEmails, List<String> testResults,
@@ -90,13 +101,11 @@ public class EmailUtility {
         properties.put("mail.smtp.starttls.enable", "true");
         properties.put("mail.smtp.host", HOST);
         properties.put("mail.smtp.port", "587");
-
         Session session = Session.getInstance(properties, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(FROM_EMAIL, PASSWORD);
             }
         });
-
         // Create the detailed body for the email (formatted HTML)
         StringBuilder formattedBody = new StringBuilder();
         formattedBody.append("<html><body style='font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333; margin: 0; padding: 0;'>")
@@ -107,10 +116,8 @@ public class EmailUtility {
                 .append("<h2 style='color: #007BFF; text-align: center; font-size: 30px; font-weight: 600; margin-bottom: 20px;'>Test Suite Execution Report</h2>")
                 .append("<p style='font-size: 16px; line-height: 1.8; margin-bottom: 20px;'>Dear Team,</p>")
                 .append("<p style='font-size: 16px; line-height: 1.8; margin-bottom: 20px;'>We are pleased to share the results of the recently executed test cases. Below is the detailed report outlining the status of each test case, including execution time and error messages where applicable.</p>")
-
                 // New section for summary (total tests, passed, failed, etc.)
-
-        // Table for test results
+                // Table for test results
                 .append("<table style='width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 16px; border: 1px solid #ddd;'>")
                 .append("<thead style='background-color: #007BFF; color: white;'>")
                 .append("<tr><th style='padding: 12px; text-align: left; border-radius: 5px;'>Test Case ID</th>")
@@ -119,12 +126,10 @@ public class EmailUtility {
                 .append("<th style='padding: 12px; text-align: left; border-radius: 5px;'>Execution Time</th>")
                 .append("<th style='padding: 12px; text-align: left; border-radius: 5px;'>Error Message</th></tr>")
                 .append("</thead><tbody>");
-
         // Add test case details dynamically to the table
         for (String result : testResults) {
             String[] resultData = result.split(";");
             String statusColor = resultData[2].equals("PASS") ? "#28a745" : (resultData[2].equals("FAIL") ? "#dc3545" : "#ffc107");
-
             formattedBody.append("<tr style='background-color: #f9f9f9; border-bottom: 1px solid #ddd;'>")
                     .append("<td style='padding: 12px;'>" + resultData[0] + "</td>")
                     .append("<td style='padding: 12px;'>" + resultData[1] + "</td>")
@@ -132,23 +137,21 @@ public class EmailUtility {
                     .append("<td style='padding: 12px;'>" + resultData[3] + "</td>")
                     .append("<td style='padding: 12px;'>" + (resultData.length > 4 ? resultData[4] : "N/A") + "</td></tr>");
         }
-
         formattedBody.append("</tbody></table>")
                 .append("<p style='font-size: 16px; line-height: 1.8; margin-top: 30px;'>For more detailed logs and further analysis, please click the button below:</p>")
                 .append("<div style='text-align: center; margin-top: 20px;'>")
-                .append("<a href='https://yourdomain.com/test-logs' style='background-color: #007BFF; color: white; padding: 12px 24px; font-size: 16px; text-decoration: none; border-radius: 5px; display: inline-block; transition: background-color 0.3s;'>View Detailed Logs</a>")
+                .append("<a href='http://172.16.1.223:53779/index.html' style='background-color: #007BFF; color: white; padding: 12px 24px; font-size: 16px; text-decoration: none; border-radius: 5px; display: inline-block; transition: background-color 0.3s;'>View Detailed Logs</a>")
                 .append("</div>")
                 .append("<p style='font-size: 16px; line-height: 1.8; margin-top: 30px;'>If you have any questions or need additional information, please do not hesitate to contact us at <a href='mailto:support@yourdomain.com' style='color: #007BFF;'>support@yourdomain.com</a>.</p>")
                 .append("<p style='font-size: 16px; line-height: 1.8;'>Thank you for your attention.</p>")
                 .append("<p style='font-size: 16px; line-height: 1.8; margin-top: 40px;'>Best regards,</p>")
-                .append("<p style='font-size: 16px; line-height: 1.8;'>Shree Shree Shree Brahmbhatt Kaushal</p>")
+                .append("<p style='font-size: 16px; line-height: 1.8;'>Brahmbhatt Kaushal</p>")
                 .append("<hr style='border: 0; border-top: 1px solid #ddd; margin-top: 30px;'>")
                 .append("<footer style='text-align: center; font-size: 14px; color: #777; padding-top: 20px;'>")
                 .append("<p>If you no longer wish to receive these reports, you can <a href='https://yourdomain.com/unsubscribe' style='color: #007BFF;'>unsubscribe</a>.</p>")
                 .append("<p>Company Name | Address | Phone Number | <a href='https://yourdomain.com/privacy-policy' style='color: #007BFF;'>Privacy Policy</a></p>")
                 .append("</footer>")
                 .append("</div></body></html>");
-
         // Send email
         try {
             MimeMessage message = new MimeMessage(session);
@@ -157,15 +160,12 @@ public class EmailUtility {
                 message.addRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
             }
             message.setSubject(subject);
-
             // Add body as a part
             MimeBodyPart textPart = new MimeBodyPart();
             textPart.setContent(formattedBody.toString(), "text/html");
-
             // Add attachments for screenshots
             Multipart multipart = new MimeMultipart();
             multipart.addBodyPart(textPart);
-
             if (screenshotPaths != null && !screenshotPaths.isEmpty()) {
                 for (String screenshotPath : screenshotPaths) {
                     MimeBodyPart attachmentPart = new MimeBodyPart();
@@ -178,7 +178,6 @@ public class EmailUtility {
                     }
                 }
             }
-
             message.setContent(multipart);
             Transport.send(message);
             logger.info("Consolidated report with screenshots sent successfully to recipients: " + toEmails);
