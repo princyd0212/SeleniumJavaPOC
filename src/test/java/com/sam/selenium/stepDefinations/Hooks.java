@@ -5,6 +5,8 @@ import com.sam.selenium.utils.PropertyFileReader;
 import com.sam.selenium.utils.ScreenRecorderUtil;
 import com.sam.selenium.utils.VideoConversionBatch;
 import io.cucumber.java.Before;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import io.cucumber.java.After;
 import io.cucumber.java.Scenario;
@@ -39,9 +41,11 @@ public class Hooks extends BaseTest {
             WebDriver driver = getDriver();
             if (driver != null) {
                 try {
-                    String screenshotPath = getScreenshot(scenario.getName(), driver);
+                    /*String screenshotPath = getScreenshot(scenario.getName(), driver);
                     FileInputStream fis = new FileInputStream(screenshotPath);
-                    Allure.addAttachment("Screenshot", new ByteArrayInputStream(fis.readAllBytes()));
+                    Allure.addAttachment("Screenshot", new ByteArrayInputStream(fis.readAllBytes()));*/
+                    final byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+                    Allure.addAttachment(scenario.getName(), new ByteArrayInputStream(screenshot));
                     String scenarioName = scenario.getName();
                     System.out.println("Scenario failed: " + scenarioName);
 
@@ -66,7 +70,7 @@ public class Hooks extends BaseTest {
                     } else {
                         System.out.println("Scenario passed: " + scenarioName + ". No recording will be attached.");
                     }
-                    fis.close();
+               //     fis.close();
                 } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
                 } finally {
