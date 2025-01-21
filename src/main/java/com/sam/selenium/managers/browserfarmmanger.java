@@ -41,11 +41,6 @@ public class browserfarmmanger {
         );
     }
 
-    public static WebDriver getAWSDriver() throws IOException {
-        // Placeholder for AWS Device Farm setup
-        throw new UnsupportedOperationException("AWS Device Farm setup is not yet implemented.");
-    }
-
     public static WebDriver getLambdaTestDriver() throws IOException {
         // LambdaTest credentials and grid URL
         String username = ConfigReader.getConfig("lambdaTest.username");
@@ -60,11 +55,17 @@ public class browserfarmmanger {
         MutableCapabilities ltOptions = new MutableCapabilities();
         ltOptions.setCapability("platformName", ConfigReader.getConfig("lambdaTest.os"));
         ltOptions.setCapability("platformVersion", ConfigReader.getConfig("lambdaTest.os_version"));
+        ltOptions.setCapability("buildName", ConfigReader.getConfig("lambdaTest.buildName"));
 
         capabilities.setCapability("LT:Options", ltOptions);
 
         // Return the RemoteWebDriver instance
         return new RemoteWebDriver(new URL(gridURL), capabilities);
+    }
+
+    public static WebDriver getAWSDriver() throws IOException {
+        // Placeholder for AWS Device Farm setup
+        throw new UnsupportedOperationException("AWS Device Farm setup is not yet implemented.");
     }
 
     public static WebDriver getQyrusDriver() throws IOException {
@@ -89,23 +90,34 @@ public class browserfarmmanger {
     }
 
     public static WebDriver getSauceLabsDriver() throws IOException {
-        // SauceLabs credentials and grid URL
-        String username = ConfigReader.getConfig("sauceLabs.username");
-        String accessKey = ConfigReader.getConfig("sauceLabs.accessKey");
-        String gridURL = "https://ondemand.saucelabs.com/wd/hub";
+        // Fetch SauceLabs credentials from the configuration
+        String sauceUsername = ConfigReader.getConfig("sauceLabs.username");
+        String sauceAccessKey = ConfigReader.getConfig("sauceLabs.accessKey");
 
-        // Set W3C-compatible SauceLabs capabilities
+        if (sauceUsername == null || sauceAccessKey == null) {
+            throw new IllegalArgumentException("SauceLabs credentials are missing in the configuration file.");
+        }
+
+        // Construct the SauceLabs grid URL
+        String gridURL = "https://" + sauceUsername + ":" + sauceAccessKey + "@ondemand.saucelabs.com/wd/hub";
+        System.out.println("Grid URL: " + gridURL); // Debugging the URL
+
+        // Set W3C-compatible capabilities for SauceLabs
         MutableCapabilities capabilities = new MutableCapabilities();
-        capabilities.setCapability("browserName", ConfigReader.getConfig("sauceLabs.browser"));
+        capabilities.setCapability("browserName", ConfigReader.getConfig("sauceLabs.browser_name"));
         capabilities.setCapability("browserVersion", ConfigReader.getConfig("sauceLabs.browser_version"));
 
+        // Set Sauce-specific options under "sauce:options"
         MutableCapabilities sauceOptions = new MutableCapabilities();
         sauceOptions.setCapability("platformName", ConfigReader.getConfig("sauceLabs.os"));
+        sauceOptions.setCapability("platformVersion", ConfigReader.getConfig("sauceLabs.os_version"));
+        sauceOptions.setCapability("buildName", ConfigReader.getConfig("sauceLabs.buildName"));
 
         capabilities.setCapability("sauce:options", sauceOptions);
+        System.out.println(sauceUsername);
+        System.out.println(sauceAccessKey);
 
         // Return the RemoteWebDriver instance
-        String completeURL = "https://" + username + ":" + accessKey + "@" + gridURL;
-        return new RemoteWebDriver(new URL(completeURL), capabilities);
+        return new RemoteWebDriver(new URL(gridURL), capabilities);
     }
 }
