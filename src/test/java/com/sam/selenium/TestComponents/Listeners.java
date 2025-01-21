@@ -102,6 +102,8 @@ public class Listeners extends BaseTest implements ITestListener {
                 testEnvironment,
                 filePath
         );
+        String failureMessage = "Test " + result.getMethod().getMethodName() + " failed: " + result.getThrowable().getMessage();
+        sendFailureNotification(failureMessage);
     }
 
     private void sendConsolidatedEmail() {
