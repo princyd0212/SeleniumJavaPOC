@@ -1,7 +1,6 @@
 package com.sam.selenium.base;
 
 import com.sam.selenium.managers.browserfarmmanger;
-import com.sam.selenium.utils.ConfigReader;
 import org.openqa.selenium.*;
 import com.sam.selenium.pageObjects.LandingPage;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -22,28 +21,31 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
-import static com.sam.selenium.utils.ConfigReader.properties;
 
 public class BaseTest {
-    private static ThreadLocal<WebDriver> tdriver = new ThreadLocal<>();
     public static WebDriver driver;
     public LandingPage landingPage;
-    public static ConfigReader ConfigReader;
+    private static ThreadLocal<WebDriver> tdriver = new ThreadLocal<>();
+
     // Initialize Driver
     public static WebDriver initializeDriver() throws IOException {
-        String browserName = System.getProperty("local_browser") != null ? System.getProperty("local_browser") : properties.getProperty("local_browser");
-        String runOn = properties.getProperty("runOn"); // "local" or "browserfarm"
-        String browserFarm = ConfigReader.getConfig("browserfarm_browser");
-        String browserstackName = System.getProperty("browserstack.browserName") != null ? System.getProperty("browserstack.browserName") : properties.getProperty("browserstack.browserName");
+        Properties prop = new Properties();
+        FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + "//src//main//java//com//sam//selenium/utils//GlobleData.properties");
+        prop.load(fis);
+
+        String browserName = System.getProperty("local_browser") != null ? System.getProperty("local_browser") : prop.getProperty("local_browser");
+        String runOn = prop.getProperty("runOn"); // "local" or "browserfarm"
+        String browserFarm = prop.getProperty("browserfarm_browser");
+        String browserstackName = System.getProperty("browserstack.browserName") != null ? System.getProperty("browserstack.browserName") : prop.getProperty("browserstack.browserName");
 
         if (runOn.equalsIgnoreCase("local")) {
             if (browserName.contains("chrome")) {
-                ChromeOptions options = new ChromeOptions();
+                ChromeOptions option = new ChromeOptions();
                 WebDriverManager.chromedriver().setup();
                 if (browserName.contains("headless")) {
-                    options.addArguments("headless");
+                    option.addArguments("headless");
                 }
-                driver = new ChromeDriver(options);
+                driver = new ChromeDriver(option);
                 driver.manage().window().setSize(new Dimension(1440, 900));
             } else if (browserName.equalsIgnoreCase("firefox")) {
                 WebDriverManager.firefoxdriver().setup();
