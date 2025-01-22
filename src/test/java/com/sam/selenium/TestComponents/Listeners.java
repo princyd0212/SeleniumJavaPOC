@@ -5,12 +5,12 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.sam.selenium.base.BaseTest;
 import com.sam.selenium.tests.EmailUtility;
-import utils.ConfigReader;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 import com.sam.selenium.utils.ExtentReporterNG;
+import com.sam.selenium.utils.PropertyFileReader;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -24,6 +24,17 @@ public class Listeners extends BaseTest implements ITestListener {
 
     // Store results for all tests
     private List<String> testResults = new ArrayList<>();
+
+    private PropertyFileReader propertyReader;
+
+    public Listeners() {
+        try {
+            propertyReader = new PropertyFileReader("D:/Automation Project POC/SeleniumJavaPOC/src/test/java/resources/config/testdata.properties");
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to initialize PropertyFileReader");
+        }
+    }
 
     @Override
     public void onTestStart(ITestResult result) {
@@ -56,7 +67,6 @@ public class Listeners extends BaseTest implements ITestListener {
             throw new RuntimeException(e);
         }
 
-
         String filePath = null;
         try {
             filePath = getScreenshot(testMethodName, driver);
@@ -84,7 +94,7 @@ public class Listeners extends BaseTest implements ITestListener {
         String testEnvironment = "Chrome, Windows 10";
 
         // Get recipients from the config file
-        String recipientsString = ConfigReader.getProperty("email.recipients");
+        String recipientsString = propertyReader.getProperty("email.recipients");
         List<String> recipients = Arrays.asList(recipientsString.split(","));
 
         // Send email
@@ -135,7 +145,7 @@ public class Listeners extends BaseTest implements ITestListener {
                     .append("\nScreenshot: ").append(filePath).append("\n\n");
         }
 
-        String recipientsString = ConfigReader.getProperty("email.recipients");
+        String recipientsString = propertyReader.getProperty("email.recipients");
         List<String> recipients = Arrays.asList(recipientsString.split(","));
 
         // Assuming you don't have any attachments to send
@@ -153,8 +163,6 @@ public class Listeners extends BaseTest implements ITestListener {
         // Now calling the sendConsolidatedEmail method with all required parameters
         EmailUtility.sendConsolidatedEmail(recipients, testResults, subject, body.toString(), attachments);
     }
-
-
 
     @Override
     public void onTestSkipped(ITestResult result) {
@@ -190,4 +198,4 @@ public class Listeners extends BaseTest implements ITestListener {
         sendConsolidatedEmail();
     }
 
-  }
+}

@@ -5,11 +5,8 @@ import com.sam.selenium.base.BaseTest;
 import org.openqa.selenium.WebDriver;
 import io.cucumber.java.After;
 import io.cucumber.java.Scenario;
-import io.qameta.allure.Allure;
-import utils.ConfigReader;
+import com.sam.selenium.utils.PropertyFileReader;
 
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -22,34 +19,49 @@ public class Hooks extends BaseTest {
             WebDriver driver = getDriver();
             if (driver != null) {
                 try {
+                    // Capture screenshot on failure
                     String screenshotPath = getScreenshot(scenario.getName(), driver);
-
 
                     // Prepare email details
                     String testCaseId = "TC_" + scenario.getName();
                     String testCaseName = scenario.getName();
-                    String failedStep = "Step description not available";
+                    String failedStep = "Step description not available";  // You may want to get this dynamically if possible
                     String expectedResult = "Expected result description";
                     String actualResult = "Actual result description";
                     String errorMessage = scenario.getStatus().toString();
-                    String testSteps = "Steps leading to failure";
+                    String testSteps = "Steps leading to failure";  // Similar to failedStep, get dynamically if needed
                     String severity = "Critical";
-                    String testExecutionDate = "2024-12-18";
-                    String testEnvironment = "Chrome, Windows 10";
+                    String testExecutionDate = "2024-12-18";  // You can use the current date here if needed
+                    String testEnvironment = "Chrome, Windows 10";  // Adjust based on your setup
 
-                    // List of recipients
-                    // Get recipients from the config file
-                    String recipientsString = ConfigReader.getProperty("email.recipients");
+                    // Create an instance of PropertyFileReader
+                    PropertyFileReader propertyReader = new PropertyFileReader();
+
+                    // Get email recipients from config file
+                    String recipientsString = propertyReader.getProperty("email.recipients");
                     List<String> recipients = Arrays.asList(recipientsString.split(","));
 
-                    // Send email
-                    EmailUtility.sendEmail(recipients,testCaseId, testCaseName, failedStep, expectedResult,
-                            actualResult, errorMessage, testSteps, severity, testExecutionDate, testEnvironment, screenshotPath );
+                    // Send the failure email with the required information
+                    EmailUtility.sendEmail(
+                            recipients,
+                            testCaseId,
+                            testCaseName,
+                            failedStep,
+                            expectedResult,
+                            actualResult,
+                            errorMessage,
+                            testSteps,
+                            severity,
+                            testExecutionDate,
+                            testEnvironment,
+                            screenshotPath
+                    );
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
+            // Quit the driver after the test
             driver.quit();
         }
     }

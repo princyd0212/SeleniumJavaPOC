@@ -1,5 +1,8 @@
 package com.sam.selenium.tests;
-import utils.ConfigReader;
+
+import com.sam.selenium.utils.PropertyFileReader;
+
+import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.io.File;
@@ -9,21 +12,24 @@ import java.util.logging.Logger;
 
 public class EmailUtility {
     private static final Logger logger = Logger.getLogger(EmailUtility.class.getName());
-    private static final String FROM_EMAIL = ConfigReader.getProperty("from_email");
-    private static final String PASSWORD = ConfigReader.getProperty("password");
-    private static final String HOST = ConfigReader.getProperty("smtp_host");
+
+    private static final PropertyFileReader propertyReader = new PropertyFileReader();
+    private static final String FROM_EMAIL = propertyReader.getProperty("from_email");
+    private static final String PASSWORD = propertyReader.getProperty("password");
+    private static final String HOST = propertyReader.getProperty("smtp_host");
 
     public static void sendEmail(List<String> toEmails, String testCaseId, String testCaseName,
-                                  String failedStep, String expectedResult, String actualResult,
-                                  String errorMessage, String testSteps, String severity,
-                                  String testExecutionDate, String testEnvironment,
-                                  String screenshotPath) {
+                                 String failedStep, String expectedResult, String actualResult,
+                                 String errorMessage, String testSteps, String severity,
+                                 String testExecutionDate, String testEnvironment,
+                                 String screenshotPath) {
 
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
         properties.put("mail.smtp.host", HOST);
         properties.put("mail.smtp.port", "587");
+
         Session session = Session.getInstance(properties, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(FROM_EMAIL, PASSWORD);
@@ -91,9 +97,6 @@ public class EmailUtility {
         }
     }
 
-
-
-    // New method to send a consolidated email with the results of all tests
     public static void sendConsolidatedEmail(List<String> toEmails, List<String> testResults,
                                              String subject, String body, List<String> screenshotPaths) {
         Properties properties = new Properties();
