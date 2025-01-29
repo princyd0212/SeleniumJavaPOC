@@ -43,8 +43,7 @@ public class browserfarmmanger {
 
         // Return the RemoteWebDriver instance
         return new RemoteWebDriver(
-                new URL("https://" + browserstackUsername + ":" + browserstackAccessKey + "@hub.browserstack.com/wd/hub"),
-                capabilities
+                new URL("https://" + browserstackUsername + ":" + browserstackAccessKey + "@hub.browserstack.com/wd/hub"), capabilities
         );
     }
 
