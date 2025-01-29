@@ -5,8 +5,6 @@ import com.sam.selenium.utils.PropertyFileReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
-
 import java.io.IOException;
 import java.util.List;
 
@@ -25,6 +23,7 @@ public class ProductCatalogue extends AbstractComponent {
         waitForElementToAppear(propertyFileReader.getLocator("productCatalogue.products"));
         return driver.findElements(propertyFileReader.getLocator("productCatalogue.products"));
     }
+
 
     public WebElement getProductByName(String productName) {
         WebElement prod = getProductList().stream().filter(product -> product.findElement(By.cssSelector("b")).getText().equals(productName)).findFirst().orElse(null);

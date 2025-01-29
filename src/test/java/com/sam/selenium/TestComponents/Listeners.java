@@ -12,6 +12,8 @@ import com.sam.selenium.utils.ExtentReporterNG;
 
 import java.io.IOException;
 
+import static com.sam.selenium.CommonMethods.CommonMethod.sendFailureNotification;
+
 public class Listeners extends BaseTest implements ITestListener {
     ExtentTest test;
     ExtentReports extent = ExtentReporterNG.getReportObject();
@@ -55,7 +57,10 @@ public class Listeners extends BaseTest implements ITestListener {
             throw new RuntimeException(e);
         }
         extentTest.get().addScreenCaptureFromPath(filePath, testMethodName);
-        //screenshot
+        //screenshot[
+
+        sendFailureNotification("Test failed: " + result.getMethod().getMethodName());
+
     }
 
     /**

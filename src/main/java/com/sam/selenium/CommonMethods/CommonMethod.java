@@ -1,6 +1,12 @@
 package com.sam.selenium.CommonMethods;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.http.ContentType;
+import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -191,6 +197,31 @@ public class CommonMethod {
         Actions actions = new Actions(driver);
         WebElement element = driver.findElement(locator);
         actions.moveToElement(element).perform();
+    }
+
+    public static void sendFailureNotification(String failureMessage) {
+        String webhookUrl = "https://contcentricpvtltd.webhook.office.com/webhookb2/1e82d6a2-3afe-4834-a55d-891d9d1592c7@92df81cd-dcf2-490a-884c-13b58b3a8ca6/IncomingWebhook/7794e09a8ad24f898b170f53b4826638/a98cea20-3ca3-474e-9414-4d238c6c92a0/V2eh5nQsofcLs38I-YRLuqPV370fbBDJQ4yDiBa7slRRQ1";
+        String jsonPayload = String.format(
+                "{ \"text\": \"🚨 Test Failure Alert: %s\" }",
+                failureMessage
+        );
+
+        try (CloseableHttpClient client = HttpClients.createDefault()) {
+            HttpPost httpPost = new HttpPost(webhookUrl);
+            StringEntity entity = new StringEntity(jsonPayload, ContentType.APPLICATION_JSON);
+            httpPost.setEntity(entity);
+
+            try (CloseableHttpResponse response = client.execute(httpPost)) {
+                int statusCode = response.getCode();
+                if (statusCode >= 200 && statusCode < 300) {
+                    System.out.println("Notification sent successfully!");
+                } else {
+                    System.err.println("Failed to send notification. HTTP Status Code: " + statusCode);
+                }
+            }
+        } catch (Exception ex) {
+            System.err.println("Failed to send notification: " + ex.getMessage());
+        }
     }
 
 }
