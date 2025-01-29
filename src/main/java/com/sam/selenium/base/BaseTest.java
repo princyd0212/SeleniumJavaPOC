@@ -1,6 +1,13 @@
 package com.sam.selenium.base;
 
 import com.sam.selenium.managers.browserfarmmanger;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.http.ContentType;
+import org.apache.hc.core5.http.io.entity.StringEntity;
+import com.sam.selenium.utils.ScreenRecorderUtil;
 import org.openqa.selenium.*;
 import com.sam.selenium.pageObjects.LandingPage;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -21,17 +28,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
-
 public class BaseTest {
     public static WebDriver driver;
     public LandingPage landingPage;
+
     private static ThreadLocal<WebDriver> tdriver = new ThreadLocal<>();
 
-    // Initialize Driver
     public static WebDriver initializeDriver() throws IOException {
         Properties prop = new Properties();
         FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + "//src//main//java//com//sam//selenium/utils//GlobleData.properties");
         prop.load(fis);
+      //  String browserName = System.getProperty("browser") != null ? System.getProperty("browser") : prop.getProperty("browser");
 
         String browserName = System.getProperty("local_browser") != null ? System.getProperty("local_browser") : prop.getProperty("local_browser");
         String runOn = prop.getProperty("runOn"); // "local" or "browserfarm"
@@ -78,20 +85,18 @@ public class BaseTest {
         } else {
             throw new IllegalArgumentException("Unsupported run environment: " + runOn);
         }
-
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
         tdriver.set(driver);
         return driver;
     }
 
-    // Get Driver using in failure Screenshot
     public static WebDriver getDriver() {
         return tdriver.get();
     }
 
     @BeforeMethod(alwaysRun = true)
-    public LandingPage launchApplication() throws IOException {
+        public LandingPage launchApplication() throws IOException {
         initializeDriver();
         landingPage = new LandingPage(driver);
         landingPage.GoTo();
@@ -100,19 +105,19 @@ public class BaseTest {
 
     @AfterMethod
     public void closeDriver() {
-        if (driver != null) {
-            driver.quit();
-        }
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        driver.quit();
     }
 
-    // Convert JSON data to Map
     public List<HashMap<String, String>> getJsonDataToMap(String filePath) throws IOException {
         String jsonContent = FileUtils.readFileToString(new File(filePath), StandardCharsets.UTF_8);
+
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(jsonContent, new TypeReference<List<HashMap<String, String>>>() {});
+        List<HashMap<String, String>> data = mapper.readValue(jsonContent, new TypeReference<List<HashMap<String, String>>>() {
+        });
+        return data;
     }
 
-    // Capture Screenshot
     public String getScreenshot(String testCaseName, WebDriver driver) throws IOException {
         TakesScreenshot ts = (TakesScreenshot) driver;
         File source = ts.getScreenshotAs(OutputType.FILE);

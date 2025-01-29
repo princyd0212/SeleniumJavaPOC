@@ -9,7 +9,7 @@ import com.sam.selenium.base.BaseTest;
 import org.testng.annotations.Test;
 
 public class SubmitOrderTest extends BaseTest {
-    //    String productName = "ZARA COAT 3";
+    //    String productName = "ADIDAS ORIGINAL";
     //Add Test = dataProvider = "getData",
     @Test(groups = {"PurchaseOrder"}, retryAnalyzer = Retry.class)
     public void submitOrder() throws IOException {
