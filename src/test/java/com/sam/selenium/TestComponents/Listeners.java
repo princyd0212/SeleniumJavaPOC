@@ -11,14 +11,16 @@ import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import com.sam.selenium.utils.ExtentReporterNG;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class Listeners extends BaseTest implements ITestListener {
+import static com.sam.selenium.CommonMethods.CommonMethod.sendFailureNotification;
 
+public class Listeners extends BaseTest implements ITestListener {
     ExtentTest test;
     ExtentReports extent = ExtentReporterNG.getReportObject();
     ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
@@ -46,6 +48,9 @@ public class Listeners extends BaseTest implements ITestListener {
         extentTest.set(test);
     }
 
+    /**
+     * @param result <code>ITestResult</code> containing information about the run test
+     */
     @Override
     public void onTestSuccess(ITestResult result) {
         test.log(Status.PASS, "Test Passed");
@@ -58,15 +63,20 @@ public class Listeners extends BaseTest implements ITestListener {
         System.out.println(testCaseName + " Passed.");
     }
 
+    /**
+     * @param result <code>ITestResult</code> containing information about the run test
+     */
     @Override
     public void onTestFailure(ITestResult result) {
         extentTest.get().fail(result.getThrowable());
         String testMethodName = result.getMethod().getMethodName();
+
         try {
             driver = (WebDriver) result.getTestClass().getRealClass().getField("driver").get(result.getInstance());
         } catch (IllegalAccessException | NoSuchFieldException e) {
             throw new RuntimeException(e);
         }
+
         String filePath = null;
         try {
             filePath = getScreenshot(testMethodName, driver);
@@ -81,6 +91,9 @@ public class Listeners extends BaseTest implements ITestListener {
         System.out.println(testCaseName + " Failed.");
     }
 
+    /**
+     * @param result <code>ITestResult</code> containing information about the run test
+     */
     @Override
     public void onTestSkipped(ITestResult result) {
         String testCaseName = result.getMethod().getMethodName();
@@ -91,21 +104,33 @@ public class Listeners extends BaseTest implements ITestListener {
         System.out.println(testCaseName + " Skipped.");
     }
 
+    /**
+     * @param result <code>ITestResult</code> containing information about the run test
+     */
     @Override
     public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
         ITestListener.super.onTestFailedButWithinSuccessPercentage(result);
     }
 
+    /**
+     * @param result <code>ITestResult</code> containing information about the run test
+     */
     @Override
     public void onTestFailedWithTimeout(ITestResult result) {
         ITestListener.super.onTestFailedWithTimeout(result);
     }
 
+    /**
+     * @param context The test context
+     */
     @Override
     public void onStart(ITestContext context) {
         ITestListener.super.onStart(context);
     }
 
+    /**
+     * @param context The test context
+     */
     @Override
     public void onFinish(ITestContext context) {
         extent.flush();

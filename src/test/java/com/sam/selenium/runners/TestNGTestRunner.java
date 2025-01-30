@@ -8,13 +8,11 @@ import io.cucumber.testng.CucumberOptions;
                 "src\\test\\java\\resources\\features\\SubmitOrder.feature"},
         glue = {"com/sam/selenium/stepDefinations", "stepDefinations"},  // Ensure this package includes your Hooks class
         monochrome = true,
-        plugin = {
-                "pretty",
-                "html:target/cucumber-reports.html",
+        tags = "@SmokeTest",
+        plugin = {"pretty", "html:target/cucumber-reports.html",
                 "json:target/cucumber-reports.json",
                 "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
         }
 )
 public class TestNGTestRunner extends AbstractTestNGCucumberTests {
-
 }

@@ -3,9 +3,12 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-/allure-results
-/allure-report
-/reports
+test-recordings/
+allure-results/
+reports/
+
+reports/
+allure-results/
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
