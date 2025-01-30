@@ -13,12 +13,13 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 public class BaseTest {
     public static WebDriver driver;
@@ -102,25 +103,8 @@ public class BaseTest {
         // Return the path where the screenshot is saved
         return destPath;
     }
-    public static void sendFailureNotification(String failureMessage) {
-        String webhookUrl = "https://contcentricpvtltd.webhook.office.com/webhookb2/1e82d6a2-3afe-4834-a55d-891d9d1592c7@92df81cd-dcf2-490a-884c-13b58b3a8ca6/IncomingWebhook/b6f44416682c4462a247e8f137e4dbab/cc991696-f8de-4eca-808a-55b25c6064ed/V2gHuqOpeljqbpQLsO7U3WCBwIQdBMxMywhZz0hKAknv81";
-        String jsonPayload = String.format(
-                "{ \"text\": \"🚨 Test Failure Alert: %s\" }",
-                failureMessage
-        );
 
-        try (var client = org.apache.hc.client5.http.impl.classic.HttpClients.createDefault()) {
-            org.apache.hc.client5.http.classic.methods.HttpPost httpPost = new org.apache.hc.client5.http.classic.methods.HttpPost(webhookUrl);
-            org.apache.hc.core5.http.io.entity.StringEntity entity = new org.apache.hc.core5.http.io.entity.StringEntity(jsonPayload, org.apache.hc.core5.http.ContentType.APPLICATION_JSON);
-            httpPost.setEntity(entity);
 
-            try (org.apache.hc.client5.http.impl.classic.CloseableHttpResponse response = client.execute(httpPost)) {
-                System.out.println("Notification sent. Response code: " + response.getCode());
-            }
-        } catch (Exception ex) {
-            System.err.println("Failed to send notification: " + ex.getMessage());
-        }
-    }
 
 }
 

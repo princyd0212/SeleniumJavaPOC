@@ -9,17 +9,17 @@ import com.sam.selenium.base.BaseTest;
 import org.testng.annotations.Test;
 
 public class SubmitOrderTest extends BaseTest {
-    //    String productName = "ZARA COAT 3";
+    //    String productName = "IPHONE 13 PRO";
     //Add Test = dataProvider = "getData",
     @Test(groups = {"PurchaseOrder"}, retryAnalyzer = Retry.class)
     public void submitOrder() throws IOException {
 
         ProductCatalogue ProductCatalogue = landingPage.LoginApplication("tadmin@admin.com", "Admin@123");
 
-        ProductCatalogue.addProductToCart("ZARA COAT 3");
+        ProductCatalogue.addProductToCart("IPHONE 13 PRO");
         CartPage cartPage = ProductCatalogue.goToCartPage();
 
-        Boolean match = cartPage.VerifyProductDisplay("ZARA COAT 3");
+        Boolean match = cartPage.VerifyProductDisplay("IPHONE 13 PRO");
         Assert.assertTrue(match);
         CheckoutPage checkoutPage = cartPage.goToCheckout();
         checkoutPage.selectCountry("india");
@@ -33,6 +33,6 @@ public class SubmitOrderTest extends BaseTest {
     public void OrderHistoryTest() throws IOException {
         ProductCatalogue ProductCatalogue = landingPage.LoginApplication("tadmin@admin.com", "Admin@123");
         OrderPage orderPage = ProductCatalogue.goToOrdersPage();
-        Assert.assertTrue(orderPage.VerifyOrderDisplay("ZARA COAT 3"));
+        Assert.assertTrue(orderPage.VerifyOrderDisplay("IPHONE 13 PRO"));
     }
 }
