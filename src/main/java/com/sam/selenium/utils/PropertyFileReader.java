@@ -13,7 +13,7 @@ public class PropertyFileReader {
     // Static block to load default config.properties file
     static {
         try {
-            String defaultFilePath = "D:\\Automation Project POC\\SeleniumJavaPOC\\src\\test\\java\\resources\\config\\testdata.properties";
+            String defaultFilePath = System.getProperty("user.dir") + "//src//test//java//resources//config//testdata.properties";
             FileInputStream fis = new FileInputStream(defaultFilePath);
             defaultProperties.load(fis);
         } catch (IOException e) {

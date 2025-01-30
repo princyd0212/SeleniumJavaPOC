@@ -35,7 +35,7 @@ public class Listeners extends BaseTest implements ITestListener {
 
     public Listeners() {
         try {
-            propertyReader = new PropertyFileReader("D:/Automation Project POC/SeleniumJavaPOC/src/test/java/resources/config/testdata.properties");
+            propertyReader = new PropertyFileReader(System.getProperty("user.dir") + "//src//test//java//resources//config//testdata.properties");
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to initialize PropertyFileReader");
