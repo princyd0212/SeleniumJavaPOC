@@ -25,7 +25,7 @@ public class ApiTests extends APICommonMethod {
     @Test
     public void APIRequest() {
         // Get data from the JSON file
-        JsonNode postNode = JsonFileReader.getNode("post");
+        JsonNode postNode = JsonFileReader.getNode("get");
         String apiUrl = postNode.path("url").asText();
         String body = postNode.path("body").toString(); // Convert JSON object to String
         int expectedStatusCode = postNode.path("response").path("statusCode").asInt();
@@ -55,7 +55,7 @@ public class ApiTests extends APICommonMethod {
 
 
         // Send the POST request
-        Response response = APICommonMethod.sendRequest("POST", apiUrl, headers, body);
+        Response response = APICommonMethod.sendRequest("GET", apiUrl, headers, body);
 //        Response response = ApiHelper.sendPostRequest(apiUrl, body);
 
         // Debugging: Log the actual response status code and body
