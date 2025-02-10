@@ -39,9 +39,7 @@ public class BaseTest {
         Properties prop = new Properties();
         FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + "//src//main//java//com//sam//selenium/utils//GlobleData.properties");
         prop.load(fis);
-      //  String browserName = System.getProperty("browser") != null ? System.getProperty("browser") : prop.getProperty("browser");
-
-        String browserName = System.getProperty("local_browser") != null ? System.getProperty("local_browser") : prop.getProperty("local_browser");
+        String browserName = System.getProperty("browser") != null ? System.getProperty("browser") : prop.getProperty("browser");
         String runOn = prop.getProperty("runOn"); // "local" or "browserfarm"
         String browserFarm = prop.getProperty("browserfarm_browser");
         String browserstackName = System.getProperty("browserstack.browserName") != null ? System.getProperty("browserstack.browserName") : prop.getProperty("browserstack.browserName");
@@ -142,8 +140,5 @@ public class BaseTest {
         // Return the path where the screenshot is saved
         return destPath;
     }
-
-
-
 }
 

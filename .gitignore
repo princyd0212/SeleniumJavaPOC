@@ -5,10 +5,7 @@ target/
 
 test-recordings/
 allure-results/
-
-
-
-
+reports/
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
