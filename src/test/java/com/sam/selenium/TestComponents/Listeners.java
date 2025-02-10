@@ -4,21 +4,18 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.sam.selenium.base.BaseTest;
-import com.sam.selenium.tests.EmailUtility;
+import com.sam.selenium.utils.EmailUtility;
 import com.sam.selenium.utils.ExtentReporterNG;
 import com.sam.selenium.utils.PropertyFileReader;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-import com.sam.selenium.utils.ExtentReporterNG;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import static com.sam.selenium.CommonMethods.CommonMethod.sendFailureNotification;
 
 public class Listeners extends BaseTest implements ITestListener {
     ExtentTest test;
@@ -35,7 +32,7 @@ public class Listeners extends BaseTest implements ITestListener {
 
     public Listeners() {
         try {
-            propertyReader = new PropertyFileReader("D:/Automation Project POC/SeleniumJavaPOC/src/test/java/resources/config/testdata.properties");
+            propertyReader = new PropertyFileReader(System.getProperty("user.dir")+"//src/test/java/resources/config/testdata.properties");
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to initialize PropertyFileReader");
@@ -88,6 +85,8 @@ public class Listeners extends BaseTest implements ITestListener {
         String status = "Fail";
         String duration = (result.getEndMillis() - result.getStartMillis()) / 1000.0 + "s";
         testResults.add(testCaseName + ";" + status + ";" + duration + ";" + filePath);
+        System.out.println("Screenshot saved at: " + filePath);
+
         System.out.println(testCaseName + " Failed.");
     }
 

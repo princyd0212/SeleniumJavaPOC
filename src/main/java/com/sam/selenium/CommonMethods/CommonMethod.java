@@ -124,8 +124,7 @@ public class CommonMethod {
         }
     }
 
-    public void scrollToElement(By locator) {
-        WebElement element = driver.findElement(locator);
+    public void scrollToElement(WebElement element) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView(true);", element);
     }

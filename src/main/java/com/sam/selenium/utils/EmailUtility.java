@@ -1,6 +1,4 @@
-package com.sam.selenium.tests;
-
-import com.sam.selenium.utils.PropertyFileReader;
+package com.sam.selenium.utils;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -62,10 +60,14 @@ public class EmailUtility {
                     .append("<td style='padding: 12px;'>" + resultData[0] + "</td>")
                     .append("<td style='padding: 12px; color: " + statusColor + ";'>" + resultData[1] + "</td>")
                     .append("<td style='padding: 12px;'>" + resultData[2] + "</td>");
-            if (!"PASS".equalsIgnoreCase(resultData[1]) && resultData.length > 4 && new File(resultData[4]).exists()) {
-                failedScreenshotPaths.add(resultData[4]);
+
+
+            if (!"PASS".equalsIgnoreCase(resultData[1]) && resultData.length > 3 && new File(resultData[3]).exists()) {
+                failedScreenshotPaths.add(resultData[3]);
             }
         }
+
+
         formattedBody.append("</tbody></table>")
                 .append("<p style='font-size: 16px; line-height: 1.8; margin-top: 30px;'>If you have any questions or need additional information, please do not hesitate to contact us at <a href='mailto:support@yourdomain.com' style='color: #007BFF;'>support@yourdomain.com</a>.</p>")
                 .append("<p style='font-size: 16px; line-height: 1.8;'>Thank you for your attention.</p>")

@@ -5,10 +5,10 @@ target/
 
 test-recordings/
 allure-results/
-reports/
 
-reports/
-allure-results/
+
+
+
 
 ### IntelliJ IDEA ###
 .idea/modules.xml

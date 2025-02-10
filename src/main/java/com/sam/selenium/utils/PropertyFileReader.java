@@ -1,5 +1,6 @@
 package com.sam.selenium.utils;
 
+import groovy.lang.GString;
 import org.openqa.selenium.By;
 
 import java.io.FileInputStream;
@@ -13,7 +14,8 @@ public class PropertyFileReader {
     // Static block to load default config.properties file
     static {
         try {
-            String defaultFilePath = "D:\\Automation Project POC\\SeleniumJavaPOC\\src\\test\\java\\resources\\config\\testdata.properties";
+            String defaultFilePath = System.getProperty("user.dir")+"//src/test/java/resources/config/testdata.properties";
+            System.out.println(defaultFilePath);
             FileInputStream fis = new FileInputStream(defaultFilePath);
             defaultProperties.load(fis);
         } catch (IOException e) {

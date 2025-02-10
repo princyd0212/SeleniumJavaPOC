@@ -3,6 +3,7 @@ package com.sam.selenium.pageObjects;
 import com.sam.selenium.AbstractComponents.AbstractComponent;
 import com.sam.selenium.utils.PropertyFileReader;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import java.io.IOException;

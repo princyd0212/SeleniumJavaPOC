@@ -1,6 +1,5 @@
 package com.sam.selenium.stepDefinations;
 
-import com.sam.selenium.tests.EmailUtility;
 import com.sam.selenium.utils.ExcelReader;
 import com.sam.selenium.base.BaseTest;
 import com.sam.selenium.managers.PageObjectManager;
