@@ -39,10 +39,9 @@ public class BaseTest {
         Properties prop = new Properties();
         FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + "//src//main//java//com//sam//selenium/utils//GlobleData.properties");
         prop.load(fis);
+
         String browserName = System.getProperty("browser") != null ? System.getProperty("browser") : prop.getProperty("browser");
         String runOn = prop.getProperty("runOn"); // "local" or "browserfarm"
-        String browserFarm = prop.getProperty("browserfarm_browser");
-        String browserstackName = System.getProperty("browserstack.browserName") != null ? System.getProperty("browserstack.browserName") : prop.getProperty("browserstack.browserName");
 
         if (runOn.equalsIgnoreCase("local")) {
             if (browserName.contains("chrome")) {
@@ -60,26 +59,14 @@ public class BaseTest {
                 throw new IllegalArgumentException("Unsupported local browser: " + browserName);
             }
         } else if (runOn.equalsIgnoreCase("browserfarm")) {
-            if (browserFarm.equalsIgnoreCase("browserstack")) {
-                driver = browserfarmmanger.getBrowserStackDriver();
-               if (browserstackName.contains("chrome")) {
-                    WebDriverManager.chromedriver().setup();
-                    driver.manage().window().setSize(new Dimension(1440, 900));
-                } else if (browserstackName.equalsIgnoreCase("firefox")) {
-                    WebDriverManager.firefoxdriver().setup();
-                } else {
-                    throw new IllegalArgumentException("Unsupported Farm browser: " + browserstackName);
-                }// Calls the updated BrowserStack method
-            } else if (browserFarm.equalsIgnoreCase("lambdaTest")) {
-                driver = browserfarmmanger.getLambdaTestDriver();
-            } else if (browserFarm.equalsIgnoreCase("aws")) {
-                driver = browserfarmmanger.getAWSDriver();
-            } else if (browserFarm.equalsIgnoreCase("qyrus")) {
-                driver = browserfarmmanger.getQyrusDriver();
-            } else if (browserFarm.equalsIgnoreCase("sauceLabs")) {
-                driver = browserfarmmanger.getSauceLabsDriver();
+            driver = browserfarmmanger.getBrowserStackDriver();
+            if (browserName.contains("chrome")) {
+                WebDriverManager.chromedriver().setup();
+                driver.manage().window().setSize(new Dimension(1440, 900));
+            } else if (browserName.equalsIgnoreCase("firefox")) {
+                WebDriverManager.firefoxdriver().setup();
             } else {
-                throw new IllegalArgumentException("Unknown browser farm: " + browserFarm);
+                throw new IllegalArgumentException("Unsupported Farm browser: " + browserName);
             }
         } else {
             throw new IllegalArgumentException("Unsupported run environment: " + runOn);
