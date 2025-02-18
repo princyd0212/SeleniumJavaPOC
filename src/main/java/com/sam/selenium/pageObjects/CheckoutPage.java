@@ -30,7 +30,7 @@ public class CheckoutPage extends AbstractComponent {
 
     public ConfirmationPage submitOrder() throws IOException {
         By submitButton = propertyFileReader.getLocator("checkoutPage.submitButton");
-        scrollToElement((WebElement) submitButton);
+        scrollToElement(submitButton);
         waitForElementToAppear(submitButton);
         clickElement(submitButton);
         return new ConfirmationPage(driver);

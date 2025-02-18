@@ -7,21 +7,25 @@ import java.io.File;
 import java.io.IOException;
 
 public class JsonFileReader {
-    private static JsonNode jsonNode;
+    private static JsonNode jsonNode; // Static variable to store JSON data
 
-    public JsonFileReader(String filePath) throws IOException {
+    // Load JSON file method (static)
+    public static void loadJson(String filePath) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        System.out.println(filePath);
         File file = new File(filePath);
+
         if (!file.exists()) {
             throw new IOException("File not found at path: " + filePath);
         }
+
         jsonNode = objectMapper.readTree(file);
+        System.out.println("JSON file loaded successfully.");
     }
 
+    // Get JSON node safely
     public static JsonNode getNode(String key) {
         if (jsonNode == null) {
-            throw new IllegalStateException("JSON data is not initialized. Ensure JsonFileReader is properly instantiated.");
+            throw new IllegalStateException("JSON data is not initialized. Call loadJson() first.");
         }
         return jsonNode.path(key);
     }

@@ -10,43 +10,41 @@ import java.util.Map;
 
 public class APICommonMethod {
     public static Response sendRequest(String method, String url, Map<String, String> headers, String body) {
-        RestAssured.baseURI = url;
-        RequestSpecification request = RestAssured.given();
+        RequestSpecification request = RestAssured.given().baseUri(url);
 
-        // Add headers dynamically
+        // Add headers
         if (headers != null && !headers.isEmpty()) {
             headers.forEach(request::header);
+        } else {
+            request.header("Content-Type", "application/json"); // Ensure Content-Type is set
         }
 
-        // Add body dynamically
+        // Add body
         if (body != null && !body.isEmpty()) {
             request.body(body);
         }
 
-        // Execute the request
+        // Execute request
+        Response response;
         switch (method.toUpperCase()) {
             case "POST":
-                return request.post();
+                response = request.post();
+                break;
             case "PUT":
-                return request.put();
+                response = request.put();
+                break;
             case "DELETE":
-                return request.delete();
+                response = request.delete();
+                break;
             case "GET":
             default:
-                return request.get();
+                response = request.get();
+                break;
         }
+
+        return response;
     }
 
-    public static Map<String, String> mergeHeadersFromJsonNodes(JsonNode defaultHeadersNode, JsonNode additionalHeadersNode) {
-        // Initialize the merged headers map
-        Map<String, String> mergedHeaders = new HashMap<>();
-
-        // Helper method to add headers from a JsonNode to the map
-        addHeadersToMap(defaultHeadersNode, mergedHeaders);
-        addHeadersToMap(additionalHeadersNode, mergedHeaders);
-
-        return mergedHeaders;
-    }
 
     public static Map<String, String> jsonNodeToMap(JsonNode node) {
         Map<String, String> map = new HashMap<>();
@@ -56,33 +54,22 @@ public class APICommonMethod {
         return map;
     }
 
-
-    private static void addHeadersToMap(JsonNode headersNode, Map<String, String> headersMap) {
-        if (headersNode != null && headersNode.isObject()) {
-            headersNode.fields().forEachRemaining(entry -> headersMap.put(entry.getKey(), entry.getValue().asText()));
-        }
-    }
-
     public String getAuthToken(String authUrl, Map<String, String> credentials) {
-        RestAssured.baseURI = authUrl;
-        RequestSpecification request = RestAssured.given();
+        RequestSpecification request = RestAssured.given()
+                .baseUri(authUrl)
+                .header("Content-Type", "application/json")
+                .body(new com.google.gson.Gson().toJson(credentials));
 
-        // Set headers
-        request.header("Content-Type", "application/json");
-
-        // Convert credentials map to JSON string
-        String body = new com.google.gson.Gson().toJson(credentials);
-        request.body(body);
-
-        // Send POST request
         Response response = request.post();
 
-        // Check the response and extract token
         if (response.getStatusCode() == 200) {
-            // Extract token from JSON response (assuming token field is named "token")
-            return response.jsonPath().getString("token");
+            String token = response.jsonPath().getString("token");
+            if (token == null || token.isEmpty()) {
+                throw new RuntimeException("Auth token is missing in response.");
+            }
+            return token;
         } else {
-            throw new RuntimeException("Failed to retrieve auth token. Status code: " + response.getStatusCode() +
+            throw new RuntimeException("Failed to retrieve auth token. Status: " + response.getStatusCode() +
                     "\nResponse: " + response.getBody().asString());
         }
     }

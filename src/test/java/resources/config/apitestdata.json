@@ -1,59 +1,24 @@
 {
-  "post": {
-    "url": "https://petstore.swagger.io/v2/pet",
-    "body": {
-      "id": 4558,
-      "category": {
-        "id": 4558,
-        "name": "Lucky files"
-      },
-      "name": "doggie files",
-      "photoUrls": ["string"],
-      "tags": [
-        {
-          "id": 4558,
-          "name": "Lucky files"
-        }
-      ],
-      "status": "available"
+  "login": {
+    "url": "https://rahulshettyacademy.com/api/ecom/auth/login",
+    "credentials": {
+      "userEmail": "tadmin@admin.com",
+      "userPassword": "Admin@123"
     },
     "response": {
-      "statusCode": 200,
-      "assertValue": "id"
+      "statusCode": 200
     }
   },
-  "get": {
-    "url": "https://petstore.swagger.io/v2/pet/4558",
-    "response": {
-      "statusCode": 200,
-      "assertValue": "id"
-    }
-  },
-  "put": {
-    "url": "https://petstore.swagger.io/v2/pet",
+  "getAllProducts": {
+    "url": "https://rahulshettyacademy.com/api/ecom/product/get-all-products",
     "body": {
-      "id": 4558,
-      "category": {
-        "id": 4558,
-        "name": "Lucky updated"
-      },
-      "name": "doggie updated",
-      "photoUrls": ["updated-string"],
-      "tags": [
-        {
-          "id": 4558,
-          "name": "Lucky updated"
-        }
-      ],
-      "status": "sold"
+      "productName": "",
+      "minPrice": null,
+      "maxPrice": null,
+      "productCategory": [],
+      "productSubCategory": [],
+      "productFor": []
     },
-    "response": {
-      "statusCode": 200,
-      "assertValue": "Lucky updated"
-    }
-  },
-  "delete": {
-    "url": "https://petstore.swagger.io/v2/pet/4558",
     "response": {
       "statusCode": 200
     }
@@ -61,17 +26,45 @@
   "headers": {
     "Content-Type": "application/json"
   },
-  "additional headers": {
-    "Cache-Control": "no-cache"
+  "Productdeatils": {
+    "url": "https://rahulshettyacademy.com/api/ecom/product/get-product-detail/67a8dde5c0d3e6622a297cc8",
+    "response": {
+      "statusCode": 200
+    }
   },
-  "login": {
-    "url": "https://reqres.in/api/login",
-    "credentials": {
-      "email": "eve.holt@reqres.in",
-      "password": "cityslicka"
+  "addToCart": {
+    "url": "https://rahulshettyacademy.com/api/ecom/user/add-to-cart",
+    "body":{
+      "_id":"668bd0bdae2afd4c0b1c0d68",
+      "product": {
+        "_id":"67a8dde5c0d3e6622a297cc8",
+        "productName":"ZARA COAT 3",
+        "productCategory":"fashion",
+        "productSubCategory":"shirts",
+        "productPrice":31500,
+        "productDescription":"Adidas Originals",
+        "productImage":"https://rahulshettyacademy.com/api/ecom/uploads/productImage_1650649434146.jpeg",
+        "productRating":"0",
+        "productTotalOrders":"0",
+        "productStatus":true,
+        "productAddedBy":"admin@gmail.com",
+        "__v":0,
+        "productFor":"family"
+      }
     },
     "response": {
       "statusCode": 200
     }
+  },
+  "checkout": {
+    "url": "https://rahulshettyacademy.com/api/ecom/order/create-order",
+    "body":{"orders":[{
+      "country": "India",
+      "productOrderedId": "67a8dde5c0d3e6622a297cc8"
+    }]},
+    "response": {
+      "statusCode": 201
+    }
   }
+
 }

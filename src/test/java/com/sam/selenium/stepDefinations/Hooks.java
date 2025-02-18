@@ -62,6 +62,7 @@ public class Hooks extends BaseTest {
                     Allure.addAttachment(scenarioName, new ByteArrayInputStream(FileUtils.readFileToByteArray(screenshotFile)));
                     System.out.println("Scenario failed: " + scenarioName);
 
+
                     // Handle Recording
                     if (!isRecordingEnabled()) {
                         if (scenario.isFailed()) {
