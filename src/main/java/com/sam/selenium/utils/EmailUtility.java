@@ -43,7 +43,7 @@ public class EmailUtility {
                 .append("</div>")
                 .append("<h2 style='color: #007BFF; text-align: center; font-size: 30px; font-weight: 600; margin-bottom: 20px;'>Test Suite Execution Report</h2>")
                 .append("<p style='font-size: 16px; line-height: 1.8; margin-bottom: 20px;'>Dear Team,</p>")
-                .append("<p style='font-size: 16px; line-height: 1.8; margin-bottom: 20px;'>We are pleased to share the results of the recently executed test cases. Below is the detailed report outlining the status of each test case, including execution time.</p>")
+                .append("<p style='font-size: 16px; line-height: 1.8; margin-bottom: 20px;'>We are pleased to share the results of the recently executed test cases.</p>")
                 .append("<table style='width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 16px; border: 1px solid #ddd;'>")
                 .append("<thead style='background-color: #007BFF; color: white;'>")
                 .append("<tr><th style='padding: 12px; text-align: left; border-radius: 5px;'>Test Case Name</th>")
@@ -55,30 +55,46 @@ public class EmailUtility {
 
         for (String result : testResults) {
             String[] resultData = result.split(";");
-            String statusColor = resultData[1].equals("PASS") ? "#28a745" : (resultData[1].equals("FAIL") ? "#dc3545" : "#ffc107");
+            String testCaseName = resultData[0];
+            String testStatus = resultData[1];
+            String executionTime = resultData[2];
+
+            // Assign color based on status
+            String statusColor;
+            switch (testStatus.toUpperCase()) {
+                case "PASS":
+                    statusColor = "#28a745"; // Green
+                    break;
+                case "FAIL":
+                    statusColor = "#dc3545"; // Red
+                    break;
+                case "SKIPPED":
+                    statusColor = "#ffc107"; // Orange
+                    break;
+                default:
+                    statusColor = "#6c757d"; // Grey (for unknown statuses)
+                    break;
+            }
+
             formattedBody.append("<tr style='background-color: #f9f9f9; border-bottom: 1px solid #ddd;'>")
-                    .append("<td style='padding: 12px;'>" + resultData[0] + "</td>")
-                    .append("<td style='padding: 12px; color: " + statusColor + ";'>" + resultData[1] + "</td>")
-                    .append("<td style='padding: 12px;'>" + resultData[2] + "</td>");
+                    .append("<td style='padding: 12px;'>" + testCaseName + "</td>")
+                    .append("<td style='padding: 12px; color: " + statusColor + "; font-weight: bold;'>" + testStatus + "</td>")
+                    .append("<td style='padding: 12px;'>" + executionTime + "</td></tr>");
 
-
-            if (!"PASS".equalsIgnoreCase(resultData[1]) && resultData.length > 3 && new File(resultData[3]).exists()) {
+            // Handle failed screenshot paths
+            if ("FAIL".equalsIgnoreCase(testStatus) && resultData.length > 3 && new File(resultData[3]).exists()) {
                 failedScreenshotPaths.add(resultData[3]);
             }
         }
 
-
         formattedBody.append("</tbody></table>")
-                .append("<p style='font-size: 16px; line-height: 1.8; margin-top: 30px;'>If you have any questions or need additional information, please do not hesitate to contact us at <a href='mailto:support@yourdomain.com' style='color: #007BFF;'>support@yourdomain.com</a>.</p>")
+                .append("<p style='font-size: 16px; line-height: 1.8; margin-top: 30px;'>If you have any questions, contact us at <a href='mailto:support@yourdomain.com' style='color: #007BFF;'>support@yourdomain.com</a>.</p>")
                 .append("<p style='font-size: 16px; line-height: 1.8;'>Thank you for your attention.</p>")
                 .append("<p style='font-size: 16px; line-height: 1.8; margin-top: 40px;'>Best regards,</p>")
                 .append("<p style='font-size: 16px; line-height: 1.8;'>Brahmbhatt Kaushal</p>")
-                .append("<hr style='border: 0; border-top: 1px solid #ddd; margin-top: 30px;'>")
-                .append("<footer style='text-align: center; font-size: 14px; color: #777; padding-top: 20px;'>")
-                .append("<p>If you no longer wish to receive these reports, you can <a href='https://yourdomain.com/unsubscribe' style='color: #007BFF;'>unsubscribe</a>.</p>")
-                .append("<p>Company Name | Address | Phone Number | <a href='https://yourdomain.com/privacy-policy' style='color: #007BFF;'>Privacy Policy</a></p>")
-                .append("</footer>")
                 .append("</div></body></html>");
+
+        // Zip screenshots if any failed tests exist
         String zipFilePath = "FailedScreenshots.zip";
         try (FileOutputStream fos = new FileOutputStream(zipFilePath);
              ZipOutputStream zos = new ZipOutputStream(fos)) {
@@ -99,6 +115,8 @@ public class EmailUtility {
         } catch (Exception e) {
             logger.severe("Error while creating ZIP file: " + e.getMessage());
         }
+
+        // Send email
         try {
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(FROM_EMAIL));
@@ -107,23 +125,27 @@ public class EmailUtility {
                 message.addRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
             }
             message.setSubject(subject);
+
             MimeBodyPart textPart = new MimeBodyPart();
             textPart.setContent(formattedBody.toString(), "text/html");
+
             Multipart multipart = new MimeMultipart();
             multipart.addBodyPart(textPart);
+
             File zipFile = new File(zipFilePath);
             if (zipFile.exists()) {
                 MimeBodyPart attachmentPart = new MimeBodyPart();
                 attachmentPart.attachFile(zipFile);
                 multipart.addBodyPart(attachmentPart);
             }
+
             message.setContent(multipart);
             Transport.send(message);
+
             logger.info("Consolidated report with screenshots sent successfully to recipients: " + recipients);
-        } catch (MessagingException e) {
-            logger.severe("Failed to send consolidated email with screenshots: " + e.getMessage());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (MessagingException | IOException e) {
+            logger.severe("Failed to send consolidated email: " + e.getMessage());
         }
     }
+
 }

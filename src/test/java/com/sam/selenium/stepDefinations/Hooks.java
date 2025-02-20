@@ -46,61 +46,39 @@ public class Hooks extends BaseTest {
     @After
     public void takeScreenshotOnFailure(Scenario scenario) throws Exception {
         String scenarioName = scenario.getName();
-        String status = scenario.isFailed() ? "Fail" : "Pass";
+        String status = scenario.isFailed() ? "Fail" : "Pass"; // Capture both Pass and Fail
         String screenshotPath = "";
 
-        if (scenario.isFailed()) {
-            WebDriver driver = getDriver();
-            if (driver != null) {
+        WebDriver driver = getDriver();
+        if (driver != null) {
+            if (scenario.isFailed()) {
                 try {
-                    // Capture screenshot
+                    // Capture screenshot for failed test cases
                     File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
                     screenshotPath = getScreenshot(scenarioName.replaceAll(" ", "_") + ".png", driver);
                     FileUtils.copyFile(screenshotFile, new File(screenshotPath));
 
-                    // Attach to Allure Report
+                    // Attach screenshot to Allure report
                     Allure.addAttachment(scenarioName, new ByteArrayInputStream(FileUtils.readFileToByteArray(screenshotFile)));
                     System.out.println("Scenario failed: " + scenarioName);
-
-                    // Handle Recording
-                    if (!isRecordingEnabled()) {
-                        if (scenario.isFailed()) {
-                            System.out.println("Scenario failed: " + scenarioName + ". Starting and stopping recording for failure.");
-                            ScreenRecorderUtil.startRecording(scenarioName); // Start recording for the failed scenario
-                            ScreenRecorderUtil.stopRecording(); // Stop the recording immediately
-                            attachRecordingToAllure(VideoConversionBatch.convertedFileName);
-                        } else {
-                            System.out.println("Scenario passed: " + scenarioName + ". No recording needed.");
-                        }
-                        return;
-                    }
-                    Thread.sleep(2000);
-                    // Stop the recording after capturing failure context
-                    ScreenRecorderUtil.stopRecording();
-                    if (scenario.isFailed()) {
-                        System.out.println("Scenario failed: " + scenarioName + ". Attaching recording to Allure report.");
-                        // Attach recording to Allure report
-                        attachRecordingToAllure(VideoConversionBatch.convertedFileName);
-                    } else {
-                        System.out.println("Scenario passed: " + scenarioName + ". No recording will be attached.");
-                    }
-
-                    // Log test results
-                    listeners.getTestResults().add(
-                            scenarioName + ";" + status + ";" + "N/A" + ";" + screenshotPath
-                    );
-
-                } catch (IOException | InterruptedException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
-                } finally {
-                    if (driver != null) {
-                        driver.quit();
-                    }
                 }
             }
-            //sendEmailReport();
+
+            // Add test result (Pass, Fail) to the list
+            listeners.getTestResults().add(
+                    scenarioName + ";" + status + ";" + "N/A" + ";" + (scenario.isFailed() ? screenshotPath : "No Screenshot")
+            );
+        }
+
+        if (driver != null) {
+            driver.quit();
         }
     }
+//sendEmailReport();
+
+
 
     private void attachRecordingToAllure(String recordingFilePath) {
         File recordingFile = new File(recordingFilePath);
@@ -128,14 +106,16 @@ public class Hooks extends BaseTest {
 
     @AfterAll
     public static void sendEmailReport() {
-        //This is very important for mail sent.
-        List<String> testResults = listeners.getTestResults();
+        List<String> testResults = listeners.getTestResults(); // Collect all results
 
         if (!testResults.isEmpty()) {
-            logger.info("Sending test report email with " + testResults.size() + " results.");
+            logger.info("Sending test report email with " + testResults.size() + " results (Pass/Fail/Skipped).");
             EmailUtility.sendConsolidatedEmail(testResults, "Cucumber Test Suite Execution Report");
         } else {
             logger.warning("No test results found. Email will not be sent.");
         }
     }
+
 }
+
+

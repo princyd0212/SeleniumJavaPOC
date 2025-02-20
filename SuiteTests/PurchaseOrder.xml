@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
 <suite name="All Test Suite">
+    <listeners>
+        <listener class-name="com.sam.selenium.TestComponents.Listeners"/>
+    </listeners>
     <test thread-count="5" name="Submit Order Test">
         <classes>
             <class name="com.sam.selenium.tests.SubmitOrderTest">
