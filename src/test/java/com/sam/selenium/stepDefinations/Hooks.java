@@ -55,7 +55,7 @@ public class Hooks extends BaseTest {
                 try {
                     // Capture screenshot
                     File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-                    screenshotPath = System.getProperty("user.dir") + "/screenshots/" + scenarioName.replaceAll(" ", "_") + ".png";
+                    screenshotPath = getScreenshot(scenarioName.replaceAll(" ", "_") + ".png", driver);
                     FileUtils.copyFile(screenshotFile, new File(screenshotPath));
 
                     // Attach to Allure Report
@@ -128,6 +128,7 @@ public class Hooks extends BaseTest {
 
     @AfterAll
     public static void sendEmailReport() {
+        //This is very important for mail sent.
         List<String> testResults = listeners.getTestResults();
 
         if (!testResults.isEmpty()) {
