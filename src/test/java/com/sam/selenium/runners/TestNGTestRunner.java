@@ -5,10 +5,11 @@ import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(
         features = {"src\\test\\java\\resources\\features\\ErrorValidation.feature",
-                "src\\test\\java\\resources\\features\\SubmitOrder.feature"},
+                "src\\test\\java\\resources\\features\\SubmitOrder.feature",
+                "src\\test\\java\\resources\\features\\api.feature"},
         glue = {"com/sam/selenium/stepDefinations", "stepDefinations"},  // Ensure this package includes your Hooks class
         monochrome = true,
-        tags = "@SmokeTest",
+        //tags = "@SmokeTest",
         plugin = {"pretty", "html:target/cucumber-reports.html",
                 "json:target/cucumber-reports.json",
                 "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
