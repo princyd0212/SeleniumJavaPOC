@@ -134,10 +134,14 @@ public class Listeners extends BaseTest implements ITestListener {
     public void onFinish(ITestContext context) {
         extent.flush();
 
-        if (!testResults.isEmpty()) {
-            EmailUtility.sendConsolidatedEmail(testResults, "Test Suite Execution Report"); // Send the consolidated email at the end
+        if (!testResults.isEmpty() && emailSent.compareAndSet(false, true)) {
+            System.out.println("Sending test execution email...");
+            EmailUtility.sendConsolidatedEmail(testResults, "Test Suite Execution Report");
+        } else {
+            System.out.println("No test results found or email already sent.");
         }
     }
+
 
     // Public method to access the test results
     public List<String> getTestResults() {
