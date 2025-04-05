@@ -4,41 +4,22 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.sam.selenium.base.BaseTest;
-import com.sam.selenium.utils.EmailUtility;
-import com.sam.selenium.utils.ExtentReporterNG;
-import com.sam.selenium.utils.PropertyFileReader;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import com.sam.selenium.utils.ExtentReporterNG;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Listeners extends BaseTest implements ITestListener {
     ExtentTest test;
     ExtentReports extent = ExtentReporterNG.getReportObject();
-    ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
+    ThreadLocal<ExtentTest> extentTest = new ThreadLocal<ExtentTest>();
 
-    // Store results for all tests
-    private final List<String> testResults = new ArrayList<>();
-
-    private PropertyFileReader propertyReader;
-
-    // Static flag to prevent duplicate email sending
-    private static final AtomicBoolean emailSent = new AtomicBoolean(false);
-
-    public Listeners() {
-        try {
-            propertyReader = new PropertyFileReader(System.getProperty("user.dir") + "//src//test//java//resources//config//testdata.properties");
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to initialize PropertyFileReader");
-        }
-    }
-
+    /**
+     * @param result the partially filled <code>ITestResult</code>
+     */
     @Override
     public void onTestStart(ITestResult result) {
         test = extent.createTest(result.getMethod().getMethodName());
@@ -51,13 +32,6 @@ public class Listeners extends BaseTest implements ITestListener {
     @Override
     public void onTestSuccess(ITestResult result) {
         test.log(Status.PASS, "Test Passed");
-
-        String testCaseName = result.getMethod().getMethodName();
-        String status = "Pass";
-        String duration = (result.getEndMillis() - result.getStartMillis()) / 1000.0 + "s";
-
-        testResults.add(testCaseName + ";" + status + ";" + duration);
-        System.out.println(testCaseName + " Passed.");
     }
 
     /**
@@ -81,13 +55,7 @@ public class Listeners extends BaseTest implements ITestListener {
             throw new RuntimeException(e);
         }
         extentTest.get().addScreenCaptureFromPath(filePath, testMethodName);
-        String testCaseName = result.getMethod().getMethodName();
-        String status = "Fail";
-        String duration = (result.getEndMillis() - result.getStartMillis()) / 1000.0 + "s";
-        testResults.add(testCaseName + ";" + status + ";" + duration + ";" + filePath);
-        System.out.println("Screenshot saved at: " + filePath);
-
-        System.out.println(testCaseName + " Failed.");
+        //screenshot
     }
 
     /**
@@ -95,12 +63,7 @@ public class Listeners extends BaseTest implements ITestListener {
      */
     @Override
     public void onTestSkipped(ITestResult result) {
-        String testCaseName = result.getMethod().getMethodName();
-        String status = "Skipped";
-        String duration = (result.getEndMillis() - result.getStartMillis()) / 1000.0 + "s";
-
-        testResults.add(testCaseName + ";" + status + ";" + duration);
-        System.out.println(testCaseName + " Skipped.");
+        ITestListener.super.onTestSkipped(result);
     }
 
     /**
@@ -133,18 +96,5 @@ public class Listeners extends BaseTest implements ITestListener {
     @Override
     public void onFinish(ITestContext context) {
         extent.flush();
-
-        if (!testResults.isEmpty() && emailSent.compareAndSet(false, true)) {
-            System.out.println("Sending test execution email...");
-            EmailUtility.sendConsolidatedEmail(testResults, "Test Suite Execution Report");
-        } else {
-            System.out.println("No test results found or email already sent.");
-        }
-    }
-
-
-    // Public method to access the test results
-    public List<String> getTestResults() {
-        return testResults;
     }
 }
