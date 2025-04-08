@@ -14,7 +14,7 @@ import java.util.List;
 
 public class StandAloneTest{
     public static void main(String[] args) throws InterruptedException, IOException {
-        String productName = "IPHONE 13 PRO";
+        String productName = "ZARA COAT 3";
         WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver();
         driver.manage().window().maximize();

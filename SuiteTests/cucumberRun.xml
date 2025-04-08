@@ -3,7 +3,6 @@
 <suite name="Suite">
 <listeners>
     <listener class-name="com.sam.selenium.TestComponents.AnnotationTransformer"/>
-<!--    <listener class-name="com.sam.selenium.TestComponents.Listeners" />-->
 </listeners>
     <test name="CucumberTests">
         <classes>

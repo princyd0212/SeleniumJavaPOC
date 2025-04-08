@@ -3,6 +3,9 @@ package com.sam.selenium.pageObjects;
 import com.sam.selenium.AbstractComponents.AbstractComponent;
 import com.sam.selenium.utils.PropertyFileReader;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 import java.io.IOException;
 
