@@ -9,9 +9,9 @@
         <class name="com.sam.selenium.tests.SubmitOrderTest"/>
     </classes>
 </test>
-<!--<test  name="Error Validations Test">-->
-<!--    <classes>-->
-<!--        <class name="com.sam.selenium.tests.ErrorValidationsTest"/>-->
-<!--    </classes>-->
-<!--</test>-->
+<test  name="Error Validations Test">
+    <classes>
+        <class name="com.sam.selenium.tests.ErrorValidationsTest"/>
+    </classes>
+</test>
 </suite>

@@ -2,10 +2,10 @@ package com.sam.selenium.pageObjects;
 
 import com.sam.selenium.AbstractComponents.AbstractComponent;
 import com.sam.selenium.utils.PropertyFileReader;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+
+
 import java.io.IOException;
 
 public class CheckoutPage extends AbstractComponent {
@@ -25,14 +25,10 @@ public class CheckoutPage extends AbstractComponent {
         a.sendKeys(driver.findElement(propertyFileReader.getLocator("checkoutPage.country")), countryName).build().perform();
         waitForElementToAppear(propertyFileReader.getLocator("checkoutPage.results"));
         clickElement(propertyFileReader.getLocator("checkoutPage.selectAnyCountry"));
-
     }
 
     public ConfirmationPage submitOrder() throws IOException {
-        By submitButton = propertyFileReader.getLocator("checkoutPage.submitButton");
-        scrollToElement(submitButton);
-        waitForElementToAppear(submitButton);
-        clickElement(submitButton);
+        clickElement(propertyFileReader.getLocator("checkoutPage.submitButton"));
         return new ConfirmationPage(driver);
     }
 
