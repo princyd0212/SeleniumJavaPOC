@@ -7,9 +7,9 @@
             </class>
         </classes>
     </test>
-<!--    <test thread-count="5" name="Error Validation Message">-->
-<!--        <classes>-->
-<!--            <class name="com.sam.selenium.tests.ErrorValidationsTest" />-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test thread-count="5" name="Error Validation Message">
+        <classes>
+            <class name="com.sam.selenium.tests.ErrorValidationsTest" />
+        </classes>
+    </test>
 </suite>

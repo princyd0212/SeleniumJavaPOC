@@ -1,1 +1,0 @@
-{"uuid":"f5b5333e-7c50-458d-a0ee-2b2e7debc5ca","name":"com.sam.selenium.tests.ApiTests","children":["49ae3981-92d1-402d-acbd-433b09c831c1"],"befores":[{"name":"setup","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1735292226494,"stop":1735292226732}],"afters":[],"start":1735292226423,"stop":1735292230168}
