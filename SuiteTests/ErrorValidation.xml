@@ -10,12 +10,12 @@
     <listeners>
         <listener class-name="com.sam.selenium.TestComponents.Listeners" />
     </listeners>
-<!--    <test thread-count="5" name="Submit Order Test">-->
-<!--        <classes>-->
-<!--            <class name="com.sam.selenium.tests.SubmitOrderTest">-->
-<!--            </class>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test thread-count="5" name="Submit Order Test">
+        <classes>
+            <class name="com.sam.selenium.tests.SubmitOrderTest">
+            </class>
+        </classes>
+    </test>
     <test thread-count="5" name="Error Validation Message">
         <classes>
             <class name="com.sam.selenium.tests.ErrorValidationsTest" />
