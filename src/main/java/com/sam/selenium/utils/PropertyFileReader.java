@@ -1,5 +1,6 @@
 package com.sam.selenium.utils;
 
+import groovy.lang.GString;
 import org.openqa.selenium.By;
 
 import java.io.FileInputStream;
@@ -7,20 +8,43 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class PropertyFileReader {
-    private final Properties properties;
+    private static final Properties defaultProperties = new Properties();
+    private final Properties customProperties;
 
+    // Static block to load default config.properties file
+    static {
+        try {
+            String defaultFilePath = System.getProperty("user.dir")+"//src/test/java/resources/config/testdata.properties";
+            System.out.println(defaultFilePath);
+            FileInputStream fis = new FileInputStream(defaultFilePath);
+            defaultProperties.load(fis);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to load default config.properties file.");
+        }
+    }
+
+    // Constructor for custom properties file
     public PropertyFileReader(String filePath) throws IOException {
-        properties = new Properties();
-        FileInputStream inputStream = new FileInputStream(filePath);
-        properties.load(inputStream);
+        customProperties = new Properties();
+        FileInputStream fis = new FileInputStream(filePath);
+        customProperties.load(fis);
     }
 
+    // Default constructor to access only the default config.properties
+    public PropertyFileReader() {
+        this.customProperties = defaultProperties;
+    }
+
+    // Method to get property value
     public String getProperty(String key) {
-        return properties.getProperty(key);
+        // Check in custom properties first, fallback to default properties
+        return customProperties.getProperty(key, defaultProperties.getProperty(key));
     }
 
+    // Method to retrieve a Selenium locator
     public By getLocator(String locatorkey) {
-        String locator =  properties.getProperty(locatorkey);
+        String locator = getProperty(locatorkey);
         if (locator == null) {
             throw new RuntimeException("Locator not found in properties file: " + locatorkey);
         }
@@ -28,6 +52,7 @@ public class PropertyFileReader {
         String[] locatorParts = locator.split(":", 2);
         String locatorType = locatorParts[0];
         String locatorValue = locatorParts[1];
+
         switch (locatorType) {
             case "id":
                 return By.id(locatorValue);
@@ -46,7 +71,7 @@ public class PropertyFileReader {
             case "partialLinkText":
                 return By.partialLinkText(locatorValue);
             default:
-                throw new IllegalArgumentException("Locator type '" + locatorType + "' not defined!!");
+                throw new IllegalArgumentException("Locator type '" + locatorType + "' not defined!");
         }
     }
 }
